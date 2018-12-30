@@ -30,17 +30,22 @@ const Layout = styled.div`
 `
 
 export default function ThirdPartyAuthentication() {
+	const url =
+		process.env.NODE_ENV === 'production'
+			? 'https://my-prisma-backend.herokuapp.com'
+			: 'http://localhost:2000'
+
 	return (
 		<Layout>
-			<Button href="http://localhost:2000/api/v1/auth/github">
+			<Button href={`${url}/api/v1/auth/github`}>
 				<Icon name="github" />
 				Github
 			</Button>
-			<Button href="http://localhost:2000/api/v1/auth/facebook">
+			<Button href={`${url}/api/v1/auth/facebook`}>
 				<Icon name="facebook" />
 				Facebook
 			</Button>
-			<Button href="http://localhost:2000/api/v1/auth/twitter">
+			<Button href={`${url}/api/v1/auth/twitter`}>
 				<Icon name="twitter" />
 				Twitter
 			</Button>
