@@ -5,6 +5,7 @@
 		"jsx": "preserve",
 		"lib": ["dom", "es2017", "esnext.asynciterable"],
 		"moduleResolution": "node",
+		"types": ["node"],
 		"allowJs": false,
 		"noEmit": true,
 		"allowSyntheticDefaultImports": true,
