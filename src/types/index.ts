@@ -1,6 +1,7 @@
 import { RouteProps } from 'react-router-dom'
 
 export interface IRoute extends RouteProps {
+	path: string
 	guest?: boolean
 }
 
