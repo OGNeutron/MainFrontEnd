@@ -19,6 +19,7 @@ export const CommentLayout = styled.div`
 	grid-area: 'comments';
 	@media (max-width: 750px) {
 		order: 3;
+		width: 100%;
 	}
 `
 
@@ -26,6 +27,7 @@ export const FriendsLayout: any = styled.div`
 	grid-area: 'friend';
 	@media (max-width: 750px) {
 		order: 2;
+		width: 100%;
 	}
 `
 
@@ -33,5 +35,6 @@ export const Profile: any = styled.div`
 	grid-area: 'profile';
 	@media (max-width: 750px) {
 		order: 1;
+		width: 100%;
 	}
 `
