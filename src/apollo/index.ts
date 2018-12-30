@@ -28,7 +28,7 @@ const state: ApolloLink = withClientState({
 
 const myHttpLink: HttpLink = new HttpLink({
 	uri:
-		process.env.REACT_APP_ENV === 'production'
+		process.env.NODE_ENV === 'production'
 			? 'https://my-prisma-backend.herokuapp.com/graphql'
 			: 'http://localhost:2000/graphql',
 	// uri: 'https://serene-river-93971.herokuapp.com/graphql',
@@ -37,7 +37,7 @@ const myHttpLink: HttpLink = new HttpLink({
 
 const wsLink = new WebSocketLink({
 	uri:
-		process.env.REACT_APP_ENV === 'production'
+		process.env.NODE_ENV === 'production'
 			? 'wss://prisma-server-2df74d7228.herokuapp.com/Prisma_backend/dev'
 			: 'ws://localhost:2000/graphql',
 	// uri: 'ws://serene-river-93971.herokuapp.com/graphql',

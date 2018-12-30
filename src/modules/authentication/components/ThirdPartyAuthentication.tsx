@@ -31,7 +31,7 @@ const Layout = styled.div`
 
 export default function ThirdPartyAuthentication() {
 	const url =
-		process.env.REACT_APP_ENV === 'production'
+		process.env.NODE_ENV === 'production'
 			? 'https://my-prisma-backend.herokuapp.com'
 			: 'http://localhost:2000'
 
