@@ -42,22 +42,23 @@ class ChatComponent extends React.PureComponent<ChildDataProps<IProps>> {
 				document: CHANNEL_MESSAGE_SUBSCRIPTION,
 				variables: { channelId },
 				updateQuery(prev, { subscriptionData }) {
-					console.log(prev)
-					console.log(subscriptionData)
-
-					const newMessage =
+					const newMessage = [
 						subscriptionData.data.messageSubscription.node
+					]
 
-					// tslint:disable-next-line
-					return Object.assign({}, prev, {
+					// @ts-ignore
+					const result = Object.assign({}, prev, {
 						showChannel: {
 							...prev.showChannel,
 							messages: [
-								...prev.showChannel.messages,
-								...newMessage
+								...newMessage,
+								...prev.showChannel.messages
+								// ...newMessage
 							]
 						}
 					})
+
+					return result
 				}
 			})
 		}

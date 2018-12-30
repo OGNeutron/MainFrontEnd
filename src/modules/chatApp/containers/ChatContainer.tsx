@@ -40,7 +40,6 @@ class ChatContainer extends React.Component<
 					variables={{ teamSlug: this.props.match.params.team }}
 				>
 					{({ data }) => {
-						console.log('CHAT', data)
 						if (data !== undefined) {
 							team = data.showTeam
 						}
@@ -53,8 +52,6 @@ class ChatContainer extends React.Component<
 									channel => channel.slug === channelSlug
 								) as any).id
 							}
-
-							console.log('TEAM', team)
 
 							return team !== undefined ? (
 								<React.Fragment>

@@ -140,8 +140,8 @@ export const EDIT_COMMENT_MUTATION = gql`
 export const DELETE_COMMENT_MUTATION = gql`
 	mutation DeleteComment($id: ID!) {
 		deleteComment(id: $id) {
-			...MySuperCommentFragment
+			id
+			parentId
 		}
 	}
-	${CommentFragmentClass.fragments.comment}
 `

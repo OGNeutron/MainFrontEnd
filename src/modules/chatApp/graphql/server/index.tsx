@@ -9,6 +9,7 @@ export const CHANNEL_MESSAGE_SUBSCRIPTION = gql`
 				body
 				parentId
 				author {
+					online
 					id
 					username
 					avatar_url {

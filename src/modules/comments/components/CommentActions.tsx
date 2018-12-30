@@ -31,6 +31,8 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 			mutate,
 			comment: { parentId, id, pageId }
 		} = this.props
+
+		console.log(id)
 		await mutate({
 			variables: {
 				id
@@ -39,27 +41,40 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 				const data = cache.readQuery({
 					query: COMMENTS_QUERY,
 					variables: {
-						parentId
+						parentId,
+						limit: 10,
+						offset: 0
 					}
 				}) as any
 
 				if (pageId === deleteComment.parentId) {
-					const response = data.queryComment.filter(
-						(comment: any) => comment.id !== deleteComment.id
+					const response = data.queryComment.edges.filter(
+						(comment: any) => comment.node.id !== deleteComment.id
 					)
-					console.log(response)
+					const result = {
+						queryComment: {
+							pageInfo: {
+								...data.queryComment.pageInfo
+							},
+							__typename: data.queryComment.__typename,
+							edges: [...response]
+						}
+					}
+
 					cache.writeQuery({
 						query: COMMENTS_QUERY,
 						variables: {
-							parentId
+							parentId,
+							limit: 10,
+							offset: 0
 						},
-						data: response
+						data: result
 					})
 				} else {
-					const response = data.queryComment
+					const response = data.queryComment.edges
 						.find(
 							(comment: any) =>
-								comment.parentId === deleteComment.parentId
+								comment.node.parentId === deleteComment.parentId
 						)
 						.replies.filter((reply: any) => reply.id === id)
 

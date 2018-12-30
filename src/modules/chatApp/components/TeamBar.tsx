@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { List, Dropdown, Divider, Button } from 'semantic-ui-react'
+import { List, Dropdown, Divider, Button, Icon } from 'semantic-ui-react'
 import { ChildProps, Query, Mutation, MutationFn } from 'react-apollo'
 import { Link } from 'react-router-dom'
 
@@ -58,6 +58,12 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 		const teamId = this.props.showTeam.id
 		const members = this.props.showTeam.members
 		const admin = this.props.showTeam.author.username
+		const adminOnline =
+			this.props.showTeam.author.online == true ? (
+				<Icon style={{ color: 'green' }} name="circle" />
+			) : (
+				<Icon name="circle" />
+			)
 		return (
 			<TeamBarLayout>
 				<h2>Team bar</h2>
@@ -143,6 +149,7 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 									<List.Item>
 										ADMIN: {` `}
 										<Link to={`/profile/${admin}`}>
+											{adminOnline}
 											{admin}
 										</Link>
 									</List.Item>
@@ -153,6 +160,17 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 													member.username
 												}`}
 											>
+												{this.props.showTeam.author
+													.online == true ? (
+													<Icon
+														style={{
+															color: 'green'
+														}}
+														name="circle"
+													/>
+												) : (
+													<Icon name="circle" />
+												)}
 												{member.username}
 											</Link>
 										</List.Item>

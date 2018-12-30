@@ -31,7 +31,6 @@ class CreateReply extends React.Component<
 	_toggle = () => this.setState({ open: !this.state.open })
 
 	render() {
-		console.log(this.props)
 		return (
 			<React.Fragment>
 				<Comment.Action onClick={this._toggle}>
@@ -53,7 +52,6 @@ class CreateReply extends React.Component<
 								parentComment: { pageId }
 							} = this.props
 							if (reply) {
-								console.log(reply)
 								await mutate({
 									variables: {
 										body: values.body,
@@ -75,8 +73,6 @@ class CreateReply extends React.Component<
 												offset: 0
 											}
 										}) as any
-
-										console.log(data)
 
 										data.queryComment.edges
 											.find(
