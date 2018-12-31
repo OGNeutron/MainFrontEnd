@@ -8,11 +8,13 @@ export const AUTHORISE_USER = gql`
 	) {
 		authoriseUser(loggedIn: $loggedIn, username: $username, id: $id)
 			@client {
-			currentUser {
-				__typename
-				loggedIn
-				id
-				username
+			authoriseUser {
+				currentUser {
+					__typename
+					loggedIn
+					id
+					username
+				}
 			}
 		}
 	}

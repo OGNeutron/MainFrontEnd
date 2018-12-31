@@ -29,8 +29,6 @@ class TeamSideBar extends React.Component<DataProps<IProps, IState>> {
 	toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
 	render() {
-		console.log(this.props)
-
 		return (
 			<React.Fragment>
 				<Button onClick={this.toggleVisibility}>Chat Teams</Button>

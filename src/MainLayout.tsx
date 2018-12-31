@@ -150,7 +150,7 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 							auth: false
 						},
 						{
-							link: '/settings',
+							link: `/settings/${username || ''}`,
 							icon: 'setting',
 							tooltip: 'settings',
 							text: 'Settings',

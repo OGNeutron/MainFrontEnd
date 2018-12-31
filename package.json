@@ -4,6 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"@material-ui/core": "^3.8.1",
+		"@types/slate": "^0.43.8",
 		"antd": "^3.11.6",
 		"apollo-cache-inmemory": "^1.2.9",
 		"apollo-cache-persist": "^0.1.1",
@@ -46,6 +47,7 @@
 		"recompose": "^0.30.0",
 		"semantic-ui-css": "^2.3.3",
 		"semantic-ui-react": "^0.84.0",
+		"slate": "^0.44.9",
 		"styled-components": "^4.0.2",
 		"styled-theming": "^2.2.0",
 		"subscriptions-transport-ws": "^0.9.14",
@@ -73,6 +75,8 @@
 		"graphql-codegen-typescript-client": "^0.15.2",
 		"graphql-codegen-typescript-common": "^0.15.2",
 		"graphql-codegen-typescript-react-apollo": "^0.15.2",
+		"jest-dom": "^3.0.0",
+		"react-testing-library": "^5.4.2",
 		"rimraf": "^2.6.2",
 		"typescript": "3.2.2"
 	},

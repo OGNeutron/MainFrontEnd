@@ -29,7 +29,7 @@ export const MainNav: any = styled('nav')`
 	z-index: 1;
 
 	@media (max-width: 768px) {
-		width: 15%;
+		width: 10%;
 		top: 0;
 		bottom: 0;
 		flex-direction: column;

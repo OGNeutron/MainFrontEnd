@@ -6,6 +6,6 @@ export const SettingLayout: React.SFC<RouteComponentProps<{}>> = ({
 	match: { path }
 }): JSX.Element => (
 	<React.Fragment>
-		<Route path={`${path}/`} component={SettingContainer} />
+		<Route path={`${path}/:username`} component={SettingContainer} />
 	</React.Fragment>
 )

@@ -30,10 +30,11 @@ const Layout = styled.div`
 `
 
 export default function ThirdPartyAuthentication() {
-	const url = 'https://my-prisma-backend.herokuapp.com'
-	// process.env.NODE_ENV === 'production'
-	// 	? 'https://my-prisma-backend.herokuapp.com'
-	// 	: 'http://localhost:2000'
+	// const url = 'https://my-prisma-backend.herokuapp.com'
+	const url =
+		process.env.NODE_ENV === 'production'
+			? 'https://my-prisma-backend.herokuapp.com'
+			: 'http://localhost:2000'
 
 	return (
 		<Layout>

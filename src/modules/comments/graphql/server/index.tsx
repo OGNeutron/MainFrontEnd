@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 class CommentFragmentClass {
 	static fragments = {
 		comment: gql`
-			fragment MySuperCommentFragment on Comment {
+			fragment MyCommentFragment on Comment {
 				id
 				parentId
 				body
@@ -75,7 +75,7 @@ export const COMMENT_MUTATION = gql`
 			parentId: $parentId
 			repliedTo: $repliedTo
 		) {
-			...MySuperCommentFragment
+			...MyCommentFragment
 		}
 	}
 	${CommentFragmentClass.fragments.comment}
@@ -92,7 +92,7 @@ export const COMMENTS_QUERY = gql`
 			}
 			edges {
 				node {
-					...MySuperCommentFragment
+					...MyCommentFragment
 				}
 			}
 		}
@@ -113,7 +113,7 @@ export const CREATE_REPLY_MUTATION = gql`
 			parentId: $parentId
 			repliedTo: $repliedTo
 		) {
-			...MySuperCommentFragment
+			...MyCommentFragment
 		}
 	}
 	${CommentFragmentClass.fragments.comment}
@@ -122,7 +122,7 @@ export const CREATE_REPLY_MUTATION = gql`
 export const LIKE_COMMENT = gql`
 	mutation LikeComment($commentId: ID!) {
 		likeComment(commentId: $commentId) {
-			...MySuperCommentFragment
+			...MyCommentFragment
 		}
 	}
 	${CommentFragmentClass.fragments.comment}
@@ -131,7 +131,7 @@ export const LIKE_COMMENT = gql`
 export const EDIT_COMMENT_MUTATION = gql`
 	mutation EditComment($id: ID!, $body: String!) {
 		editComment(id: $id, body: $body) {
-			...MySuperCommentFragment
+			...MyCommentFragment
 		}
 	}
 	${CommentFragmentClass.fragments.comment}

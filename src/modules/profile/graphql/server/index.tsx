@@ -14,21 +14,51 @@ class FriendFragment {
 	}
 }
 
-export const GET_PROFILE_QUERY = gql`
-	query GetProfileQuery($username: String!) {
-		getProfile(username: $username) {
+export const BLOCK_OR_UNBLOCK_USER = gql`
+	mutation BlockOrUnblockUser($id: ID!) {
+		blockUser(id: $id) {
 			id
 			username
-			createdAt
-			updatedAt
-			friends {
-				...FriendFragment
-			}
 			avatar_url {
 				url
 			}
-			friend_requests {
-				...FriendFragment
+		}
+	}
+`
+
+export const GET_PROFILE_QUERY = gql`
+	query GetProfileQuery($username: String!) {
+		getProfile(username: $username) {
+			user {
+				id
+				username
+				createdAt
+				updatedAt
+				private
+				blockedUsers {
+					username
+					id
+					avatar_url {
+						url
+					}
+				}
+				friends {
+					...FriendFragment
+				}
+				avatar_url {
+					url
+				}
+				friend_requests {
+					...FriendFragment
+				}
+			}
+			errors {
+				message
+				username
+				avatar_url {
+					url
+				}
+				error
 			}
 		}
 	}

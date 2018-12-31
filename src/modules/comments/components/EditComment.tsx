@@ -54,7 +54,6 @@ export default compose(
 				setSubmitting
 			}
 		) {
-			console.log('WORKING')
 			const response = await mutate({
 				variables: {
 					body: values.body,

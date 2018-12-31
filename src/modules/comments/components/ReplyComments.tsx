@@ -7,8 +7,8 @@ import { CommentListLayout } from '../styles'
 import CreateReply from './CreateReply'
 import LikeComment from './LikeComment'
 import {
-	MyCommentFragmentReplies,
-	Maybe
+	Maybe,
+	MyCommentFragmentReplies
 } from '../../../apollo/components/apollo-components'
 
 interface IProps {

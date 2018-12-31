@@ -301,7 +301,23 @@ export interface UserWhereInput {
 
 	gmailId_not_ends_with?: Maybe<string>
 
+	directMessages_every?: Maybe<CommentWhereInput>
+
+	directMessages_some?: Maybe<CommentWhereInput>
+
+	directMessages_none?: Maybe<CommentWhereInput>
+
 	avatar_url?: Maybe<FileWhereInput>
+
+	private?: Maybe<boolean>
+
+	private_not?: Maybe<boolean>
+
+	blockedUsers_every?: Maybe<UserWhereInput>
+
+	blockedUsers_some?: Maybe<UserWhereInput>
+
+	blockedUsers_none?: Maybe<UserWhereInput>
 
 	confirmed?: Maybe<boolean>
 
@@ -392,6 +408,228 @@ export interface UserWhereInput {
 	OR?: Maybe<UserWhereInput[]>
 
 	NOT?: Maybe<UserWhereInput[]>
+}
+
+export interface CommentWhereInput {
+	id?: Maybe<string>
+
+	id_not?: Maybe<string>
+
+	id_in?: Maybe<string[]>
+
+	id_not_in?: Maybe<string[]>
+
+	id_lt?: Maybe<string>
+
+	id_lte?: Maybe<string>
+
+	id_gt?: Maybe<string>
+
+	id_gte?: Maybe<string>
+
+	id_contains?: Maybe<string>
+
+	id_not_contains?: Maybe<string>
+
+	id_starts_with?: Maybe<string>
+
+	id_not_starts_with?: Maybe<string>
+
+	id_ends_with?: Maybe<string>
+
+	id_not_ends_with?: Maybe<string>
+
+	body?: Maybe<string>
+
+	body_not?: Maybe<string>
+
+	body_in?: Maybe<string[]>
+
+	body_not_in?: Maybe<string[]>
+
+	body_lt?: Maybe<string>
+
+	body_lte?: Maybe<string>
+
+	body_gt?: Maybe<string>
+
+	body_gte?: Maybe<string>
+
+	body_contains?: Maybe<string>
+
+	body_not_contains?: Maybe<string>
+
+	body_starts_with?: Maybe<string>
+
+	body_not_starts_with?: Maybe<string>
+
+	body_ends_with?: Maybe<string>
+
+	body_not_ends_with?: Maybe<string>
+
+	parentId?: Maybe<string>
+
+	parentId_not?: Maybe<string>
+
+	parentId_in?: Maybe<string[]>
+
+	parentId_not_in?: Maybe<string[]>
+
+	parentId_lt?: Maybe<string>
+
+	parentId_lte?: Maybe<string>
+
+	parentId_gt?: Maybe<string>
+
+	parentId_gte?: Maybe<string>
+
+	parentId_contains?: Maybe<string>
+
+	parentId_not_contains?: Maybe<string>
+
+	parentId_starts_with?: Maybe<string>
+
+	parentId_not_starts_with?: Maybe<string>
+
+	parentId_ends_with?: Maybe<string>
+
+	parentId_not_ends_with?: Maybe<string>
+
+	pageId?: Maybe<string>
+
+	pageId_not?: Maybe<string>
+
+	pageId_in?: Maybe<string[]>
+
+	pageId_not_in?: Maybe<string[]>
+
+	pageId_lt?: Maybe<string>
+
+	pageId_lte?: Maybe<string>
+
+	pageId_gt?: Maybe<string>
+
+	pageId_gte?: Maybe<string>
+
+	pageId_contains?: Maybe<string>
+
+	pageId_not_contains?: Maybe<string>
+
+	pageId_starts_with?: Maybe<string>
+
+	pageId_not_starts_with?: Maybe<string>
+
+	pageId_ends_with?: Maybe<string>
+
+	pageId_not_ends_with?: Maybe<string>
+
+	repliedTo?: Maybe<UserWhereInput>
+
+	ratings?: Maybe<RatingWhereInput>
+
+	createdAt?: Maybe<DateTime>
+
+	createdAt_not?: Maybe<DateTime>
+
+	createdAt_in?: Maybe<DateTime[]>
+
+	createdAt_not_in?: Maybe<DateTime[]>
+
+	createdAt_lt?: Maybe<DateTime>
+
+	createdAt_lte?: Maybe<DateTime>
+
+	createdAt_gt?: Maybe<DateTime>
+
+	createdAt_gte?: Maybe<DateTime>
+
+	updatedAt?: Maybe<DateTime>
+
+	updatedAt_not?: Maybe<DateTime>
+
+	updatedAt_in?: Maybe<DateTime[]>
+
+	updatedAt_not_in?: Maybe<DateTime[]>
+
+	updatedAt_lt?: Maybe<DateTime>
+
+	updatedAt_lte?: Maybe<DateTime>
+
+	updatedAt_gt?: Maybe<DateTime>
+
+	updatedAt_gte?: Maybe<DateTime>
+
+	replies_every?: Maybe<CommentWhereInput>
+
+	replies_some?: Maybe<CommentWhereInput>
+
+	replies_none?: Maybe<CommentWhereInput>
+
+	author?: Maybe<UserWhereInput>
+
+	AND?: Maybe<CommentWhereInput[]>
+
+	OR?: Maybe<CommentWhereInput[]>
+
+	NOT?: Maybe<CommentWhereInput[]>
+}
+
+export interface RatingWhereInput {
+	id?: Maybe<string>
+
+	id_not?: Maybe<string>
+
+	id_in?: Maybe<string[]>
+
+	id_not_in?: Maybe<string[]>
+
+	id_lt?: Maybe<string>
+
+	id_lte?: Maybe<string>
+
+	id_gt?: Maybe<string>
+
+	id_gte?: Maybe<string>
+
+	id_contains?: Maybe<string>
+
+	id_not_contains?: Maybe<string>
+
+	id_starts_with?: Maybe<string>
+
+	id_not_starts_with?: Maybe<string>
+
+	id_ends_with?: Maybe<string>
+
+	id_not_ends_with?: Maybe<string>
+
+	vote?: Maybe<number>
+
+	vote_not?: Maybe<number>
+
+	vote_in?: Maybe<number[]>
+
+	vote_not_in?: Maybe<number[]>
+
+	vote_lt?: Maybe<number>
+
+	vote_lte?: Maybe<number>
+
+	vote_gt?: Maybe<number>
+
+	vote_gte?: Maybe<number>
+
+	author_every?: Maybe<UserWhereInput>
+
+	author_some?: Maybe<UserWhereInput>
+
+	author_none?: Maybe<UserWhereInput>
+
+	AND?: Maybe<RatingWhereInput[]>
+
+	OR?: Maybe<RatingWhereInput[]>
+
+	NOT?: Maybe<RatingWhereInput[]>
 }
 
 export interface FileWhereInput {
@@ -1112,228 +1350,6 @@ export interface MessageWhereInput {
 	NOT?: Maybe<MessageWhereInput[]>
 }
 
-export interface CommentWhereInput {
-	id?: Maybe<string>
-
-	id_not?: Maybe<string>
-
-	id_in?: Maybe<string[]>
-
-	id_not_in?: Maybe<string[]>
-
-	id_lt?: Maybe<string>
-
-	id_lte?: Maybe<string>
-
-	id_gt?: Maybe<string>
-
-	id_gte?: Maybe<string>
-
-	id_contains?: Maybe<string>
-
-	id_not_contains?: Maybe<string>
-
-	id_starts_with?: Maybe<string>
-
-	id_not_starts_with?: Maybe<string>
-
-	id_ends_with?: Maybe<string>
-
-	id_not_ends_with?: Maybe<string>
-
-	body?: Maybe<string>
-
-	body_not?: Maybe<string>
-
-	body_in?: Maybe<string[]>
-
-	body_not_in?: Maybe<string[]>
-
-	body_lt?: Maybe<string>
-
-	body_lte?: Maybe<string>
-
-	body_gt?: Maybe<string>
-
-	body_gte?: Maybe<string>
-
-	body_contains?: Maybe<string>
-
-	body_not_contains?: Maybe<string>
-
-	body_starts_with?: Maybe<string>
-
-	body_not_starts_with?: Maybe<string>
-
-	body_ends_with?: Maybe<string>
-
-	body_not_ends_with?: Maybe<string>
-
-	parentId?: Maybe<string>
-
-	parentId_not?: Maybe<string>
-
-	parentId_in?: Maybe<string[]>
-
-	parentId_not_in?: Maybe<string[]>
-
-	parentId_lt?: Maybe<string>
-
-	parentId_lte?: Maybe<string>
-
-	parentId_gt?: Maybe<string>
-
-	parentId_gte?: Maybe<string>
-
-	parentId_contains?: Maybe<string>
-
-	parentId_not_contains?: Maybe<string>
-
-	parentId_starts_with?: Maybe<string>
-
-	parentId_not_starts_with?: Maybe<string>
-
-	parentId_ends_with?: Maybe<string>
-
-	parentId_not_ends_with?: Maybe<string>
-
-	pageId?: Maybe<string>
-
-	pageId_not?: Maybe<string>
-
-	pageId_in?: Maybe<string[]>
-
-	pageId_not_in?: Maybe<string[]>
-
-	pageId_lt?: Maybe<string>
-
-	pageId_lte?: Maybe<string>
-
-	pageId_gt?: Maybe<string>
-
-	pageId_gte?: Maybe<string>
-
-	pageId_contains?: Maybe<string>
-
-	pageId_not_contains?: Maybe<string>
-
-	pageId_starts_with?: Maybe<string>
-
-	pageId_not_starts_with?: Maybe<string>
-
-	pageId_ends_with?: Maybe<string>
-
-	pageId_not_ends_with?: Maybe<string>
-
-	repliedTo?: Maybe<UserWhereInput>
-
-	ratings?: Maybe<RatingWhereInput>
-
-	createdAt?: Maybe<DateTime>
-
-	createdAt_not?: Maybe<DateTime>
-
-	createdAt_in?: Maybe<DateTime[]>
-
-	createdAt_not_in?: Maybe<DateTime[]>
-
-	createdAt_lt?: Maybe<DateTime>
-
-	createdAt_lte?: Maybe<DateTime>
-
-	createdAt_gt?: Maybe<DateTime>
-
-	createdAt_gte?: Maybe<DateTime>
-
-	updatedAt?: Maybe<DateTime>
-
-	updatedAt_not?: Maybe<DateTime>
-
-	updatedAt_in?: Maybe<DateTime[]>
-
-	updatedAt_not_in?: Maybe<DateTime[]>
-
-	updatedAt_lt?: Maybe<DateTime>
-
-	updatedAt_lte?: Maybe<DateTime>
-
-	updatedAt_gt?: Maybe<DateTime>
-
-	updatedAt_gte?: Maybe<DateTime>
-
-	replies_every?: Maybe<CommentWhereInput>
-
-	replies_some?: Maybe<CommentWhereInput>
-
-	replies_none?: Maybe<CommentWhereInput>
-
-	author?: Maybe<UserWhereInput>
-
-	AND?: Maybe<CommentWhereInput[]>
-
-	OR?: Maybe<CommentWhereInput[]>
-
-	NOT?: Maybe<CommentWhereInput[]>
-}
-
-export interface RatingWhereInput {
-	id?: Maybe<string>
-
-	id_not?: Maybe<string>
-
-	id_in?: Maybe<string[]>
-
-	id_not_in?: Maybe<string[]>
-
-	id_lt?: Maybe<string>
-
-	id_lte?: Maybe<string>
-
-	id_gt?: Maybe<string>
-
-	id_gte?: Maybe<string>
-
-	id_contains?: Maybe<string>
-
-	id_not_contains?: Maybe<string>
-
-	id_starts_with?: Maybe<string>
-
-	id_not_starts_with?: Maybe<string>
-
-	id_ends_with?: Maybe<string>
-
-	id_not_ends_with?: Maybe<string>
-
-	vote?: Maybe<number>
-
-	vote_not?: Maybe<number>
-
-	vote_in?: Maybe<number[]>
-
-	vote_not_in?: Maybe<number[]>
-
-	vote_lt?: Maybe<number>
-
-	vote_lte?: Maybe<number>
-
-	vote_gt?: Maybe<number>
-
-	vote_gte?: Maybe<number>
-
-	author_every?: Maybe<UserWhereInput>
-
-	author_some?: Maybe<UserWhereInput>
-
-	author_none?: Maybe<UserWhereInput>
-
-	AND?: Maybe<RatingWhereInput[]>
-
-	OR?: Maybe<RatingWhereInput[]>
-
-	NOT?: Maybe<RatingWhereInput[]>
-}
-
 export interface TodoWhereInput {
 	id?: Maybe<string>
 
@@ -1577,6 +1593,21 @@ export enum NotificationOrderByInput {
 	UpdatedAtDesc = 'updatedAt_DESC'
 }
 
+export enum CommentOrderByInput {
+	IdAsc = 'id_ASC',
+	IdDesc = 'id_DESC',
+	BodyAsc = 'body_ASC',
+	BodyDesc = 'body_DESC',
+	ParentIdAsc = 'parentId_ASC',
+	ParentIdDesc = 'parentId_DESC',
+	PageIdAsc = 'pageId_ASC',
+	PageIdDesc = 'pageId_DESC',
+	CreatedAtAsc = 'createdAt_ASC',
+	CreatedAtDesc = 'createdAt_DESC',
+	UpdatedAtAsc = 'updatedAt_ASC',
+	UpdatedAtDesc = 'updatedAt_DESC'
+}
+
 export enum UserOrderByInput {
 	IdAsc = 'id_ASC',
 	IdDesc = 'id_DESC',
@@ -1596,6 +1627,8 @@ export enum UserOrderByInput {
 	TwitterIdDesc = 'twitterId_DESC',
 	GmailIdAsc = 'gmailId_ASC',
 	GmailIdDesc = 'gmailId_DESC',
+	PrivateAsc = 'private_ASC',
+	PrivateDesc = 'private_DESC',
 	ConfirmedAsc = 'confirmed_ASC',
 	ConfirmedDesc = 'confirmed_DESC',
 	OnlineAsc = 'online_ASC',
@@ -1651,21 +1684,6 @@ export enum MessageOrderByInput {
 	UrlDesc = 'url_DESC',
 	FiletypeAsc = 'filetype_ASC',
 	FiletypeDesc = 'filetype_DESC',
-	CreatedAtAsc = 'createdAt_ASC',
-	CreatedAtDesc = 'createdAt_DESC',
-	UpdatedAtAsc = 'updatedAt_ASC',
-	UpdatedAtDesc = 'updatedAt_DESC'
-}
-
-export enum CommentOrderByInput {
-	IdAsc = 'id_ASC',
-	IdDesc = 'id_DESC',
-	BodyAsc = 'body_ASC',
-	BodyDesc = 'body_DESC',
-	ParentIdAsc = 'parentId_ASC',
-	ParentIdDesc = 'parentId_DESC',
-	PageIdAsc = 'pageId_ASC',
-	PageIdDesc = 'pageId_DESC',
 	CreatedAtAsc = 'createdAt_ASC',
 	CreatedAtDesc = 'createdAt_DESC',
 	UpdatedAtAsc = 'updatedAt_ASC',
@@ -1876,6 +1894,8 @@ export type ChannelMessageSubscriptionNode = {
 
 export type ChannelMessageSubscriptionAuthor = {
 	__typename?: 'User'
+
+	online: boolean
 
 	id: string
 
@@ -2388,8 +2408,8 @@ export type CommentMutationCreateComment = MyCommentFragmentFragment
 
 export type QueryCommentVariables = {
 	parentId: string
-	offset: number
-	limit: number
+	offset?: Maybe<number>
+	limit?: Maybe<number>
 }
 
 export type QueryCommentQuery = {
@@ -2476,7 +2496,39 @@ export type DeleteCommentMutation = {
 	deleteComment: DeleteCommentDeleteComment
 }
 
-export type DeleteCommentDeleteComment = MyCommentFragmentFragment
+export type DeleteCommentDeleteComment = {
+	__typename?: 'DeleteCommentResponse'
+
+	id: Maybe<string>
+
+	parentId: Maybe<string>
+}
+
+export type BlockOrUnblockUserVariables = {
+	id: string
+}
+
+export type BlockOrUnblockUserMutation = {
+	__typename?: 'Mutation'
+
+	blockUser: Maybe<BlockOrUnblockUserBlockUser>
+}
+
+export type BlockOrUnblockUserBlockUser = {
+	__typename?: 'MyUser'
+
+	id: string
+
+	username: string
+
+	avatar_url: BlockOrUnblockUserAvatarUrl
+}
+
+export type BlockOrUnblockUserAvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
 
 export type GetProfileQueryVariables = {
 	username: string
@@ -2489,24 +2541,44 @@ export type GetProfileQueryQuery = {
 }
 
 export type GetProfileQueryGetProfile = {
-	__typename?: 'User'
+	__typename?: 'ProfileResponse'
+
+	user: Maybe<GetProfileQueryUser>
+
+	errors: Maybe<GetProfileQueryErrors>
+}
+
+export type GetProfileQueryUser = {
+	__typename?: 'MyUser'
 
 	id: string
 
 	username: string
 
-	createdAt: DateTime
+	createdAt: string
 
-	updatedAt: DateTime
+	updatedAt: string
+
+	private: boolean
+
+	blockedUsers: Maybe<GetProfileQueryBlockedUsers[]>
 
 	friends: Maybe<GetProfileQueryFriends[]>
 
-	avatar_url: GetProfileQueryAvatarUrl
+	avatar_url: GetProfileQuery_AvatarUrl
 
 	friend_requests: Maybe<GetProfileQueryFriendRequests[]>
 }
 
-export type GetProfileQueryFriends = FriendFragmentFragment
+export type GetProfileQueryBlockedUsers = {
+	__typename?: 'User'
+
+	username: string
+
+	id: string
+
+	avatar_url: GetProfileQueryAvatarUrl
+}
 
 export type GetProfileQueryAvatarUrl = {
 	__typename?: 'File'
@@ -2514,7 +2586,33 @@ export type GetProfileQueryAvatarUrl = {
 	url: string
 }
 
+export type GetProfileQueryFriends = FriendFragmentFragment
+
+export type GetProfileQuery_AvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
+
 export type GetProfileQueryFriendRequests = FriendFragmentFragment
+
+export type GetProfileQueryErrors = {
+	__typename?: 'ProfileError'
+
+	message: Maybe<string>
+
+	username: Maybe<string>
+
+	avatar_url: Maybe<GetProfileQuery__AvatarUrl>
+
+	error: Maybe<string>
+}
+
+export type GetProfileQuery__AvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
 
 export type FriendRequestMutationVariables = {
 	requestedId: string
@@ -2626,6 +2724,48 @@ export type CreateTeamMutationChannels = {
 	slug: string
 }
 
+export type SetProfilePrivacyVariables = {
+	bool: boolean
+}
+
+export type SetProfilePrivacyMutation = {
+	__typename?: 'Mutation'
+
+	setProfilePrivacy: Maybe<SetProfilePrivacySetProfilePrivacy>
+}
+
+export type SetProfilePrivacySetProfilePrivacy = {
+	__typename?: 'MyUser'
+
+	private: boolean
+}
+
+export type UnBlockUserVariables = {
+	id: string
+}
+
+export type UnBlockUserMutation = {
+	__typename?: 'Mutation'
+
+	unblockUser: Maybe<UnBlockUserUnblockUser>
+}
+
+export type UnBlockUserUnblockUser = {
+	__typename?: 'MyUser'
+
+	id: string
+
+	username: string
+
+	avatar_url: UnBlockUserAvatarUrl
+}
+
+export type UnBlockUserAvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
+
 export type QueryUsersVariables = {}
 
 export type QueryUsersQuery = {
@@ -2635,7 +2775,7 @@ export type QueryUsersQuery = {
 }
 
 export type QueryUsersQueryUsers = {
-	__typename?: 'User'
+	__typename?: 'MyUser'
 
 	username: string
 
@@ -2679,7 +2819,7 @@ export type CurrentUserQueryQuery = {
 }
 
 export type CurrentUserQueryCurrentUser = {
-	__typename?: 'User'
+	__typename?: 'MyUser'
 
 	email: string
 
@@ -2927,10 +3067,7 @@ export type RegisterProps<TChildProps = any> = Partial<
 	ReactApollo.MutateProps<RegisterMutation, RegisterVariables>
 > &
 	TChildProps
-export type RegisterMutationFn = ReactApollo.MutationFn<
-	RegisterMutation,
-	RegisterVariables
->
+export type RegisterMutationFn = ReactApollo.MutationFn<RegisterMutation, RegisterVariables>
 export function RegisterHOC<TProps, TChildProps = any>(
 	operationOptions:
 		| ReactApollo.OperationOption<
@@ -2977,10 +3114,7 @@ export type LoginProps<TChildProps = any> = Partial<
 	ReactApollo.MutateProps<LoginMutation, LoginVariables>
 > &
 	TChildProps
-export type LoginMutationFn = ReactApollo.MutationFn<
-	LoginMutation,
-	LoginVariables
->
+export type LoginMutationFn = ReactApollo.MutationFn<LoginMutation, LoginVariables>
 export function LoginHOC<TProps, TChildProps = any>(
 	operationOptions:
 		| ReactApollo.OperationOption<
@@ -2991,12 +3125,10 @@ export function LoginHOC<TProps, TChildProps = any>(
 		  >
 		| undefined
 ) {
-	return ReactApollo.graphql<
-		TProps,
-		LoginMutation,
-		LoginVariables,
-		LoginProps<TChildProps>
-	>(LoginDocument, operationOptions)
+	return ReactApollo.graphql<TProps, LoginMutation, LoginVariables, LoginProps<TChildProps>>(
+		LoginDocument,
+		operationOptions
+	)
 }
 export const ForgotPasswordDocument = gql`
 	mutation ForgotPassword($email: String!) {
@@ -3007,19 +3139,11 @@ export const ForgotPasswordDocument = gql`
 	}
 `
 export class ForgotPasswordComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<
-			ForgotPasswordMutation,
-			ForgotPasswordVariables
-		>
-	>
+	Partial<ReactApollo.MutationProps<ForgotPasswordMutation, ForgotPasswordVariables>>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				ForgotPasswordMutation,
-				ForgotPasswordVariables
-			>
+			<ReactApollo.Mutation<ForgotPasswordMutation, ForgotPasswordVariables>
 				mutation={ForgotPasswordDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -3075,10 +3199,7 @@ export type CheckTokenProps<TChildProps = any> = Partial<
 	ReactApollo.MutateProps<CheckTokenMutation, CheckTokenVariables>
 > &
 	TChildProps
-export type CheckTokenMutationFn = ReactApollo.MutationFn<
-	CheckTokenMutation,
-	CheckTokenVariables
->
+export type CheckTokenMutationFn = ReactApollo.MutationFn<CheckTokenMutation, CheckTokenVariables>
 export function CheckTokenHOC<TProps, TChildProps = any>(
 	operationOptions:
 		| ReactApollo.OperationOption<
@@ -3105,9 +3226,7 @@ export const ResetPasswordDocument = gql`
 	}
 `
 export class ResetPasswordComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<ResetPasswordMutation, ResetPasswordVariables>
-	>
+	Partial<ReactApollo.MutationProps<ResetPasswordMutation, ResetPasswordVariables>>
 > {
 	render() {
 		return (
@@ -3152,19 +3271,11 @@ export const AuthConfirmationDocument = gql`
 	}
 `
 export class AuthConfirmationComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<
-			AuthConfirmationMutation,
-			AuthConfirmationVariables
-		>
-	>
+	Partial<ReactApollo.MutationProps<AuthConfirmationMutation, AuthConfirmationVariables>>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				AuthConfirmationMutation,
-				AuthConfirmationVariables
-			>
+			<ReactApollo.Mutation<AuthConfirmationMutation, AuthConfirmationVariables>
 				mutation={AuthConfirmationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -3202,19 +3313,11 @@ export const LogoutMutationDocument = gql`
 	}
 `
 export class LogoutMutationComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<
-			LogoutMutationMutation,
-			LogoutMutationVariables
-		>
-	>
+	Partial<ReactApollo.MutationProps<LogoutMutationMutation, LogoutMutationVariables>>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				LogoutMutationMutation,
-				LogoutMutationVariables
-			>
+			<ReactApollo.Mutation<LogoutMutationMutation, LogoutMutationVariables>
 				mutation={LogoutMutationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -3254,6 +3357,7 @@ export const ChannelMessageSubscriptionDocument = gql`
 				body
 				parentId
 				author {
+					online
 					id
 					username
 					avatar_url {
@@ -3499,9 +3603,7 @@ export const ShowChannelQueryDocument = gql`
 	}
 `
 export class ShowChannelQueryComponent extends React.Component<
-	Partial<
-		ReactApollo.QueryProps<ShowChannelQueryQuery, ShowChannelQueryVariables>
-	>
+	Partial<ReactApollo.QueryProps<ShowChannelQueryQuery, ShowChannelQueryVariables>>
 > {
 	render() {
 		return (
@@ -3572,18 +3674,12 @@ export const CreateChannelMutationDocument = gql`
 `
 export class CreateChannelMutationComponent extends React.Component<
 	Partial<
-		ReactApollo.MutationProps<
-			CreateChannelMutationMutation,
-			CreateChannelMutationVariables
-		>
+		ReactApollo.MutationProps<CreateChannelMutationMutation, CreateChannelMutationVariables>
 	>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				CreateChannelMutationMutation,
-				CreateChannelMutationVariables
-			>
+			<ReactApollo.Mutation<CreateChannelMutationMutation, CreateChannelMutationVariables>
 				mutation={CreateChannelMutationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -3591,10 +3687,7 @@ export class CreateChannelMutationComponent extends React.Component<
 	}
 }
 export type CreateChannelMutationProps<TChildProps = any> = Partial<
-	ReactApollo.MutateProps<
-		CreateChannelMutationMutation,
-		CreateChannelMutationVariables
-	>
+	ReactApollo.MutateProps<CreateChannelMutationMutation, CreateChannelMutationVariables>
 > &
 	TChildProps
 export type CreateChannelMutationMutationFn = ReactApollo.MutationFn<
@@ -3639,18 +3732,12 @@ export const CreateMessageMutationDocument = gql`
 `
 export class CreateMessageMutationComponent extends React.Component<
 	Partial<
-		ReactApollo.MutationProps<
-			CreateMessageMutationMutation,
-			CreateMessageMutationVariables
-		>
+		ReactApollo.MutationProps<CreateMessageMutationMutation, CreateMessageMutationVariables>
 	>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				CreateMessageMutationMutation,
-				CreateMessageMutationVariables
-			>
+			<ReactApollo.Mutation<CreateMessageMutationMutation, CreateMessageMutationVariables>
 				mutation={CreateMessageMutationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -3658,10 +3745,7 @@ export class CreateMessageMutationComponent extends React.Component<
 	}
 }
 export type CreateMessageMutationProps<TChildProps = any> = Partial<
-	ReactApollo.MutateProps<
-		CreateMessageMutationMutation,
-		CreateMessageMutationVariables
-	>
+	ReactApollo.MutateProps<CreateMessageMutationMutation, CreateMessageMutationVariables>
 > &
 	TChildProps
 export type CreateMessageMutationMutationFn = ReactApollo.MutationFn<
@@ -3729,10 +3813,7 @@ export class AddChannelMemberMutationComponent extends React.Component<
 	}
 }
 export type AddChannelMemberMutationProps<TChildProps = any> = Partial<
-	ReactApollo.MutateProps<
-		AddChannelMemberMutationMutation,
-		AddChannelMemberMutationVariables
-	>
+	ReactApollo.MutateProps<AddChannelMemberMutationMutation, AddChannelMemberMutationVariables>
 > &
 	TChildProps
 export type AddChannelMemberMutationMutationFn = ReactApollo.MutationFn<
@@ -3774,18 +3855,12 @@ export const AddTeamMemberMutationDocument = gql`
 `
 export class AddTeamMemberMutationComponent extends React.Component<
 	Partial<
-		ReactApollo.MutationProps<
-			AddTeamMemberMutationMutation,
-			AddTeamMemberMutationVariables
-		>
+		ReactApollo.MutationProps<AddTeamMemberMutationMutation, AddTeamMemberMutationVariables>
 	>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				AddTeamMemberMutationMutation,
-				AddTeamMemberMutationVariables
-			>
+			<ReactApollo.Mutation<AddTeamMemberMutationMutation, AddTeamMemberMutationVariables>
 				mutation={AddTeamMemberMutationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -3793,10 +3868,7 @@ export class AddTeamMemberMutationComponent extends React.Component<
 	}
 }
 export type AddTeamMemberMutationProps<TChildProps = any> = Partial<
-	ReactApollo.MutateProps<
-		AddTeamMemberMutationMutation,
-		AddTeamMemberMutationVariables
-	>
+	ReactApollo.MutateProps<AddTeamMemberMutationMutation, AddTeamMemberMutationVariables>
 > &
 	TChildProps
 export type AddTeamMemberMutationMutationFn = ReactApollo.MutationFn<
@@ -3821,18 +3893,8 @@ export function AddTeamMemberMutationHOC<TProps, TChildProps = any>(
 	>(AddTeamMemberMutationDocument, operationOptions)
 }
 export const CommentMutationDocument = gql`
-	mutation CommentMutation(
-		$body: String!
-		$pageId: ID!
-		$parentId: ID!
-		$repliedTo: ID
-	) {
-		createComment(
-			body: $body
-			pageId: $pageId
-			parentId: $parentId
-			repliedTo: $repliedTo
-		) {
+	mutation CommentMutation($body: String!, $pageId: ID!, $parentId: ID!, $repliedTo: ID) {
+		createComment(body: $body, pageId: $pageId, parentId: $parentId, repliedTo: $repliedTo) {
 			...MyCommentFragment
 		}
 	}
@@ -3840,19 +3902,11 @@ export const CommentMutationDocument = gql`
 	${MyCommentFragmentFragmentDoc}
 `
 export class CommentMutationComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<
-			CommentMutationMutation,
-			CommentMutationVariables
-		>
-	>
+	Partial<ReactApollo.MutationProps<CommentMutationMutation, CommentMutationVariables>>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				CommentMutationMutation,
-				CommentMutationVariables
-			>
+			<ReactApollo.Mutation<CommentMutationMutation, CommentMutationVariables>
 				mutation={CommentMutationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -3885,7 +3939,7 @@ export function CommentMutationHOC<TProps, TChildProps = any>(
 	>(CommentMutationDocument, operationOptions)
 }
 export const QueryCommentDocument = gql`
-	query QueryComment($parentId: ID!, $offset: Int!, $limit: Int!) {
+	query QueryComment($parentId: ID!, $offset: Int, $limit: Int) {
 		queryComment(parentId: $parentId, offset: $offset, limit: $limit) {
 			pageInfo {
 				hasPreviousPage
@@ -3937,18 +3991,8 @@ export function QueryCommentHOC<TProps, TChildProps = any>(
 	>(QueryCommentDocument, operationOptions)
 }
 export const CreateReplyDocument = gql`
-	mutation CreateReply(
-		$body: String!
-		$pageId: ID!
-		$parentId: ID!
-		$repliedTo: ID
-	) {
-		createReply(
-			body: $body
-			pageId: $pageId
-			parentId: $parentId
-			repliedTo: $repliedTo
-		) {
+	mutation CreateReply($body: String!, $pageId: ID!, $parentId: ID!, $repliedTo: ID) {
+		createReply(body: $body, pageId: $pageId, parentId: $parentId, repliedTo: $repliedTo) {
 			...MyCommentFragment
 		}
 	}
@@ -3956,9 +4000,7 @@ export const CreateReplyDocument = gql`
 	${MyCommentFragmentFragmentDoc}
 `
 export class CreateReplyComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<CreateReplyMutation, CreateReplyVariables>
-	>
+	Partial<ReactApollo.MutationProps<CreateReplyMutation, CreateReplyVariables>>
 > {
 	render() {
 		return (
@@ -4004,9 +4046,7 @@ export const LikeCommentDocument = gql`
 	${MyCommentFragmentFragmentDoc}
 `
 export class LikeCommentComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<LikeCommentMutation, LikeCommentVariables>
-	>
+	Partial<ReactApollo.MutationProps<LikeCommentMutation, LikeCommentVariables>>
 > {
 	render() {
 		return (
@@ -4052,9 +4092,7 @@ export const EditCommentDocument = gql`
 	${MyCommentFragmentFragmentDoc}
 `
 export class EditCommentComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<EditCommentMutation, EditCommentVariables>
-	>
+	Partial<ReactApollo.MutationProps<EditCommentMutation, EditCommentVariables>>
 > {
 	render() {
 		return (
@@ -4093,16 +4131,13 @@ export function EditCommentHOC<TProps, TChildProps = any>(
 export const DeleteCommentDocument = gql`
 	mutation DeleteComment($id: ID!) {
 		deleteComment(id: $id) {
-			...MyCommentFragment
+			id
+			parentId
 		}
 	}
-
-	${MyCommentFragmentFragmentDoc}
 `
 export class DeleteCommentComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<DeleteCommentMutation, DeleteCommentVariables>
-	>
+	Partial<ReactApollo.MutationProps<DeleteCommentMutation, DeleteCommentVariables>>
 > {
 	render() {
 		return (
@@ -4138,21 +4173,87 @@ export function DeleteCommentHOC<TProps, TChildProps = any>(
 		DeleteCommentProps<TChildProps>
 	>(DeleteCommentDocument, operationOptions)
 }
-export const GetProfileQueryDocument = gql`
-	query GetProfileQuery($username: String!) {
-		getProfile(username: $username) {
+export const BlockOrUnblockUserDocument = gql`
+	mutation BlockOrUnblockUser($id: ID!) {
+		blockUser(id: $id) {
 			id
 			username
-			createdAt
-			updatedAt
-			friends {
-				...FriendFragment
-			}
 			avatar_url {
 				url
 			}
-			friend_requests {
-				...FriendFragment
+		}
+	}
+`
+export class BlockOrUnblockUserComponent extends React.Component<
+	Partial<ReactApollo.MutationProps<BlockOrUnblockUserMutation, BlockOrUnblockUserVariables>>
+> {
+	render() {
+		return (
+			<ReactApollo.Mutation<BlockOrUnblockUserMutation, BlockOrUnblockUserVariables>
+				mutation={BlockOrUnblockUserDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type BlockOrUnblockUserProps<TChildProps = any> = Partial<
+	ReactApollo.MutateProps<BlockOrUnblockUserMutation, BlockOrUnblockUserVariables>
+> &
+	TChildProps
+export type BlockOrUnblockUserMutationFn = ReactApollo.MutationFn<
+	BlockOrUnblockUserMutation,
+	BlockOrUnblockUserVariables
+>
+export function BlockOrUnblockUserHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				BlockOrUnblockUserMutation,
+				BlockOrUnblockUserVariables,
+				BlockOrUnblockUserProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		BlockOrUnblockUserMutation,
+		BlockOrUnblockUserVariables,
+		BlockOrUnblockUserProps<TChildProps>
+	>(BlockOrUnblockUserDocument, operationOptions)
+}
+export const GetProfileQueryDocument = gql`
+	query GetProfileQuery($username: String!) {
+		getProfile(username: $username) {
+			user {
+				id
+				username
+				createdAt
+				updatedAt
+				private
+				blockedUsers {
+					username
+					id
+					avatar_url {
+						url
+					}
+				}
+				friends {
+					...FriendFragment
+				}
+				avatar_url {
+					url
+				}
+				friend_requests {
+					...FriendFragment
+				}
+			}
+			errors {
+				message
+				username
+				avatar_url {
+					url
+				}
+				error
 			}
 		}
 	}
@@ -4160,9 +4261,7 @@ export const GetProfileQueryDocument = gql`
 	${FriendFragmentFragmentDoc}
 `
 export class GetProfileQueryComponent extends React.Component<
-	Partial<
-		ReactApollo.QueryProps<GetProfileQueryQuery, GetProfileQueryVariables>
-	>
+	Partial<ReactApollo.QueryProps<GetProfileQueryQuery, GetProfileQueryVariables>>
 > {
 	render() {
 		return (
@@ -4207,18 +4306,12 @@ export const FriendRequestMutationDocument = gql`
 `
 export class FriendRequestMutationComponent extends React.Component<
 	Partial<
-		ReactApollo.MutationProps<
-			FriendRequestMutationMutation,
-			FriendRequestMutationVariables
-		>
+		ReactApollo.MutationProps<FriendRequestMutationMutation, FriendRequestMutationVariables>
 	>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				FriendRequestMutationMutation,
-				FriendRequestMutationVariables
-			>
+			<ReactApollo.Mutation<FriendRequestMutationMutation, FriendRequestMutationVariables>
 				mutation={FriendRequestMutationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -4226,10 +4319,7 @@ export class FriendRequestMutationComponent extends React.Component<
 	}
 }
 export type FriendRequestMutationProps<TChildProps = any> = Partial<
-	ReactApollo.MutateProps<
-		FriendRequestMutationMutation,
-		FriendRequestMutationVariables
-	>
+	ReactApollo.MutateProps<FriendRequestMutationMutation, FriendRequestMutationVariables>
 > &
 	TChildProps
 export type FriendRequestMutationMutationFn = ReactApollo.MutationFn<
@@ -4270,19 +4360,11 @@ export const AddFriendMutationDocument = gql`
 	${FriendFragmentFragmentDoc}
 `
 export class AddFriendMutationComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<
-			AddFriendMutationMutation,
-			AddFriendMutationVariables
-		>
-	>
+	Partial<ReactApollo.MutationProps<AddFriendMutationMutation, AddFriendMutationVariables>>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				AddFriendMutationMutation,
-				AddFriendMutationVariables
-			>
+			<ReactApollo.Mutation<AddFriendMutationMutation, AddFriendMutationVariables>
 				mutation={AddFriendMutationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -4290,10 +4372,7 @@ export class AddFriendMutationComponent extends React.Component<
 	}
 }
 export type AddFriendMutationProps<TChildProps = any> = Partial<
-	ReactApollo.MutateProps<
-		AddFriendMutationMutation,
-		AddFriendMutationVariables
-	>
+	ReactApollo.MutateProps<AddFriendMutationMutation, AddFriendMutationVariables>
 > &
 	TChildProps
 export type AddFriendMutationMutationFn = ReactApollo.MutationFn<
@@ -4329,19 +4408,11 @@ export const RejectFriendMutationDocument = gql`
 	}
 `
 export class RejectFriendMutationComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<
-			RejectFriendMutationMutation,
-			RejectFriendMutationVariables
-		>
-	>
+	Partial<ReactApollo.MutationProps<RejectFriendMutationMutation, RejectFriendMutationVariables>>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				RejectFriendMutationMutation,
-				RejectFriendMutationVariables
-			>
+			<ReactApollo.Mutation<RejectFriendMutationMutation, RejectFriendMutationVariables>
 				mutation={RejectFriendMutationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -4349,10 +4420,7 @@ export class RejectFriendMutationComponent extends React.Component<
 	}
 }
 export type RejectFriendMutationProps<TChildProps = any> = Partial<
-	ReactApollo.MutateProps<
-		RejectFriendMutationMutation,
-		RejectFriendMutationVariables
-	>
+	ReactApollo.MutateProps<RejectFriendMutationMutation, RejectFriendMutationVariables>
 > &
 	TChildProps
 export type RejectFriendMutationMutationFn = ReactApollo.MutationFn<
@@ -4389,19 +4457,11 @@ export const CreateTeamMutationDocument = gql`
 	}
 `
 export class CreateTeamMutationComponent extends React.Component<
-	Partial<
-		ReactApollo.MutationProps<
-			CreateTeamMutationMutation,
-			CreateTeamMutationVariables
-		>
-	>
+	Partial<ReactApollo.MutationProps<CreateTeamMutationMutation, CreateTeamMutationVariables>>
 > {
 	render() {
 		return (
-			<ReactApollo.Mutation<
-				CreateTeamMutationMutation,
-				CreateTeamMutationVariables
-			>
+			<ReactApollo.Mutation<CreateTeamMutationMutation, CreateTeamMutationVariables>
 				mutation={CreateTeamMutationDocument}
 				{...(this as any)['props'] as any}
 			/>
@@ -4409,10 +4469,7 @@ export class CreateTeamMutationComponent extends React.Component<
 	}
 }
 export type CreateTeamMutationProps<TChildProps = any> = Partial<
-	ReactApollo.MutateProps<
-		CreateTeamMutationMutation,
-		CreateTeamMutationVariables
-	>
+	ReactApollo.MutateProps<CreateTeamMutationMutation, CreateTeamMutationVariables>
 > &
 	TChildProps
 export type CreateTeamMutationMutationFn = ReactApollo.MutationFn<
@@ -4435,6 +4492,98 @@ export function CreateTeamMutationHOC<TProps, TChildProps = any>(
 		CreateTeamMutationVariables,
 		CreateTeamMutationProps<TChildProps>
 	>(CreateTeamMutationDocument, operationOptions)
+}
+export const SetProfilePrivacyDocument = gql`
+	mutation SetProfilePrivacy($bool: Boolean!) {
+		setProfilePrivacy(bool: $bool) {
+			private
+		}
+	}
+`
+export class SetProfilePrivacyComponent extends React.Component<
+	Partial<ReactApollo.MutationProps<SetProfilePrivacyMutation, SetProfilePrivacyVariables>>
+> {
+	render() {
+		return (
+			<ReactApollo.Mutation<SetProfilePrivacyMutation, SetProfilePrivacyVariables>
+				mutation={SetProfilePrivacyDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type SetProfilePrivacyProps<TChildProps = any> = Partial<
+	ReactApollo.MutateProps<SetProfilePrivacyMutation, SetProfilePrivacyVariables>
+> &
+	TChildProps
+export type SetProfilePrivacyMutationFn = ReactApollo.MutationFn<
+	SetProfilePrivacyMutation,
+	SetProfilePrivacyVariables
+>
+export function SetProfilePrivacyHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				SetProfilePrivacyMutation,
+				SetProfilePrivacyVariables,
+				SetProfilePrivacyProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		SetProfilePrivacyMutation,
+		SetProfilePrivacyVariables,
+		SetProfilePrivacyProps<TChildProps>
+	>(SetProfilePrivacyDocument, operationOptions)
+}
+export const UnBlockUserDocument = gql`
+	mutation UnBlockUser($id: ID!) {
+		unblockUser(id: $id) {
+			id
+			username
+			avatar_url {
+				url
+			}
+		}
+	}
+`
+export class UnBlockUserComponent extends React.Component<
+	Partial<ReactApollo.MutationProps<UnBlockUserMutation, UnBlockUserVariables>>
+> {
+	render() {
+		return (
+			<ReactApollo.Mutation<UnBlockUserMutation, UnBlockUserVariables>
+				mutation={UnBlockUserDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type UnBlockUserProps<TChildProps = any> = Partial<
+	ReactApollo.MutateProps<UnBlockUserMutation, UnBlockUserVariables>
+> &
+	TChildProps
+export type UnBlockUserMutationFn = ReactApollo.MutationFn<
+	UnBlockUserMutation,
+	UnBlockUserVariables
+>
+export function UnBlockUserHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				UnBlockUserMutation,
+				UnBlockUserVariables,
+				UnBlockUserProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		UnBlockUserMutation,
+		UnBlockUserVariables,
+		UnBlockUserProps<TChildProps>
+	>(UnBlockUserDocument, operationOptions)
 }
 export const QueryUsersDocument = gql`
 	query QueryUsers {
@@ -4490,9 +4639,7 @@ export const ShowTeamsQueryDocument = gql`
 	}
 `
 export class ShowTeamsQueryComponent extends React.Component<
-	Partial<
-		ReactApollo.QueryProps<ShowTeamsQueryQuery, ShowTeamsQueryVariables>
-	>
+	Partial<ReactApollo.QueryProps<ShowTeamsQueryQuery, ShowTeamsQueryVariables>>
 > {
 	render() {
 		return (
@@ -4534,9 +4681,7 @@ export const CurrentUserQueryDocument = gql`
 	}
 `
 export class CurrentUserQueryComponent extends React.Component<
-	Partial<
-		ReactApollo.QueryProps<CurrentUserQueryQuery, CurrentUserQueryVariables>
-	>
+	Partial<ReactApollo.QueryProps<CurrentUserQueryQuery, CurrentUserQueryVariables>>
 > {
 	render() {
 		return (

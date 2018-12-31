@@ -13,6 +13,7 @@ import { ProfileLayout, CommentLayout } from '../styles'
 import ProfileComponent from '../components/ProfileComponent'
 import FriendComponent from '../components/FriendComponent'
 import CommentContainer from '../../comments'
+import { BlockedOrPrivate } from '../views/BlockedOrPrivate'
 
 import { CURRENT_USER_QUERY } from '../../../utils/graphql/server'
 import { GetProfileQuery } from '../../../operation-result-types'
@@ -22,7 +23,6 @@ import { GetProfileQuery } from '../../../operation-result-types'
 
 interface IProps {
 	currentUser: any
-	getProfile: any
 }
 
 const ProfileContainer: React.SFC<
@@ -32,8 +32,6 @@ const ProfileContainer: React.SFC<
 	const {
 		currentUser: { currentUser }
 	} = props
-
-	// console.log('GETPROFILE', getProfile)
 
 	return (
 		<GetProfileQueryComponent
@@ -80,27 +78,47 @@ const ProfileContainer: React.SFC<
 					return <Spinner />
 				}
 
-				return loading ? (
+				let display
+
+				if (data.getProfile !== null && loading === false) {
+					if (
+						data.getProfile.user === null &&
+						data.getProfile.errors !== null
+					) {
+						display = (
+							<BlockedOrPrivate
+								username={data.getProfile.errors.username}
+								message={data.getProfile.errors.message}
+								avatar_url={data.getProfile.errors.avatar_url}
+							/>
+						)
+					} else if (data.getProfile.user !== null) {
+						display = (
+							<React.Fragment>
+								<ProfileComponent
+									currentUser={currentUser}
+									user={data.getProfile.user}
+								/>
+								<CommentLayout>
+									<CommentContainer
+										currentUser={currentUser}
+										pageId={data.getProfile.user.id}
+									/>
+								</CommentLayout>
+
+								<FriendComponent
+									currentUser={currentUser}
+									user={data.getProfile.user}
+								/>
+							</React.Fragment>
+						)
+					}
+				}
+
+				return loading && data !== null ? (
 					<Spinner />
 				) : (
-					<ProfileLayout>
-						<ProfileComponent
-							currentUser={currentUser}
-							user={data.getProfile}
-						/>
-						<CommentLayout>
-							<CommentContainer
-								currentUser={currentUser}
-								// @ts-ignore
-								pageId={data.getProfile.id}
-							/>
-						</CommentLayout>
-
-						<FriendComponent
-							currentUser={currentUser}
-							user={data.getProfile}
-						/>
-					</ProfileLayout>
+					<ProfileLayout>{display}</ProfileLayout>
 				)
 			}}
 		</GetProfileQueryComponent>
