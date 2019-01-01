@@ -12,17 +12,22 @@ import { CURRENT_THEME_QUERY } from '../../../apollo/graphql/client'
 import { CHANGE_THEME } from '../../../utils/graphql/client'
 import { GetProfileQueryComponent } from '../../../apollo/components/apollo-components'
 import { Spinner } from '../../../utils/components/animations/loader'
+import ProfileDetails from '../components/ProfileDetails'
 
 const SettingLayout = styled.div`
 	color: ${props => props.theme.color};
+	margin: auto;
+
+	@media (max-width: 780px) {
+		width: 75%;
+	}
 `
 interface IProps {
 	currentTheme: any
 	changeTheme: any
 }
-class SettingContainer extends React.Component<
-	IProps & RouteComponentProps<{ username: string }>
-> {
+
+class SettingContainer extends React.Component<IProps & RouteComponentProps<{ username: string }>> {
 	state = {
 		checked: this.props.currentTheme.theme === 'light' ? false : true
 	}
@@ -74,13 +79,11 @@ class SettingContainer extends React.Component<
 									</span>
 								</div>
 
-								<PrivacySetting
-									profile={data.getProfile.user}
-								/>
+								<PrivacySetting profile={data.getProfile.user} />
 								<Divider />
-								<BlockedUsersComponent
-									profile={data.getProfile.user}
-								/>
+								<BlockedUsersComponent profile={data.getProfile.user} />
+								<Divider />
+								<ProfileDetails profile={data.getProfile.user} />
 							</React.Fragment>
 						) : (
 							<Spinner />

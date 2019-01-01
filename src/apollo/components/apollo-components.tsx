@@ -1724,6 +1724,8 @@ export enum MutationType {
 
 export type DateTime = any
 
+export type Upload = any
+
 // ====================================================
 // Documents
 // ====================================================
@@ -2761,6 +2763,25 @@ export type UnBlockUserUnblockUser = {
 }
 
 export type UnBlockUserAvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
+
+export type UpdateProfileVariables = {
+	username?: Maybe<string>
+	oldPassword?: Maybe<string>
+	newPassword?: Maybe<string>
+	avatar: Upload
+}
+
+export type UpdateProfileMutation = {
+	__typename?: 'Mutation'
+
+	updateProfile: Maybe<UpdateProfileUpdateProfile>
+}
+
+export type UpdateProfileUpdateProfile = {
 	__typename?: 'File'
 
 	url: string
@@ -4584,6 +4605,60 @@ export function UnBlockUserHOC<TProps, TChildProps = any>(
 		UnBlockUserVariables,
 		UnBlockUserProps<TChildProps>
 	>(UnBlockUserDocument, operationOptions)
+}
+export const UpdateProfileDocument = gql`
+	mutation UpdateProfile(
+		$username: String
+		$oldPassword: String
+		$newPassword: String
+		$avatar: Upload!
+	) {
+		updateProfile(
+			username: $username
+			oldPassword: $oldPassword
+			newPassword: $newPassword
+			avatar: $avatar
+		) {
+			url
+		}
+	}
+`
+export class UpdateProfileComponent extends React.Component<
+	Partial<ReactApollo.MutationProps<UpdateProfileMutation, UpdateProfileVariables>>
+> {
+	render() {
+		return (
+			<ReactApollo.Mutation<UpdateProfileMutation, UpdateProfileVariables>
+				mutation={UpdateProfileDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type UpdateProfileProps<TChildProps = any> = Partial<
+	ReactApollo.MutateProps<UpdateProfileMutation, UpdateProfileVariables>
+> &
+	TChildProps
+export type UpdateProfileMutationFn = ReactApollo.MutationFn<
+	UpdateProfileMutation,
+	UpdateProfileVariables
+>
+export function UpdateProfileHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				UpdateProfileMutation,
+				UpdateProfileVariables,
+				UpdateProfileProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		UpdateProfileMutation,
+		UpdateProfileVariables,
+		UpdateProfileProps<TChildProps>
+	>(UpdateProfileDocument, operationOptions)
 }
 export const QueryUsersDocument = gql`
 	query QueryUsers {

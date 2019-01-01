@@ -19,3 +19,21 @@ export const UN_BLOCK_USER = gql`
 		}
 	}
 `
+
+export const UPDATE_PROFILE_DATA = gql`
+	mutation UpdateProfile(
+		$username: String
+		$oldPassword: String
+		$newPassword: String
+		$avatar: Upload!
+	) {
+		updateProfile(
+			username: $username
+			oldPassword: $oldPassword
+			newPassword: $newPassword
+			avatar: $avatar
+		) {
+			url
+		}
+	}
+`

@@ -1,11 +1,12 @@
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { HttpLink } from 'apollo-link-http'
+// import { HttpLink } from 'apollo-link-http'
 import { ApolloLink, split, from } from 'apollo-link'
 import { withClientState } from 'apollo-link-state'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 import { onError } from 'apollo-link-error'
+import { createUploadLink } from 'apollo-upload-client'
 // import { persistCache } from 'apollo-cache-persist'
 
 import { defaultState, resolvers } from './state'
@@ -29,14 +30,22 @@ const state: ApolloLink = withClientState({
 // const urlHttp = 'https://my-prisma-backend.herokuapp.com/graphql'
 // const urlWss = 'wss://prisma-server-2df74d7228.herokuapp.com/Prisma_backend/dev'
 
-const myHttpLink: HttpLink = new HttpLink({
+const apolloUploadLink = createUploadLink({
 	uri:
 		process.env.NODE_ENV === 'production'
 			? 'https://my-prisma-backend.herokuapp.com/graphql'
 			: 'http://localhost:2000/graphql',
-	// 'https://serene-river-93971.herokuapp.com/graphql',
 	credentials: 'include'
 })
+
+// const myHttpLink: HttpLink = new HttpLink({
+// 	uri:
+// 		process.env.NODE_ENV === 'production'
+// 			? 'https://my-prisma-backend.herokuapp.com/graphql'
+// 			: 'http://localhost:2000/graphql',
+// 	// 'https://serene-river-93971.herokuapp.com/graphql',
+// 	credentials: 'include'
+// })
 
 const wsLink = new WebSocketLink({
 	uri:
@@ -89,7 +98,7 @@ const middleware = new ApolloLink((operation, forward) => {
 	}
 })
 
-const httpLink = from([middleware, afterwareLink, myHttpLink])
+const httpLink = from([middleware, afterwareLink, apolloUploadLink])
 
 const link = split(
 	// split based on operation type
