@@ -44,6 +44,8 @@ export interface ITheme {
 	buttons: {
 		[key: string]: {}
 	}
+	textColour: string
+	headerColour: string
 }
 
 export interface SiteTheme {
@@ -53,28 +55,15 @@ export interface SiteTheme {
 
 export const theme: SiteTheme = {
 	light: {
+		headerColour: '#6d4cba',
+		textColour: '#141414',
 		fontSizes: ['8px', '10px', '12px', '13px', '14px', '16px', '18px'],
 		borderRadius: {},
 		fonts: {},
 		siteBackground: '#e2dcdc',
 		colours: {
-			primary: [
-				'#07385A',
-				'#184F76',
-				'#3290D4',
-				'#6DC1FD',
-				'#A7DAFF',
-				'#E2F3FF',
-				'#F3FAFF'
-			],
-			neutrals: [
-				'#263238',
-				'#78909C',
-				'#B7C1C6',
-				'#E6EAEF',
-				'#F9FBFD',
-				'#FFFFFF'
-			],
+			primary: ['#07385A', '#184F76', '#3290D4', '#6DC1FD', '#A7DAFF', '#E2F3FF', '#F3FAFF'],
+			neutrals: ['#263238', '#78909C', '#B7C1C6', '#E6EAEF', '#F9FBFD', '#FFFFFF'],
 			errors: ['#7A1414', '#BE0A0A', '#FF4F4F', '#FFC6C6', '#FFF3F3'],
 			warnings: ['#684B00', '#CC9C23', '#FFCB44', '#FFE6A6', '#FFF8E7'],
 			success: ['#07822A', '#49B267', '#67D987', '#AEF1C1', '#E1FFE9']
@@ -94,8 +83,10 @@ export const theme: SiteTheme = {
 		}
 	},
 	dark: {
+		textColour: '#dddddd',
 		fontSizes: [],
-		siteBackground: '#232323',
+		headerColour: '#4600ea',
+		siteBackground: '#302f2f',
 		colours: {},
 		borderRadius: {},
 		fonts: {

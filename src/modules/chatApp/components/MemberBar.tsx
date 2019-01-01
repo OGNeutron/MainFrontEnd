@@ -1,13 +1,6 @@
 import * as React from 'react'
 import { graphql, ChildMutateProps, ChildDataProps } from 'react-apollo'
-import {
-	Dropdown,
-	Button,
-	Divider,
-	Segment,
-	List,
-	Grid
-} from 'semantic-ui-react'
+import { Dropdown, Button, Divider, Segment, List, Grid } from 'semantic-ui-react'
 import { RouteComponentProps, Link } from 'react-router-dom'
 
 import { MemberBarLayout } from '../styles'
@@ -96,11 +89,7 @@ class MemberBar extends React.PureComponent<
 								<List.Item key={member.id}>
 									<Grid>
 										<Grid.Column floated="left" width={5}>
-											<Link
-												to={`/profile/${
-													member.username
-												}`}
-											>
+											<Link to={`/profile/${member.username}`}>
 												{member.username}
 											</Link>
 										</Grid.Column>
@@ -120,6 +109,7 @@ class MemberBar extends React.PureComponent<
 
 		return (
 			<MemberBarLayout>
+				<h2>Channel Members</h2>
 				<Dropdown
 					onChange={this._handleChange}
 					placeholder="Search Users"
@@ -138,6 +128,4 @@ class MemberBar extends React.PureComponent<
 	}
 }
 
-export default graphql<ChildDataProps<IProps>>(ADD_CHANNEL_MEMBER_MUTATION)(
-	MemberBar as any
-)
+export default graphql<ChildDataProps<IProps>>(ADD_CHANNEL_MEMBER_MUTATION)(MemberBar as any)

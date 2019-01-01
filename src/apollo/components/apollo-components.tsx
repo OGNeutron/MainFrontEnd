@@ -2393,6 +2393,24 @@ export type AddTeamMemberMutationMembers = {
 	username: string
 }
 
+export type NewCommentSubscriptionVariables = {
+	pageId: string
+}
+
+export type NewCommentSubscriptionSubscription = {
+	__typename?: 'Subscription'
+
+	newCommentSubscription: NewCommentSubscriptionNewCommentSubscription
+}
+
+export type NewCommentSubscriptionNewCommentSubscription = {
+	__typename?: 'CommentSubscriptionPayload'
+
+	node: Maybe<NewCommentSubscriptionNode>
+}
+
+export type NewCommentSubscriptionNode = MyCommentFragmentFragment
+
 export type CommentMutationVariables = {
 	body: string
 	pageId: string
@@ -3912,6 +3930,58 @@ export function AddTeamMemberMutationHOC<TProps, TChildProps = any>(
 		AddTeamMemberMutationVariables,
 		AddTeamMemberMutationProps<TChildProps>
 	>(AddTeamMemberMutationDocument, operationOptions)
+}
+export const NewCommentSubscriptionDocument = gql`
+	subscription NewCommentSubscription($pageId: ID!) {
+		newCommentSubscription(pageId: $pageId) {
+			node {
+				...MyCommentFragment
+			}
+		}
+	}
+
+	${MyCommentFragmentFragmentDoc}
+`
+export class NewCommentSubscriptionComponent extends React.Component<
+	Partial<
+		ReactApollo.SubscriptionProps<
+			NewCommentSubscriptionSubscription,
+			NewCommentSubscriptionVariables
+		>
+	>
+> {
+	render() {
+		return (
+			<ReactApollo.Subscription<
+				NewCommentSubscriptionSubscription,
+				NewCommentSubscriptionVariables
+			>
+				subscription={NewCommentSubscriptionDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type NewCommentSubscriptionProps<TChildProps = any> = Partial<
+	ReactApollo.DataProps<NewCommentSubscriptionSubscription, NewCommentSubscriptionVariables>
+> &
+	TChildProps
+export function NewCommentSubscriptionHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				NewCommentSubscriptionSubscription,
+				NewCommentSubscriptionVariables,
+				NewCommentSubscriptionProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		NewCommentSubscriptionSubscription,
+		NewCommentSubscriptionVariables,
+		NewCommentSubscriptionProps<TChildProps>
+	>(NewCommentSubscriptionDocument, operationOptions)
 }
 export const CommentMutationDocument = gql`
 	mutation CommentMutation($body: String!, $pageId: ID!, $parentId: ID!, $repliedTo: ID) {

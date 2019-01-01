@@ -26,8 +26,7 @@ interface IProps {
 }
 
 const ProfileContainer: React.SFC<
-	ChildDataProps<IProps, GetProfileQuery> &
-		RouteComponentProps<{ username: string }>
+	ChildDataProps<IProps, GetProfileQuery> & RouteComponentProps<{ username: string }>
 > = (props): JSX.Element => {
 	const {
 		currentUser: { currentUser }
@@ -81,10 +80,7 @@ const ProfileContainer: React.SFC<
 				let display
 
 				if (data.getProfile !== null && loading === false) {
-					if (
-						data.getProfile.user === null &&
-						data.getProfile.errors !== null
-					) {
+					if (data.getProfile.user === null && data.getProfile.errors !== null) {
 						display = (
 							<BlockedOrPrivate
 								username={data.getProfile.errors.username}
@@ -125,6 +121,4 @@ const ProfileContainer: React.SFC<
 	)
 }
 
-export default compose(graphql(CURRENT_USER_QUERY, { name: 'currentUser' }))(
-	ProfileContainer
-)
+export default compose(graphql(CURRENT_USER_QUERY, { name: 'currentUser' }))(ProfileContainer)

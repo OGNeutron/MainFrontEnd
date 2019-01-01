@@ -9,7 +9,7 @@ export const NavItem: any = styled.div`
 	a {
 		transition: color 0.3s ease-in-out;
 		text-decoration: none;
-		color: ${props => props.theme.color};
+		color: ${props => props.theme.textColour};
 	}
 
 	@media (max-width: 768px) {
@@ -23,12 +23,12 @@ export const MainNav: any = styled('nav')`
 	left: 0;
 	width: 100%;
 	display: flex;
-	background: ${props => props.theme.mainHeaderBackground};
+	background: ${props => props.theme.headerColour};
 	padding: 0 1rem;
 	box-shadow: 1px 7px 29px 0px rgba(0, 0, 0, 0.5);
 	z-index: 1;
 
-	@media (max-width: 768px) {
+	@media (max-width: 750px) {
 		width: 10%;
 		top: 0;
 		bottom: 0;
@@ -42,11 +42,10 @@ export const NavBrand: any = styled.div`
 	font-size: 2rem;
 	padding: 1.5rem 0;
 	justify-content: center;
-
 	a {
 		transition: color 0.3s ease-in-out;
 		text-decoration: none;
-		color: ${props => props.theme.color};
+		color: ${props => props.theme.textColour};
 	}
 
 	@media (max-width: 768px) {
@@ -80,9 +79,7 @@ export const DropDownContent: any = styled('div')`
 	padding: 0.4rem;
 
 	background: ${props =>
-		props.theme.mainHeaderBackground
-			? props.theme.mainHeaderBackground
-			: null};
+		props.theme.mainHeaderBackground ? props.theme.mainHeaderBackground : null};
 
 	a {
 		display: block;
@@ -99,8 +96,7 @@ export const DropDownButton: any = styled(NavItem)`
 	font-size: 1.4rem;
 
 	i {
-		color: ${(props: any) =>
-			props.theme.color ? props.theme.color : '#000'};
+		color: ${(props: any) => (props.theme.color ? props.theme.color : '#000')};
 		transition: color 0.8s ease-in-out;
 
 		&:hover {

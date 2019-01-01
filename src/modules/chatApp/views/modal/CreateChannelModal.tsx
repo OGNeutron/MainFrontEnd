@@ -1,8 +1,10 @@
 import * as React from 'react'
+import * as yup from 'yup'
+
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Formik } from 'formik'
 import { Mutation } from 'react-apollo'
 import { Modal, Button } from 'semantic-ui-react'
-import * as yup from 'yup'
 
 import { CREATE_CHANNEL_MUTATION, SHOW_TEAM_QUERY } from '../../graphql/server'
 import {
@@ -16,6 +18,8 @@ import { InputField } from '../../../../utils/form/inputField'
 interface IProps {
 	teamId: string
 	teamSlug: string
+	toggleModal: any
+	modalOpen: boolean
 }
 
 interface IFormValues {
@@ -29,7 +33,13 @@ const validationSchema = yup.object().shape({
 		.min(3)
 })
 
-const CreateChannelModal: React.SFC<IProps> = ({ teamId, teamSlug }) => (
+const CreateChannelModal: React.SFC<IProps & RouteComponentProps<{}>> = ({
+	teamId,
+	teamSlug,
+	history,
+	toggleModal,
+	modalOpen
+}) => (
 	<Mutation<CreateChannelMutation, CreateChannelMutationVariables>
 		mutation={CREATE_CHANNEL_MUTATION}
 	>
@@ -37,27 +47,19 @@ const CreateChannelModal: React.SFC<IProps> = ({ teamId, teamSlug }) => (
 			<Formik
 				initialValues={{ name: '' }}
 				validationSchema={validationSchema}
-				onSubmit={async (
-					{ name }: IFormValues,
-					{ setSubmitting, resetForm }
-				) => {
+				onSubmit={async ({ name }: IFormValues, { setSubmitting, resetForm }) => {
 					const response = await mutate({
 						variables: {
 							name,
 							teamId
 						},
 						update(cache, { data }: any) {
-							const store: ShowTeamQuery | null = cache.readQuery(
-								{
-									query: SHOW_TEAM_QUERY,
-									variables: { teamSlug }
-								}
-							)
+							const store: ShowTeamQuery | null = cache.readQuery({
+								query: SHOW_TEAM_QUERY,
+								variables: { teamSlug }
+							})
 
-							if (
-								store != null &&
-								store.showTeam.channels != null
-							) {
+							if (store != null && store.showTeam.channels != null) {
 								store.showTeam.channels.push(data.createChannel)
 
 								console.log(store.showTeam)
@@ -73,13 +75,20 @@ const CreateChannelModal: React.SFC<IProps> = ({ teamId, teamSlug }) => (
 						}
 					})
 
-					console.log(response)
+					toggleModal()
 					setSubmitting(false)
 					resetForm()
+
+					// @ts-ignore
+					history.push(`/chat-app/${teamSlug}/${response.data.createChannel.slug}`)
 				}}
 			>
 				{props => (
-					<Modal trigger={<Button>Create Channel</Button>}>
+					<Modal
+						trigger={<Button onClick={toggleModal}>Create Channel</Button>}
+						open={modalOpen}
+						onClose={toggleModal}
+					>
 						<Modal.Header>Create Channel</Modal.Header>
 						<Modal.Content>
 							<FormContainer
@@ -101,4 +110,4 @@ const CreateChannelModal: React.SFC<IProps> = ({ teamId, teamSlug }) => (
 	</Mutation>
 )
 
-export default CreateChannelModal
+export default withRouter<IProps & RouteComponentProps<{}>>(CreateChannelModal)

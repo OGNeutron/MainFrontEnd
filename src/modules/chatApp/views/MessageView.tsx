@@ -3,10 +3,15 @@ import { Comment } from 'semantic-ui-react'
 import Moment from 'react-moment'
 
 import { Messages } from '../types'
+import styled from 'styled-components'
 
 interface IProps {
 	messages: Messages[]
 }
+
+const MessageViewLayout = styled.div`
+	color: ${props => props.theme.textColour};
+`
 
 class MessageView extends React.PureComponent<IProps> {
 	render() {
@@ -16,20 +21,19 @@ class MessageView extends React.PureComponent<IProps> {
 				{messages.map(message => {
 					return (
 						<Comment key={message.id}>
-							<Comment.Avatar
-								src={message.author.avatar_url.url}
-							/>
+							<Comment.Avatar src={message.author.avatar_url.url} />
 							<Comment.Content>
 								<Comment.Author as="a">
-									{message.author.username}
+									<MessageViewLayout>{message.author.username}</MessageViewLayout>
 								</Comment.Author>
 								<Comment.Metadata>
-									<Moment
-										fromNow
-										date={new Date(message.createdAt)}
-									/>
+									<MessageViewLayout>
+										<Moment fromNow date={new Date(message.createdAt)} />
+									</MessageViewLayout>
 								</Comment.Metadata>
-								<Comment.Text>{message.body}</Comment.Text>
+								<Comment.Text>
+									<MessageViewLayout>{message.body}</MessageViewLayout>
+								</Comment.Text>
 							</Comment.Content>
 						</Comment>
 					)

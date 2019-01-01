@@ -5,10 +5,7 @@ import { graphql, ChildProps, compose } from 'react-apollo'
 
 import Routes from './router'
 import Header from './partials/Header/Header'
-import {
-	CURRENT_USER_QUERY_CLIENT,
-	CURRENT_THEME_QUERY
-} from './apollo/graphql/client'
+import { CURRENT_USER_QUERY_CLIENT, CURRENT_THEME_QUERY } from './apollo/graphql/client'
 import { AUTHORISE_USER } from './modules/authentication/graphql/client'
 import { IAuthoriseVariables } from './types'
 import { theme } from './styles/theme'
@@ -118,9 +115,7 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 			} = this.props
 			header = (
 				<Header
-					authorised={
-						this.props.currentUser.currentUserClient.loggedIn
-					}
+					authorised={this.props.currentUser.currentUserClient.loggedIn}
 					sidePanel={true}
 					navBrand={{
 						title: 'MainSite',
@@ -176,39 +171,22 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 				/>
 			)
 			return (
-				<ThemeProvider
-					theme={
-						theme[
-							(currentTheme.clientTheme.theme as any) || 'light'
-						]
-					}
-				>
+				<ThemeProvider theme={theme[(currentTheme.clientTheme.theme as any) || 'light']}>
 					<React.Fragment>
-						<GlobalStyle
-							theme={theme[currentTheme.clientTheme.theme]}
-						/>
+						<GlobalStyle theme={theme[currentTheme.clientTheme.theme]} />
 						<MainLayoutStyle>
 							<Helmet>
 								<meta charSet="utf-8" />
 								<title>MainSite</title>
-								<meta
-									name="universal app"
-									content="stuff happens"
-								/>
+								<meta name="universal app" content="stuff happens" />
 							</Helmet>
 							{header}
 							<Container width="80%">
 								{username !== null ? (
-									<NotificationContainer
-										username={username}
-										id={id}
-									/>
+									<NotificationContainer username={username} id={id} />
 								) : null}
 								{username !== null ? (
-									<NotificationContainer
-										username={username}
-										id={id}
-									/>
+									<NotificationContainer username={username} id={id} />
 								) : null}
 								<Routes />
 							</Container>
@@ -218,17 +196,12 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 			)
 		} else {
 			return this.props.currentUserServer.loading === false ? (
-				<ThemeProvider
-					theme={theme[currentTheme.clientTheme.theme as any] || {}}
-				>
+				<ThemeProvider theme={theme[currentTheme.clientTheme.theme as any] || {}}>
 					<MainLayoutStyle>
 						<Helmet>
 							<meta charSet="utf-8" />
 							<title>MainSite</title>
-							<meta
-								name="universal app"
-								content="stuff happens"
-							/>
+							<meta name="universal app" content="stuff happens" />
 						</Helmet>
 						{header}
 						<Container width="80%">

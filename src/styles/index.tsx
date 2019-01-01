@@ -22,7 +22,8 @@ export const MainLayoutStyle: any = styled.div`
 	margin-top: 5rem;
 	/* background: ${props => props.theme.background}; */
 	height: 100%;
-	background: ${props => props.theme.background};
+    color: ${props => props.theme.textColour};
+	background: ${props => props.theme.siteBackground};
 	/* display: grid; */
 	/* height: 100vh; */
 

@@ -62,19 +62,20 @@ class CommentFragmentClass {
 	}
 }
 
+export const COMMENTS_SUBSCRIPTION = gql`
+	subscription NewCommentSubscription($pageId: ID!) {
+		newCommentSubscription(pageId: $pageId) {
+			node {
+				...MyCommentFragment
+			}
+		}
+	}
+	${CommentFragmentClass.fragments.comment}
+`
+
 export const COMMENT_MUTATION = gql`
-	mutation CommentMutation(
-		$body: String!
-		$pageId: ID!
-		$parentId: ID!
-		$repliedTo: ID
-	) {
-		createComment(
-			body: $body
-			pageId: $pageId
-			parentId: $parentId
-			repliedTo: $repliedTo
-		) {
+	mutation CommentMutation($body: String!, $pageId: ID!, $parentId: ID!, $repliedTo: ID) {
+		createComment(body: $body, pageId: $pageId, parentId: $parentId, repliedTo: $repliedTo) {
 			...MyCommentFragment
 		}
 	}
@@ -101,18 +102,8 @@ export const COMMENTS_QUERY = gql`
 `
 
 export const CREATE_REPLY_MUTATION = gql`
-	mutation CreateReply(
-		$body: String!
-		$pageId: ID!
-		$parentId: ID!
-		$repliedTo: ID
-	) {
-		createReply(
-			body: $body
-			pageId: $pageId
-			parentId: $parentId
-			repliedTo: $repliedTo
-		) {
+	mutation CreateReply($body: String!, $pageId: ID!, $parentId: ID!, $repliedTo: ID) {
+		createReply(body: $body, pageId: $pageId, parentId: $parentId, repliedTo: $repliedTo) {
 			...MyCommentFragment
 		}
 	}

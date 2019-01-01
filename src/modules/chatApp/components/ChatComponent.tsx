@@ -2,10 +2,7 @@ import * as React from 'react'
 import { graphql, ChildDataProps } from 'react-apollo'
 
 import { ChatComponentLayout } from '../styles'
-import {
-	SHOW_CHANNEL_QUERY,
-	CHANNEL_MESSAGE_SUBSCRIPTION
-} from '../graphql/server'
+import { SHOW_CHANNEL_QUERY, CHANNEL_MESSAGE_SUBSCRIPTION } from '../graphql/server'
 import {
 	// ShowTeamQuery_showTeam,
 	ShowChannelQuery,
@@ -24,9 +21,14 @@ interface IProps {
 	channelId: string
 }
 
-class ChatComponent extends React.PureComponent<ChildDataProps<IProps>> {
+interface IState {
+	channelId: string
+}
+
+class ChatComponent extends React.PureComponent<ChildDataProps<IProps>, IState> {
 	state = {
-		channelId: ''
+		channelId: '',
+		modalOpen: false
 	}
 
 	// @ts-ignore
@@ -42,9 +44,7 @@ class ChatComponent extends React.PureComponent<ChildDataProps<IProps>> {
 				document: CHANNEL_MESSAGE_SUBSCRIPTION,
 				variables: { channelId },
 				updateQuery(prev, { subscriptionData }) {
-					const newMessage = [
-						subscriptionData.data.messageSubscription.node
-					]
+					const newMessage = [subscriptionData.data.messageSubscription.node]
 
 					// @ts-ignore
 					const result = Object.assign({}, prev, {
@@ -76,9 +76,7 @@ class ChatComponent extends React.PureComponent<ChildDataProps<IProps>> {
 
 		return data.loading === false ? (
 			<ChatComponentLayout>
-				{channelId !== undefined ? (
-					<CreateMessageForm channelId={channelId} />
-				) : null}
+				{channelId !== undefined ? <CreateMessageForm channelId={channelId} /> : null}
 				{data.showChannel.messages !== null ? (
 					<MessageView messages={data.showChannel.messages} />
 				) : null}
@@ -89,9 +87,6 @@ class ChatComponent extends React.PureComponent<ChildDataProps<IProps>> {
 	}
 }
 
-export default graphql<IProps, ShowChannelQuery, ShowChannelQueryVariables>(
-	SHOW_CHANNEL_QUERY,
-	{
-		options: props => ({ variables: { channelId: props.channelId } })
-	}
-)(ChatComponent as any)
+export default graphql<IProps, ShowChannelQuery, ShowChannelQueryVariables>(SHOW_CHANNEL_QUERY, {
+	options: props => ({ variables: { channelId: props.channelId } })
+})(ChatComponent as any)

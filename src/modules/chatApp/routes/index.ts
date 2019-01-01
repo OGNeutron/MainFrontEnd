@@ -1,10 +1,13 @@
+import * as React from 'react'
 import { IRoute } from '../../../types'
-import { ChatAppLayout } from '../layouts'
+// import { ChatAppLayout } from '../layouts'
+
+const ChatLayout = React.lazy(() => import('../layouts'))
 
 export const routes: IRoute[] = [
 	{
 		path: '/chat-app',
-		component: ChatAppLayout,
+		component: ChatLayout,
 		guest: false
 	}
 ]

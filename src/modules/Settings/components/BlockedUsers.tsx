@@ -11,16 +11,23 @@ import {
 import { Mutation } from 'react-apollo'
 import { UN_BLOCK_USER } from '../graphql/server'
 import { GET_PROFILE_QUERY } from '../../profile/graphql/server'
+import styled from 'styled-components'
 
 interface IProps {
 	profile: Maybe<GetProfileQueryUser>
 }
 
+const BlockedUsersLayout = styled.div`
+	.block-header {
+		color: ${prop => prop.theme.textColour};
+	}
+`
+
 export const BlockedUsersComponent: React.SFC<IProps> = ({ profile }): JSX.Element => {
 	if (profile !== null && profile.blockedUsers !== null) {
 		return (
-			<div style={{ marginLeft: '1.5rem', marginTop: '1rem' }}>
-				<h3>Blocked Users</h3>
+			<BlockedUsersLayout style={{ marginLeft: '1.5rem', marginTop: '1rem' }}>
+				<h3 className="block-header">Blocked Users</h3>
 				<List>
 					{profile.blockedUsers.map(user => (
 						<List.Item key={user.id}>
@@ -107,7 +114,7 @@ export const BlockedUsersComponent: React.SFC<IProps> = ({ profile }): JSX.Eleme
 						</List.Item>
 					))}
 				</List>
-			</div>
+			</BlockedUsersLayout>
 		)
 	} else {
 		return <div>Something went wrong</div>

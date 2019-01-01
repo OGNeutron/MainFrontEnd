@@ -25,7 +25,12 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 	state = {
 		value: undefined,
 		submit: false,
-		key: ''
+		key: '',
+		modalOpen: false
+	}
+
+	toggleModal = () => {
+		this.setState({ modalOpen: !this.state.modalOpen })
 	}
 
 	_handleChange = async (_: any, { value, options }: any) => {
@@ -34,22 +39,17 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 	}
 
 	_handleSubmit = async (
-		mutate: MutationFn<
-			AddTeamMemberMutation,
-			AddTeamMemberMutationVariables
-		>
+		mutate: MutationFn<AddTeamMemberMutation, AddTeamMemberMutationVariables>
 	): Promise<void> => {
 		const { value, key } = this.state
 		console.log(value, key)
 
-		const response = await mutate({
+		await mutate({
 			variables: {
 				userId: key,
 				teamId: this.props.showTeam.id
 			}
 		})
-
-		console.log(response)
 	}
 
 	render() {
@@ -68,20 +68,17 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 			<TeamBarLayout>
 				<h2>Team bar</h2>
 				<CreateChannelModal
+					toggleModal={this.toggleModal}
 					teamId={teamId as any}
 					teamSlug={teamSlug as any}
+					modalOpen={this.state.modalOpen}
 				/>
 				<Query query={USER_SEARCH}>
 					{({ data, loading }) => {
 						let users: any = []
 
-						if (
-							data !== undefined &&
-							data.queryUsers !== undefined
-						) {
-							const usernames: [
-								{ key: any; value: any; text: any }
-							] = data.queryUsers
+						if (data !== undefined && data.queryUsers !== undefined) {
+							const usernames: [{ key: any; value: any; text: any }] = data.queryUsers
 								.map(user => {
 									return {
 										key: user.id,
@@ -93,9 +90,7 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 								.filter(user => {
 									for (const member of members) {
 										if (member.username === user.value) {
-											return (
-												user.value !== member.username
-											)
+											return user.value !== member.username
 										}
 									}
 									return null
@@ -119,10 +114,7 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 								/>
 
 								{this.state.value !== undefined ? (
-									<Mutation<
-										AddTeamMemberMutation,
-										AddTeamMemberMutationVariables
-									>
+									<Mutation<AddTeamMemberMutation, AddTeamMemberMutationVariables>
 										mutation={ADD_TEAM_MEMBER}
 									>
 										{mutate => {
@@ -131,11 +123,7 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 													style={{
 														marginTop: '1rem'
 													}}
-													onClick={() =>
-														this._handleSubmit(
-															mutate
-														)
-													}
+													onClick={() => this._handleSubmit(mutate)}
 												>
 													Add User
 												</Button>
@@ -144,8 +132,8 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 									</Mutation>
 								) : null}
 								<Divider />
-								<h2>Members</h2>
 								<List>
+									<h2>Team Members</h2>
 									<List.Item>
 										ADMIN: {` `}
 										<Link to={`/profile/${admin}`}>
@@ -155,13 +143,8 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 									</List.Item>
 									{members.map(member => (
 										<List.Item key={member.id}>
-											<Link
-												to={`/profile/${
-													member.username
-												}`}
-											>
-												{this.props.showTeam.author
-													.online == true ? (
+											<Link to={`/profile/${member.username}`}>
+												{this.props.showTeam.author.online == true ? (
 													<Icon
 														style={{
 															color: 'green'
@@ -185,9 +168,7 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 				<List>
 					{channels.map((channel: IChannel) => (
 						<List.Item key={channel.id}>
-							<Link to={`/chat-app/${teamSlug}/${channel.slug}`}>
-								{channel.name}
-							</Link>
+							<Link to={`/chat-app/${teamSlug}/${channel.slug}`}>{channel.name}</Link>
 						</List.Item>
 					))}
 				</List>

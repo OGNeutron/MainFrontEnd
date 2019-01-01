@@ -11,7 +11,7 @@ export const ChatLayout = styled(Box)`
 
 	@media (max-width: 750px) {
 		/* grid-template-rows: 1fr 2fr 1fr; */
-		grid-template-rows: TeamBarComponent MemberBarComponent ChatComponent;
+		grid-template-areas: TeamBarComponent MemberBarComponent ChatComponent;
 	}
 	/* grid-template: ChatComponent MemberBar TeamBar; */
 `
@@ -19,26 +19,27 @@ export const ChatLayout = styled(Box)`
 export const ChatComponentLayout = styled.div`
 	grid-area: 'ChatComponent';
 
-	@media (max-width: 750px) {
+	@media (max-width: 751px) {
 		order: 3;
+		width: 250px;
 	}
 	@media (min-width: 750px) {
 		order: 2;
+		width: 400px;
+		margin: 0 auto;
 	}
 `
 
 export const MemberBarLayout = styled.div`
 	grid-area: 'MemberBarComponent';
-	padding-left: 10px;
 
-	@media (min-width: 750px) {
-		order: 2;
-		border-left: 1px solid black;
+	@media (min-width: 756px) {
+		order: 3;
+		padding-left: 1rem;
 	}
 
 	@media (max-width: 750px) {
-		order: 3;
-		border-left: 1px solid black;
+		order: 2;
 	}
 	/* grid-area: MemberBar; */
 `
@@ -49,6 +50,5 @@ export const TeamBarLayout = styled.div`
 	@media (min-width: 750px) {
 		order: 1;
 		padding-right: 0.5rem;
-		border-right: 1px solid black;
 	}
 `

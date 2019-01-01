@@ -6,10 +6,7 @@ import Moment from 'react-moment'
 import { CommentListLayout } from '../styles'
 import CreateReply from './CreateReply'
 import LikeComment from './LikeComment'
-import {
-	Maybe,
-	MyCommentFragmentReplies
-} from '../../../apollo/components/apollo-components'
+import { Maybe, MyCommentFragmentReplies } from '../../../apollo/components/apollo-components'
 
 interface IProps {
 	replies: Maybe<MyCommentFragmentReplies[]>
@@ -30,29 +27,20 @@ function ReplyComments({ replies, parentComment }: IProps): JSX.Element {
 						<Comment as="span" key={reply.id}>
 							<Comment.Content style={styles.CommentContent}>
 								<Comment.Author as="span">
-									<Link
-										to={`/profile/${reply.author.username}`}
-									>
+									<Link to={`/profile/${reply.author.username}`}>
 										{reply.author.username}
 									</Link>
 								</Comment.Author>
 								<Comment.Metadata>
 									<div>
 										<CommentListLayout>
-											<Moment
-												fromNow
-												date={reply.createdAt}
-											/>
+											<Moment fromNow date={reply.createdAt} />
 										</CommentListLayout>
 									</div>
 									<div>
 										<CommentListLayout>
 											<Icon name="long arrow alternate right" />
-											<Link
-												to={`/profile/${
-													reply.repliedTo!.username
-												}`}
-											/>
+											<Link to={`/profile/${reply.repliedTo!.username}`} />
 											{reply.repliedTo!.username}
 											<LikeComment id={reply.id} />
 											<span>{reply.ratings.vote}</span>
@@ -61,7 +49,7 @@ function ReplyComments({ replies, parentComment }: IProps): JSX.Element {
 								</Comment.Metadata>
 
 								<Comment.Text>
-									<CommentListLayout>
+									<CommentListLayout style={{ fontSize: '1.17rem' }}>
 										{reply.body}
 									</CommentListLayout>
 								</Comment.Text>

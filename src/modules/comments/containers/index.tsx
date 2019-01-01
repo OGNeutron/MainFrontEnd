@@ -5,6 +5,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 
 import CommentList from '../components/CommentList'
 import CreateComment from '../components/CreateComment'
+import { UpdateCommentsComponent } from '../components/UpdateCommentsComponent'
 import { Spinner } from '../../../utils/components/animations/loader'
 import { IUser } from '../../../types'
 import { COMMENTS_QUERY } from '../graphql/server'
@@ -44,10 +45,7 @@ const CommentContainer: React.SFC<IProps> = (props): JSX.Element => {
 				// console.log('PREV', prev)
 				// console.log('FETCH', fetchMoreResult)
 
-				let newEdges = [
-					...prev.queryComment.edges,
-					...fetchMoreResult.queryComment.edges
-				]
+				let newEdges = [...prev.queryComment.edges, ...fetchMoreResult.queryComment.edges]
 
 				// @ts-ignore
 				const newObject = {
@@ -96,16 +94,14 @@ const CommentContainer: React.SFC<IProps> = (props): JSX.Element => {
 				return loading == false && data.queryComment ? (
 					<React.Fragment>
 						<CreateComment parentId={props.pageId} />
+						<UpdateCommentsComponent pageId={props.pageId} />
 						<InfiniteScroll
 							pageStart={0}
 							threshhold={250}
 							hasMore={more}
 							loader={<Spinner key={'spinner' + 0} />}
 							loadMore={() =>
-								hasMoreComments(
-									fetchMore,
-									data.queryComment.edges.length
-								)
+								hasMoreComments(fetchMore, data.queryComment.edges.length)
 							}
 						>
 							<CommentList
