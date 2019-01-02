@@ -50,7 +50,7 @@ const apolloUploadLink = createUploadLink({
 const wsLink = new WebSocketLink({
 	uri:
 		process.env.NODE_ENV === 'production'
-			? 'wss://prisma-server-2df74d7228.herokuapp.com/Prisma_backend/dev'
+			? 'wss://my-prisma-backend.herokuapp.com/graphql'
 			: 'ws://localhost:2000/graphql',
 	// uri: 'ws://serene-river-93971.herokuapp.com/graphql',
 	options: {
