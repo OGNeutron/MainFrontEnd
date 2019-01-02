@@ -28,14 +28,14 @@ const CommentContainer: React.SFC<IProps> = (props): JSX.Element => {
 	// 	changeMore(true)
 	// }, [])
 
-	function hasMoreComments(func, length) {
+	function hasMoreComments(func: any, length: any) {
 		func({
 			variables: {
 				parentId: props.pageId,
 				limit: 5,
 				offset: length + 10
 			},
-			updateQuery(prev, { fetchMoreResult }) {
+			updateQuery(prev: any, { fetchMoreResult }: { fetchMoreResult: any }) {
 				if (!fetchMoreResult) return prev
 
 				// if (!fetchMoreResult.queryComment.pageInfo.hasNextPage) {
@@ -95,6 +95,7 @@ const CommentContainer: React.SFC<IProps> = (props): JSX.Element => {
 					<React.Fragment>
 						<CreateComment parentId={props.pageId} />
 						<UpdateCommentsComponent pageId={props.pageId} />
+						// @ts-ignore
 						<InfiniteScroll
 							pageStart={0}
 							threshhold={250}
