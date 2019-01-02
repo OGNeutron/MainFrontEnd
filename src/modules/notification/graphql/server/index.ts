@@ -9,6 +9,9 @@ export const FRIEND_REQUEST_SUBSCRIPTION = gql`
 				friend_requests {
 					id
 					username
+					avatar_url {
+						url
+					}
 				}
 			}
 		}
@@ -24,6 +27,9 @@ export const FRIEND_SUBSCRIPTION = gql`
 				friends {
 					id
 					username
+					avatar_url {
+						url
+					}
 				}
 			}
 		}

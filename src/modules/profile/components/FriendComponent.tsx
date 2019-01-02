@@ -6,11 +6,7 @@ import { Image } from 'rebass'
 
 import { FriendsLayout } from '../styles'
 import { IProfile } from '../types'
-import {
-	ADD_FRIEND_MUTATION,
-	REJECT_FREIND_MUTATION,
-	GET_PROFILE_QUERY
-} from '../graphql/server'
+import { ADD_FRIEND_MUTATION, REJECT_FREIND_MUTATION, GET_PROFILE_QUERY } from '../graphql/server'
 import UserSearch from '../../shared/components/UserSearch'
 
 interface IProps {
@@ -33,10 +29,10 @@ class FriendContainer extends React.Component<ChildMutateProps<IProps>> {
 					variables: { username }
 				})
 
-				data.getProfile.friend_requests.splice(
-					data.getProfile.friend_requests.findIndex(
-						(e: any) => e.id === id
-					)
+				console.log('PROFILE', data)
+
+				data.getProfile.user.friend_requests.splice(
+					data.getProfile.user.friend_requests.findIndex((e: any) => e.id === id)
 				)
 
 				console.log('CHANGED_USER', data)
@@ -68,13 +64,9 @@ class FriendContainer extends React.Component<ChildMutateProps<IProps>> {
 					}
 				})
 
-				for (
-					let i = 0;
-					i < store.getProfile.friend_requests.length;
-					i++
-				) {
-					if (store.getProfile.friend_requests[i].id === id) {
-						store.getProfile.friend_requests.splice(i, 1)
+				for (let i = 0; i < store.getProfile.user.friend_requests.length; i++) {
+					if (store.getProfile.user.friend_requests[i].id === id) {
+						store.getProfile.user.friend_requests.splice(i, 1)
 					}
 				}
 
@@ -95,7 +87,7 @@ class FriendContainer extends React.Component<ChildMutateProps<IProps>> {
 			<FriendsLayout>
 				<Card>
 					<Card.Content>
-						<UserSearch />
+						<UserSearch currentUser={currentUser} />
 
 						{currentUser.id === user.id ? (
 							user.friend_requests.length > 0 ? (
@@ -105,21 +97,11 @@ class FriendContainer extends React.Component<ChildMutateProps<IProps>> {
 										{user.friend_requests.map(request => (
 											<List.Item key={request.id}>
 												{request.username}
-												<Button
-													onClick={() =>
-														this._addFriend(
-															request.id
-														)
-													}
-												>
+												<Button onClick={() => this._addFriend(request.id)}>
 													Accept
 												</Button>
 												<Button
-													onClick={() =>
-														this._rejectFriend(
-															request.id
-														)
-													}
+													onClick={() => this._rejectFriend(request.id)}
 												>
 													Reject
 												</Button>
@@ -136,14 +118,8 @@ class FriendContainer extends React.Component<ChildMutateProps<IProps>> {
 								<List>
 									{user.friends.map(friend => (
 										<List.Item key={friend.id}>
-											<Image
-												src={friend.avatar_url.url}
-											/>
-											<Link
-												to={`/profile/${
-													friend.username
-												}`}
-											>
+											<Image src={friend.avatar_url.url} />
+											<Link to={`/profile/${friend.username}`}>
 												{friend.username}
 											</Link>
 										</List.Item>

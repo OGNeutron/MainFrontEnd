@@ -27,7 +27,7 @@ interface IState {
 	subscribe: Observable<any>
 }
 
-class NotificationContainer extends React.Component<
+class NotificationContainer extends React.PureComponent<
 	ChildDataProps<IProps> & IState & WithApolloClient<IProps>
 > {
 	state = {
@@ -73,27 +73,37 @@ class NotificationContainer extends React.Component<
 			updateQuery(previousResult, { subscriptionData }) {
 				if (!subscriptionData.data) return previousResult
 
-				const requestedUser =
-					subscriptionData.data.friendRequestSubscription.node
-						.friend_requests
+				const currentFriendRequest = previousResult.getProfile.user.friend_requests
+				const newFriendRequest =
+					subscriptionData.data.friendRequestSubscription.node.friend_requests
 
-				const user =
-					subscriptionData.data.friendRequestSubscription.node
-						.friend_requests[requestedUser.length - 1]
+				const friend_requests = [...currentFriendRequest, ...newFriendRequest]
 
-				if (user && user.username) {
-					console.log('WORKING')
-
-					toast(`Friend Request from ${user.username}`)
+				if (friend_requests.length <= 0) {
+					return previousResult
 				}
 
-				/* tslint:disable-next-line */
-				return Object.assign({}, previousResult, {
-					friend_requests: {
-						...subscriptionData.data.friendRequestSubscription.node
-							.friend_requests
+				if (currentFriendRequest.some(fr => fr.id === newFriendRequest[0].id)) {
+					return previousResult
+				}
+
+				if (!currentFriendRequest.some(fr => fr.id === newFriendRequest[0].id)) {
+					toast(
+						`Friend Request from ${
+							subscriptionData.data.friendRequestSubscription.node.username
+						}`
+					)
+				}
+
+				return {
+					getProfile: {
+						...previousResult.getProfile,
+						user: {
+							...previousResult.getProfile.user,
+							friend_requests: [...friend_requests]
+						}
 					}
-				})
+				}
 			}
 		}) as any
 	}

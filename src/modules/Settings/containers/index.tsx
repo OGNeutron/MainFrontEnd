@@ -27,7 +27,9 @@ interface IProps {
 	changeTheme: any
 }
 
-class SettingContainer extends React.Component<IProps & RouteComponentProps<{ username: string }>> {
+class SettingContainer extends React.PureComponent<
+	IProps & RouteComponentProps<{ username: string }>
+> {
 	state = {
 		checked: this.props.currentTheme.theme === 'light' ? false : true
 	}

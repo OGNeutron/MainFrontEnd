@@ -29,13 +29,12 @@ interface IProps {
 	changeTheme: ({  }: any) => any
 }
 
-class MainLayout extends React.Component<ChildProps<IProps>> {
+class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 	state = {
 		authorised: false
 	}
 
 	componentDidUpdate() {
-		console.log('THEME', this.props.currentTheme.clientTheme.theme)
 		const theme = this.props.currentTheme.clientTheme.theme
 		let css = document.getElementById('my-styles')
 		if (theme === 'dark') {
@@ -93,11 +92,10 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 			}
 		})
 
-		// await this.props.logoutMutation()
+		return await this.props.logoutMutation()
 	}
 
 	_login = () => {
-		console.log(this.props.currentUserServer)
 		if (this.props.currentUserServer.currentUser) {
 			const {
 				currentUser: { username, id }

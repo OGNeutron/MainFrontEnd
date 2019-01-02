@@ -2,8 +2,11 @@ import * as React from 'react'
 // import Downshift from 'downshift'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Dropdown, Button } from 'semantic-ui-react'
-import { graphql, DataProps, compose } from 'react-apollo'
+import { DataProps, compose } from 'react-apollo'
 import { USER_SEARCH } from '../graphql/server'
+import { IUser } from '../../../types'
+
+import { QueryUsersHOC, QueryUsersQueryUsers } from '../../../apollo/components/apollo-components'
 
 // const items: any[] = []
 
@@ -12,9 +15,10 @@ interface IHistory {
 }
 
 interface IProps extends Partial<RouteComponentProps<IHistory>> {
-	queryUsers: any
+	queryUsers: QueryUsersQueryUsers[]
 	history: any
 	mutate?: (variables: {}) => void
+	currentUser: IUser
 }
 
 interface IState {
@@ -44,19 +48,22 @@ class UserSearch extends React.Component<DataProps<IProps, IState> & IProps> {
 	render() {
 		const { value } = this.state
 		const {
-			data: { queryUsers }
+			data: { queryUsers },
+			currentUser
 		} = this.props
 
 		let users
 
-		if (queryUsers) {
-			users = this.props.data.queryUsers.map((user: any) => {
-				return {
-					key: user.id,
-					value: user.username,
-					text: user.username
-				}
-			})
+		if (queryUsers !== undefined) {
+			users = queryUsers
+				.filter(user => user.id !== currentUser.id)
+				.map((user: any) => {
+					return {
+						key: user.id,
+						value: user.username,
+						text: user.username
+					}
+				})
 		} else {
 			users = []
 		}
@@ -72,9 +79,7 @@ class UserSearch extends React.Component<DataProps<IProps, IState> & IProps> {
 						selection
 						options={users}
 					/>
-					{value !== '' ? (
-						<Button onClick={this._handleClick}>{value}</Button>
-					) : null}
+					{value !== '' ? <Button onClick={this._handleClick}>{value}</Button> : null}
 				</div>
 			</React.Fragment>
 
@@ -139,5 +144,5 @@ class UserSearch extends React.Component<DataProps<IProps, IState> & IProps> {
 
 export default compose(
 	withRouter,
-	graphql<IProps>(USER_SEARCH)
+	QueryUsersHOC<IProps>(USER_SEARCH)
 )(UserSearch)
