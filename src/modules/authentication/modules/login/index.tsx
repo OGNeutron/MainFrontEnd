@@ -50,7 +50,6 @@ const LoginContainer: React.SFC<RouteComponentProps<{}>> = ({
 							if (ok) {
 								await authoriseUser({
 									variables: {
-										__typename: 'currentUserClient',
 										loggedIn: ok,
 										username,
 										id
@@ -63,6 +62,7 @@ const LoginContainer: React.SFC<RouteComponentProps<{}>> = ({
 								}
 
 								history.push(`/profile/${username}`)
+								return
 							} else {
 								return false
 							}

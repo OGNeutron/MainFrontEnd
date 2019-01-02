@@ -54,7 +54,10 @@ const wsLink = new WebSocketLink({
 			: 'ws://localhost:2000/graphql',
 	// uri: 'ws://serene-river-93971.herokuapp.com/graphql',
 	options: {
-		reconnect: true
+		reconnect: true,
+		connectionParams: {
+			authToken: localStorage.getItem('main-client-token')
+		}
 	}
 })
 

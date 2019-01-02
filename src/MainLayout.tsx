@@ -34,6 +34,55 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 		authorised: false
 	}
 
+	componentDidUpdate() {
+		console.log('THEME', this.props.currentTheme.clientTheme.theme)
+		const theme = this.props.currentTheme.clientTheme.theme
+		let css = document.getElementById('my-styles')
+		if (theme === 'dark') {
+			if (css !== null) {
+				css.removeChild(css.childNodes[0])
+
+				const styles = `html, body {
+                    background-color: #302f2f;
+                    height: 100vh;
+                }`
+
+				css.append(document.createTextNode(styles))
+			} else {
+				let css = document.createElement('style')
+				css.id = 'my-styles'
+				const styles = `html, body {
+                    background-color: #302f2f;
+                    height: 100vh;
+                }`
+
+				css.append(document.createTextNode(styles))
+				document.head.append(css)
+			}
+		} else {
+			if (css !== null) {
+				css.removeChild(css.childNodes[0])
+
+				const styles = `html, body {
+                    background-color: #e2dcdc;
+                    height: 100vh;
+                }`
+
+				css.append(document.createTextNode(styles))
+			} else {
+				let css = document.createElement('style')
+				css.id = 'my-styles'
+				const styles = `html, body {
+                    background-color: #e2dcdc;
+                    height: 100vh;
+                }`
+
+				css.append(document.createTextNode(styles))
+				document.head.append(css)
+			}
+		}
+	}
+
 	_logout = async () => {
 		this.props.authoriseUser({
 			variables: {
@@ -53,7 +102,7 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 			const {
 				currentUser: { username, id }
 			} = this.props.currentUserServer
-			this.props.authoriseUser({
+			return this.props.authoriseUser({
 				variables: {
 					__typename: 'currentUserClient',
 					username,

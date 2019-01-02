@@ -5,12 +5,18 @@ import styled, { createGlobalStyle } from 'styled-components'
 // `
 
 export const GlobalStyle = createGlobalStyle`
-        body: {
+        /* body: {
             background: "#e2dcdc"
+        } */
+
+        body, html {
+            height: 100vh
         }
 
         * {
-            box-sizing: border-box
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         a {
@@ -20,20 +26,20 @@ export const GlobalStyle = createGlobalStyle`
 
 export const MainLayoutStyle: any = styled.div`
 	margin-top: 5rem;
-	/* background: ${props => props.theme.background}; */
-	height: 100%;
-    color: ${props => props.theme.textColour};
+
 	background: ${props => props.theme.siteBackground};
+	/* height: 100%; */
+	color: ${props => props.theme.textColour};
 	/* display: grid; */
 	/* height: 100vh; */
 
-	 @media (max-width: 750px) {
-        margin-top: 0;
+	@media (max-width: 750px) {
+		margin-top: 0;
 		/* grid-template-areas: 'nav  main friend';
 		grid-template-columns: 0.3fr auto;
 		transition: all 0.3s ease-in-out; */
 	}
-/*
+	/*
 	@media (max-width: 900px) {
 		grid-template-areas: 'nav  main friend';
 		grid-template-columns: 0.1fr auto;
