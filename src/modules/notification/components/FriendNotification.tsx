@@ -18,7 +18,6 @@ class FriendNotification extends React.Component<IProps> {
 					variables={{ id: this.props.id }}
 				>
 					{response => {
-						console.log('FRIEND NOTIFACTION', response)
 						if (response.data !== undefined) {
 							return toast('friend accepted')
 						}

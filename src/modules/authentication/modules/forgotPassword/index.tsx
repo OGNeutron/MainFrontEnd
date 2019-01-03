@@ -33,22 +33,17 @@ class ForgotPasswordComponent extends React.Component<IState> {
 						<Formik
 							initialValues={{ email: '' }}
 							validationSchema={validationSchema}
-							onSubmit={async (
-								values: any,
-								{ resetForm, setSubmitting }: any
-							) => {
+							onSubmit={async (values: any, { resetForm, setSubmitting }: any) => {
 								const response = await result.forgotPassword({
 									email: values.email
 								})
 
 								if (response.data.forgotPassword.ok) {
 									this.setState({
-										alertWord:
-											response.data.forgotPassword.result
+										alertWord: response.data.forgotPassword.result
 									})
 								}
 
-								console.log(response)
 								resetForm()
 								setSubmitting(false)
 							}}

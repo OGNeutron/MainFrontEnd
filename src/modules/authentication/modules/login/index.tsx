@@ -67,7 +67,6 @@ const LoginContainer: React.SFC<RouteComponentProps<{}>> = ({
 								return false
 							}
 						} catch (error) {
-							console.log('ERROR', error)
 							setErrors({ email: 'Invalid Credentials' })
 							return error
 						}

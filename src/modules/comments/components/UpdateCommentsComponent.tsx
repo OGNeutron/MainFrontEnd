@@ -18,8 +18,6 @@ class UpdateCommentsComponent extends React.Component<IProps> {
 		// const { pageId, currentUser } = this.props
 		// const { comments } = this.state
 
-		console.log(this.props)
-
 		// if (
 		//     data !== undefined &&
 		//     data.newCommentSubscription !== null &&

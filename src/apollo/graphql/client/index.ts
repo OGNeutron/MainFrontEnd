@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const CURRENT_USER_QUERY_CLIENT = gql`
-	query QueryClientUser {
-		currentUserClient @client {
+	query QueryAuthorisedUser {
+		authorisedUser @client {
 			__typename
 			loggedIn
 			id

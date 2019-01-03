@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Helmet from 'react-helmet'
+
 import { ThemeProvider } from 'styled-components'
+import { ToastContainer } from 'react-toastify'
 import { graphql, ChildProps, compose } from 'react-apollo'
 
 import Routes from './router'
@@ -11,9 +13,10 @@ import { IAuthoriseVariables } from './types'
 import { theme } from './styles/theme'
 import { MainLayoutStyle, Container, GlobalStyle } from './styles'
 import { CHANGE_THEME } from './utils/graphql/client/index'
-import NotificationContainer from './modules/notification/containers/Notification'
 import { CURRENT_USER_QUERY } from './utils/graphql/server'
 import { LOGOUT_MUTATION } from './modules/authentication/graphql'
+import SubscriptionContainer from './modules/notification/containers/SubcriptionContainer'
+import { themeHelper } from './utils/helpers'
 
 interface IVariables {
 	variables: IAuthoriseVariables
@@ -36,63 +39,21 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 
 	componentDidUpdate() {
 		const theme = this.props.currentTheme.clientTheme.theme
-		let css = document.getElementById('my-styles')
-		if (theme === 'dark') {
-			if (css !== null) {
-				css.removeChild(css.childNodes[0])
-
-				const styles = `html, body {
-                    background-color: #302f2f;
-                    height: 100vh;
-                }`
-
-				css.append(document.createTextNode(styles))
-			} else {
-				let css = document.createElement('style')
-				css.id = 'my-styles'
-				const styles = `html, body {
-                    background-color: #302f2f;
-                    height: 100vh;
-                }`
-
-				css.append(document.createTextNode(styles))
-				document.head.append(css)
-			}
-		} else {
-			if (css !== null) {
-				css.removeChild(css.childNodes[0])
-
-				const styles = `html, body {
-                    background-color: #e2dcdc;
-                    height: 100vh;
-                }`
-
-				css.append(document.createTextNode(styles))
-			} else {
-				let css = document.createElement('style')
-				css.id = 'my-styles'
-				const styles = `html, body {
-                    background-color: #e2dcdc;
-                    height: 100vh;
-                }`
-
-				css.append(document.createTextNode(styles))
-				document.head.append(css)
-			}
-		}
+		themeHelper(theme)
 	}
 
 	_logout = async () => {
 		this.props.authoriseUser({
 			variables: {
-				__typename: 'currentUserClient',
+				__typename: 'authorisedUser',
 				id: '',
 				username: '',
 				loggedIn: false
 			}
 		})
 
-		return await this.props.logoutMutation()
+		await this.props.logoutMutation()
+		return
 	}
 
 	_login = () => {
@@ -100,15 +61,16 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 			const {
 				currentUser: { username, id }
 			} = this.props.currentUserServer
-			return this.props.authoriseUser({
+			this.props.authoriseUser({
 				variables: {
-					__typename: 'currentUserClient',
+					__typename: 'authorisedUser',
 					username,
 					id,
 					loggedIn: true
 				}
 			})
 		}
+		return
 	}
 
 	render() {
@@ -157,12 +119,13 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 		) {
 			const {
 				currentUserServer: {
-					currentUser: { username, id }
+					currentUser: { username }
 				}
 			} = this.props
+
 			header = (
 				<Header
-					authorised={this.props.currentUser.currentUserClient.loggedIn}
+					authorised={this.props.currentUser.authorisedUser.loggedIn}
 					sidePanel={true}
 					navBrand={{
 						title: 'MainSite',
@@ -185,6 +148,15 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 							auth: false
 						},
 						{
+							link: '/notifications',
+							icon: 'tasks',
+							tooltip: 'notifications',
+							text: '',
+							auth: true,
+							badge: true,
+							count: 1
+						},
+						{
 							link: '/auth/register',
 							icon: 'add user',
 							tooltip: 'register',
@@ -200,7 +172,7 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 						},
 						{
 							link: `/profile/${username || ''}`,
-							icon: 'bolt',
+							icon: 'user',
 							tooltip: 'profile',
 							text: 'Profile',
 							auth: true
@@ -217,9 +189,27 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 					]}
 				/>
 			)
+			console.log('LAYOUT', this.props)
 			return (
 				<ThemeProvider theme={theme[(currentTheme.clientTheme.theme as any) || 'light']}>
 					<React.Fragment>
+						{this.props.currentUser.authorisedUser.id !== '' ? (
+							<React.Fragment>
+								<SubscriptionContainer
+									username={this.props.currentUser.authorisedUser.username}
+									id={this.props.currentUser.authorisedUser.id}
+								/>
+
+								<ToastContainer
+									autoClose={5000}
+									newestOnTop={false}
+									closeOnClick
+									rtl={false}
+									draggable
+								/>
+							</React.Fragment>
+						) : null}
+
 						<GlobalStyle theme={theme[currentTheme.clientTheme.theme]} />
 						<MainLayoutStyle>
 							<Helmet>
@@ -229,12 +219,6 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 							</Helmet>
 							{header}
 							<Container width="80%">
-								{username !== null ? (
-									<NotificationContainer username={username} id={id} />
-								) : null}
-								{username !== null ? (
-									<NotificationContainer username={username} id={id} />
-								) : null}
 								<Routes />
 							</Container>
 						</MainLayoutStyle>
@@ -245,6 +229,17 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 			return this.props.currentUserServer.loading === false ? (
 				<ThemeProvider theme={theme[currentTheme.clientTheme.theme as any] || {}}>
 					<MainLayoutStyle>
+						<ToastContainer
+							autoClose={5000}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							draggable
+						/>
+						<SubscriptionContainer
+							username={this.props.currentUser.authorisedUser.username}
+							id={this.props.currentUser.authorisedUser.id}
+						/>
 						<Helmet>
 							<meta charSet="utf-8" />
 							<title>MainSite</title>

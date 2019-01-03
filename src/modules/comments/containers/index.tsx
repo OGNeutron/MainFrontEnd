@@ -42,9 +42,6 @@ const CommentContainer: React.SFC<IProps> = (props): JSX.Element => {
 				// 	changeMore(false)
 				// }
 
-				// console.log('PREV', prev)
-				// console.log('FETCH', fetchMoreResult)
-
 				let newEdges = [...prev.queryComment.edges, ...fetchMoreResult.queryComment.edges]
 
 				// @ts-ignore
@@ -75,10 +72,7 @@ const CommentContainer: React.SFC<IProps> = (props): JSX.Element => {
 			}}
 		>
 			{({ data, loading, fetchMore }) => {
-				// console.log(data)
-				// console.log(loading)
 				if (!data) {
-					console.log('Problem happened with comments')
 					return <Spinner />
 				}
 

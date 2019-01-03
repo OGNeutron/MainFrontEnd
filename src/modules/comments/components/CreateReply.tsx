@@ -20,10 +20,7 @@ interface IState {
 	open: boolean
 }
 
-class CreateReply extends React.Component<
-	FormikProps<any> & ChildMutateProps<IProps>,
-	IState
-> {
+class CreateReply extends React.Component<FormikProps<any> & ChildMutateProps<IProps>, IState> {
 	state = {
 		open: false
 	}
@@ -41,10 +38,7 @@ class CreateReply extends React.Component<
 					<Formik
 						initialValues={{ body: '' }}
 						validationSchema={validationSchema}
-						onSubmit={async (
-							values,
-							{ setSubmitting, resetForm }
-						) => {
+						onSubmit={async (values, { setSubmitting, resetForm }) => {
 							const {
 								reply,
 								mutate,
@@ -59,12 +53,7 @@ class CreateReply extends React.Component<
 										pageId,
 										repliedTo: author.id
 									},
-									update(
-										cache: any,
-										{ data: { createReply } }: any
-									) {
-										console.log('PAGEID', pageId)
-										console.log('createReply', createReply)
+									update(cache: any, { data: { createReply } }: any) {
 										const data = cache.readQuery({
 											query: COMMENTS_QUERY,
 											variables: {
@@ -75,10 +64,7 @@ class CreateReply extends React.Component<
 										}) as any
 
 										data.queryComment.edges
-											.find(
-												(comment: any) =>
-													comment.node.id === parentId
-											)
+											.find((comment: any) => comment.node.id === parentId)
 											.node.replies.push(createReply)
 
 										cache.writeQuery({
@@ -98,10 +84,7 @@ class CreateReply extends React.Component<
 										parentId: id,
 										repliedTo: author.id
 									},
-									update(
-										cache: any,
-										{ data: { createReply } }: any
-									) {
+									update(cache: any, { data: { createReply } }: any) {
 										const data = cache.readQuery({
 											query: COMMENTS_QUERY,
 											variables: {
@@ -111,13 +94,8 @@ class CreateReply extends React.Component<
 											}
 										}) as any
 
-										console.log('DATA', data)
-
 										data.queryComment.edges
-											.find(
-												(comment: any) =>
-													comment.node.id === id
-											)
+											.find((comment: any) => comment.node.id === id)
 											.node.replies.push(createReply)
 
 										cache.writeQuery({

@@ -5,20 +5,26 @@ import styled from 'styled-components'
 import classNames from 'classnames'
 
 export const DropDownContainer = styled.div`
-	display: flex;
-	flex: 1;
-	grid-gap: 1rem;
+	@media (min-width: 780px) {
+		display: flex;
+		flex: 1;
+		grid-gap: 1rem;
+	}
 `
 
 export const DropdownStyle = styled.div`
-	border: 1px dotted black;
-	width: 200px;
-	height: 200px;
+	@media (min-width: 780px) {
+		border: 1px dotted black;
+		width: 200px;
+		height: 200px;
+	}
 `
 
 export const DropInput = styled.input`
-	border: 1px solid black;
-	width: 50%;
+	@media (min-width: 780px) {
+		border: 1px solid black;
+		width: 50%;
+	}
 `
 
 interface IProps {

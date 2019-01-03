@@ -50,9 +50,7 @@ class MemberBar extends React.PureComponent<
 		})
 	}
 
-	_removeMember = () => {
-		console.log('working')
-	}
+	_removeMember = () => {}
 
 	render() {
 		const { user } = this.state

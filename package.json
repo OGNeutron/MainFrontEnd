@@ -41,12 +41,12 @@
 		"react-simple-infinite-scroll": "^0.0.1",
 		"react-stripe-checkout": "^2.6.3",
 		"react-stripe-elements": "^2.0.1",
-		"react-toastify": "^4.3.0",
+		"react-toastify": "^4.5.2",
 		"react-toolbox": "^2.0.0-beta.13",
 		"react-transition-group": "^2.5.0",
 		"rebass": "^3.0.0",
 		"recompose": "^0.30.0",
-		"semantic-ui-css": "^2.3.3",
+		"semantic-ui-css": "^2.4.1",
 		"semantic-ui-react": "^0.84.0",
 		"slate": "^0.44.9",
 		"styled-components": "^4.0.2",
@@ -80,7 +80,7 @@
 		"graphql-codegen-typescript-react-apollo": "^0.15.2",
 		"jest-dom": "^3.0.0",
 		"react-testing-library": "^5.4.2",
-		"rimraf": "^2.6.2",
+		"rimraf": "^2.6.3",
 		"typescript": "3.2.2"
 	},
 	"scripts": {

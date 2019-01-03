@@ -62,8 +62,6 @@ const CreateChannelModal: React.SFC<IProps & RouteComponentProps<{}>> = ({
 							if (store != null && store.showTeam.channels != null) {
 								store.showTeam.channels.push(data.createChannel)
 
-								console.log(store.showTeam)
-
 								cache.writeQuery({
 									query: SHOW_TEAM_QUERY,
 									variables: {

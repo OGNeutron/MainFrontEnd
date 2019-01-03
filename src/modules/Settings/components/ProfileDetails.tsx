@@ -17,7 +17,7 @@ import { FormContainer } from '../../../utils/form/FormContainer'
 import { InputField } from '../../../utils/form/inputField'
 import { UPDATE_PROFILE_DATA } from '../graphql/server'
 import { GET_PROFILE_QUERY } from '../../profile/graphql/server'
-import { Thumb, PreviewImage } from '../styles'
+import { PreviewImage, ImageLayout } from '../styles'
 import { ProfileDetailValidationSchema } from '../../../utils/yupSchemas'
 import { FileUpload } from '../../../utils/form/FileUpload'
 
@@ -42,45 +42,38 @@ const ProfileDetails: React.SFC<IProps & RouteComponentProps<{}>> = ({
 }): JSX.Element => {
 	const [files, changeFile] = useState<IPreview[]>([])
 
-	console.log(files)
-
 	return (
 		<div>
 			<h2>Profile Details</h2>
 			<h5>Profile Avatar</h5>
-			<FileUpload
-				onDrop={(acceptedFiles, rejectedFiles) => {
-					const preview = acceptedFiles.map(file =>
-						Object.assign(file, { preview: URL.createObjectURL(file) })
-					)
-					changeFile(preview as any)
+			<ImageLayout>
+				<FileUpload
+					onDrop={acceptedFiles => {
+						const preview = acceptedFiles.map(file =>
+							Object.assign(file, { preview: URL.createObjectURL(file) })
+						)
+						changeFile(preview as any)
 
-					console.log(acceptedFiles)
-					console.log(rejectedFiles)
+						const reader = new FileReader()
+						reader.onload = () => {
+							// const fileAsBinaryString = reader.result
+							// do whatever you want with the file content
+						}
+						reader.onabort = () => console.log('file reading was aborted')
+						reader.onerror = () => console.log('file reading has failed')
 
-					const reader = new FileReader()
-					reader.onload = () => {
-						// const fileAsBinaryString = reader.result
-						// console.log('ONLOAD', fileAsBinaryString)
-						// do whatever you want with the file content
-					}
-					reader.onabort = () => console.log('file reading was aborted')
-					reader.onerror = () => console.log('file reading has failed')
-
-					reader.readAsBinaryString(acceptedFiles[0])
-
-					console.log('READER', reader)
-				}}
-			/>
-			<aside>
+						reader.readAsBinaryString(acceptedFiles[0])
+					}}
+				/>
 				{files.map(file => (
-					<Thumb key={file.name}>
-						<div>
-							<PreviewImage style={{ backgroundSize: 'cover' }} src={file.preview} />
-						</div>
-					</Thumb>
+					<PreviewImage
+						key={file.name}
+						style={{ backgroundSize: 'cover' }}
+						src={file.preview}
+					/>
 				))}
-			</aside>
+			</ImageLayout>
+
 			<h5>User Details</h5>
 			<Mutation<UpdateProfileMutation, UpdateProfileVariables> mutation={UPDATE_PROFILE_DATA}>
 				{mutate => {
@@ -94,9 +87,7 @@ const ProfileDetails: React.SFC<IProps & RouteComponentProps<{}>> = ({
 							}}
 							validationSchema={ProfileDetailValidationSchema}
 							onSubmit={async (values, { resetForm, setSubmitting }) => {
-								console.log(values)
-
-								const response = await mutate({
+								await mutate({
 									variables: {
 										username: values.username,
 										oldPassword: values.oldPassword,
@@ -133,7 +124,8 @@ const ProfileDetails: React.SFC<IProps & RouteComponentProps<{}>> = ({
 																...cacheData.getProfile.user,
 
 																avatar_url: {
-																	url: data.updateProfile.url,
+																	url: data.updateProfile.avatar!
+																		.url,
 																	__typename:
 																		data.updateProfile
 																			.__typename
@@ -160,8 +152,6 @@ const ProfileDetails: React.SFC<IProps & RouteComponentProps<{}>> = ({
 										}
 									}
 								})
-
-								console.log(response)
 
 								resetForm()
 								setSubmitting(false)

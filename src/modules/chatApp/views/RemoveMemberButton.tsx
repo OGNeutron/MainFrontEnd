@@ -30,14 +30,9 @@ interface IProps {
 }
 
 class RemoveMemberButton extends React.Component<
-	ChildMutateProps<
-		IProps,
-		removeChannelMemberMutation,
-		removeChannelMemberMutationVariables
-	>
+	ChildMutateProps<IProps, removeChannelMemberMutation, removeChannelMemberMutationVariables>
 > {
 	_removeMember = async () => {
-		console.log('working')
 		const { mutate, channelId, member } = this.props
 
 		await mutate({

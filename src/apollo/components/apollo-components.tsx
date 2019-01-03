@@ -57,6 +57,14 @@ export interface NotificationWhereInput {
 
 	message_not_ends_with?: Maybe<string>
 
+	comments?: Maybe<CommentWhereInput>
+
+	messages?: Maybe<MessageWhereInput>
+
+	friend_requests?: Maybe<UserWhereInput>
+
+	friend?: Maybe<UserWhereInput>
+
 	author?: Maybe<UserWhereInput>
 
 	AND?: Maybe<NotificationWhereInput[]>
@@ -64,6 +72,170 @@ export interface NotificationWhereInput {
 	OR?: Maybe<NotificationWhereInput[]>
 
 	NOT?: Maybe<NotificationWhereInput[]>
+}
+
+export interface CommentWhereInput {
+	id?: Maybe<string>
+
+	id_not?: Maybe<string>
+
+	id_in?: Maybe<string[]>
+
+	id_not_in?: Maybe<string[]>
+
+	id_lt?: Maybe<string>
+
+	id_lte?: Maybe<string>
+
+	id_gt?: Maybe<string>
+
+	id_gte?: Maybe<string>
+
+	id_contains?: Maybe<string>
+
+	id_not_contains?: Maybe<string>
+
+	id_starts_with?: Maybe<string>
+
+	id_not_starts_with?: Maybe<string>
+
+	id_ends_with?: Maybe<string>
+
+	id_not_ends_with?: Maybe<string>
+
+	body?: Maybe<string>
+
+	body_not?: Maybe<string>
+
+	body_in?: Maybe<string[]>
+
+	body_not_in?: Maybe<string[]>
+
+	body_lt?: Maybe<string>
+
+	body_lte?: Maybe<string>
+
+	body_gt?: Maybe<string>
+
+	body_gte?: Maybe<string>
+
+	body_contains?: Maybe<string>
+
+	body_not_contains?: Maybe<string>
+
+	body_starts_with?: Maybe<string>
+
+	body_not_starts_with?: Maybe<string>
+
+	body_ends_with?: Maybe<string>
+
+	body_not_ends_with?: Maybe<string>
+
+	parentId?: Maybe<string>
+
+	parentId_not?: Maybe<string>
+
+	parentId_in?: Maybe<string[]>
+
+	parentId_not_in?: Maybe<string[]>
+
+	parentId_lt?: Maybe<string>
+
+	parentId_lte?: Maybe<string>
+
+	parentId_gt?: Maybe<string>
+
+	parentId_gte?: Maybe<string>
+
+	parentId_contains?: Maybe<string>
+
+	parentId_not_contains?: Maybe<string>
+
+	parentId_starts_with?: Maybe<string>
+
+	parentId_not_starts_with?: Maybe<string>
+
+	parentId_ends_with?: Maybe<string>
+
+	parentId_not_ends_with?: Maybe<string>
+
+	pageId?: Maybe<string>
+
+	pageId_not?: Maybe<string>
+
+	pageId_in?: Maybe<string[]>
+
+	pageId_not_in?: Maybe<string[]>
+
+	pageId_lt?: Maybe<string>
+
+	pageId_lte?: Maybe<string>
+
+	pageId_gt?: Maybe<string>
+
+	pageId_gte?: Maybe<string>
+
+	pageId_contains?: Maybe<string>
+
+	pageId_not_contains?: Maybe<string>
+
+	pageId_starts_with?: Maybe<string>
+
+	pageId_not_starts_with?: Maybe<string>
+
+	pageId_ends_with?: Maybe<string>
+
+	pageId_not_ends_with?: Maybe<string>
+
+	repliedTo?: Maybe<UserWhereInput>
+
+	ratings?: Maybe<RatingWhereInput>
+
+	createdAt?: Maybe<DateTime>
+
+	createdAt_not?: Maybe<DateTime>
+
+	createdAt_in?: Maybe<DateTime[]>
+
+	createdAt_not_in?: Maybe<DateTime[]>
+
+	createdAt_lt?: Maybe<DateTime>
+
+	createdAt_lte?: Maybe<DateTime>
+
+	createdAt_gt?: Maybe<DateTime>
+
+	createdAt_gte?: Maybe<DateTime>
+
+	updatedAt?: Maybe<DateTime>
+
+	updatedAt_not?: Maybe<DateTime>
+
+	updatedAt_in?: Maybe<DateTime[]>
+
+	updatedAt_not_in?: Maybe<DateTime[]>
+
+	updatedAt_lt?: Maybe<DateTime>
+
+	updatedAt_lte?: Maybe<DateTime>
+
+	updatedAt_gt?: Maybe<DateTime>
+
+	updatedAt_gte?: Maybe<DateTime>
+
+	replies_every?: Maybe<CommentWhereInput>
+
+	replies_some?: Maybe<CommentWhereInput>
+
+	replies_none?: Maybe<CommentWhereInput>
+
+	author?: Maybe<UserWhereInput>
+
+	AND?: Maybe<CommentWhereInput[]>
+
+	OR?: Maybe<CommentWhereInput[]>
+
+	NOT?: Maybe<CommentWhereInput[]>
 }
 
 export interface UserWhereInput {
@@ -408,228 +580,6 @@ export interface UserWhereInput {
 	OR?: Maybe<UserWhereInput[]>
 
 	NOT?: Maybe<UserWhereInput[]>
-}
-
-export interface CommentWhereInput {
-	id?: Maybe<string>
-
-	id_not?: Maybe<string>
-
-	id_in?: Maybe<string[]>
-
-	id_not_in?: Maybe<string[]>
-
-	id_lt?: Maybe<string>
-
-	id_lte?: Maybe<string>
-
-	id_gt?: Maybe<string>
-
-	id_gte?: Maybe<string>
-
-	id_contains?: Maybe<string>
-
-	id_not_contains?: Maybe<string>
-
-	id_starts_with?: Maybe<string>
-
-	id_not_starts_with?: Maybe<string>
-
-	id_ends_with?: Maybe<string>
-
-	id_not_ends_with?: Maybe<string>
-
-	body?: Maybe<string>
-
-	body_not?: Maybe<string>
-
-	body_in?: Maybe<string[]>
-
-	body_not_in?: Maybe<string[]>
-
-	body_lt?: Maybe<string>
-
-	body_lte?: Maybe<string>
-
-	body_gt?: Maybe<string>
-
-	body_gte?: Maybe<string>
-
-	body_contains?: Maybe<string>
-
-	body_not_contains?: Maybe<string>
-
-	body_starts_with?: Maybe<string>
-
-	body_not_starts_with?: Maybe<string>
-
-	body_ends_with?: Maybe<string>
-
-	body_not_ends_with?: Maybe<string>
-
-	parentId?: Maybe<string>
-
-	parentId_not?: Maybe<string>
-
-	parentId_in?: Maybe<string[]>
-
-	parentId_not_in?: Maybe<string[]>
-
-	parentId_lt?: Maybe<string>
-
-	parentId_lte?: Maybe<string>
-
-	parentId_gt?: Maybe<string>
-
-	parentId_gte?: Maybe<string>
-
-	parentId_contains?: Maybe<string>
-
-	parentId_not_contains?: Maybe<string>
-
-	parentId_starts_with?: Maybe<string>
-
-	parentId_not_starts_with?: Maybe<string>
-
-	parentId_ends_with?: Maybe<string>
-
-	parentId_not_ends_with?: Maybe<string>
-
-	pageId?: Maybe<string>
-
-	pageId_not?: Maybe<string>
-
-	pageId_in?: Maybe<string[]>
-
-	pageId_not_in?: Maybe<string[]>
-
-	pageId_lt?: Maybe<string>
-
-	pageId_lte?: Maybe<string>
-
-	pageId_gt?: Maybe<string>
-
-	pageId_gte?: Maybe<string>
-
-	pageId_contains?: Maybe<string>
-
-	pageId_not_contains?: Maybe<string>
-
-	pageId_starts_with?: Maybe<string>
-
-	pageId_not_starts_with?: Maybe<string>
-
-	pageId_ends_with?: Maybe<string>
-
-	pageId_not_ends_with?: Maybe<string>
-
-	repliedTo?: Maybe<UserWhereInput>
-
-	ratings?: Maybe<RatingWhereInput>
-
-	createdAt?: Maybe<DateTime>
-
-	createdAt_not?: Maybe<DateTime>
-
-	createdAt_in?: Maybe<DateTime[]>
-
-	createdAt_not_in?: Maybe<DateTime[]>
-
-	createdAt_lt?: Maybe<DateTime>
-
-	createdAt_lte?: Maybe<DateTime>
-
-	createdAt_gt?: Maybe<DateTime>
-
-	createdAt_gte?: Maybe<DateTime>
-
-	updatedAt?: Maybe<DateTime>
-
-	updatedAt_not?: Maybe<DateTime>
-
-	updatedAt_in?: Maybe<DateTime[]>
-
-	updatedAt_not_in?: Maybe<DateTime[]>
-
-	updatedAt_lt?: Maybe<DateTime>
-
-	updatedAt_lte?: Maybe<DateTime>
-
-	updatedAt_gt?: Maybe<DateTime>
-
-	updatedAt_gte?: Maybe<DateTime>
-
-	replies_every?: Maybe<CommentWhereInput>
-
-	replies_some?: Maybe<CommentWhereInput>
-
-	replies_none?: Maybe<CommentWhereInput>
-
-	author?: Maybe<UserWhereInput>
-
-	AND?: Maybe<CommentWhereInput[]>
-
-	OR?: Maybe<CommentWhereInput[]>
-
-	NOT?: Maybe<CommentWhereInput[]>
-}
-
-export interface RatingWhereInput {
-	id?: Maybe<string>
-
-	id_not?: Maybe<string>
-
-	id_in?: Maybe<string[]>
-
-	id_not_in?: Maybe<string[]>
-
-	id_lt?: Maybe<string>
-
-	id_lte?: Maybe<string>
-
-	id_gt?: Maybe<string>
-
-	id_gte?: Maybe<string>
-
-	id_contains?: Maybe<string>
-
-	id_not_contains?: Maybe<string>
-
-	id_starts_with?: Maybe<string>
-
-	id_not_starts_with?: Maybe<string>
-
-	id_ends_with?: Maybe<string>
-
-	id_not_ends_with?: Maybe<string>
-
-	vote?: Maybe<number>
-
-	vote_not?: Maybe<number>
-
-	vote_in?: Maybe<number[]>
-
-	vote_not_in?: Maybe<number[]>
-
-	vote_lt?: Maybe<number>
-
-	vote_lte?: Maybe<number>
-
-	vote_gt?: Maybe<number>
-
-	vote_gte?: Maybe<number>
-
-	author_every?: Maybe<UserWhereInput>
-
-	author_some?: Maybe<UserWhereInput>
-
-	author_none?: Maybe<UserWhereInput>
-
-	AND?: Maybe<RatingWhereInput[]>
-
-	OR?: Maybe<RatingWhereInput[]>
-
-	NOT?: Maybe<RatingWhereInput[]>
 }
 
 export interface FileWhereInput {
@@ -1348,6 +1298,64 @@ export interface MessageWhereInput {
 	OR?: Maybe<MessageWhereInput[]>
 
 	NOT?: Maybe<MessageWhereInput[]>
+}
+
+export interface RatingWhereInput {
+	id?: Maybe<string>
+
+	id_not?: Maybe<string>
+
+	id_in?: Maybe<string[]>
+
+	id_not_in?: Maybe<string[]>
+
+	id_lt?: Maybe<string>
+
+	id_lte?: Maybe<string>
+
+	id_gt?: Maybe<string>
+
+	id_gte?: Maybe<string>
+
+	id_contains?: Maybe<string>
+
+	id_not_contains?: Maybe<string>
+
+	id_starts_with?: Maybe<string>
+
+	id_not_starts_with?: Maybe<string>
+
+	id_ends_with?: Maybe<string>
+
+	id_not_ends_with?: Maybe<string>
+
+	vote?: Maybe<number>
+
+	vote_not?: Maybe<number>
+
+	vote_in?: Maybe<number[]>
+
+	vote_not_in?: Maybe<number[]>
+
+	vote_lt?: Maybe<number>
+
+	vote_lte?: Maybe<number>
+
+	vote_gt?: Maybe<number>
+
+	vote_gte?: Maybe<number>
+
+	author_every?: Maybe<UserWhereInput>
+
+	author_some?: Maybe<UserWhereInput>
+
+	author_none?: Maybe<UserWhereInput>
+
+	AND?: Maybe<RatingWhereInput[]>
+
+	OR?: Maybe<RatingWhereInput[]>
+
+	NOT?: Maybe<RatingWhereInput[]>
 }
 
 export interface TodoWhereInput {
@@ -2524,6 +2532,276 @@ export type DeleteCommentDeleteComment = {
 	parentId: Maybe<string>
 }
 
+export type FriendRequestSubscriptionVariables = {
+	id: string
+}
+
+export type FriendRequestSubscriptionSubscription = {
+	__typename?: 'Subscription'
+
+	friendRequestSubscription: FriendRequestSubscriptionFriendRequestSubscription
+}
+
+export type FriendRequestSubscriptionFriendRequestSubscription = {
+	__typename?: 'UserSubscriptionPayload'
+
+	node: Maybe<FriendRequestSubscriptionNode>
+}
+
+export type FriendRequestSubscriptionNode = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+
+	friend_requests: Maybe<FriendRequestSubscriptionFriendRequests[]>
+}
+
+export type FriendRequestSubscriptionFriendRequests = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+
+	avatar_url: FriendRequestSubscriptionAvatarUrl
+}
+
+export type FriendRequestSubscriptionAvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
+
+export type FriendSubscriptionVariables = {
+	id: string
+}
+
+export type FriendSubscriptionSubscription = {
+	__typename?: 'Subscription'
+
+	friendSubscription: FriendSubscriptionFriendSubscription
+}
+
+export type FriendSubscriptionFriendSubscription = {
+	__typename?: 'UserSubscriptionPayload'
+
+	node: Maybe<FriendSubscriptionNode>
+}
+
+export type FriendSubscriptionNode = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+
+	friends: Maybe<FriendSubscriptionFriends[]>
+}
+
+export type FriendSubscriptionFriends = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+
+	avatar_url: FriendSubscriptionAvatarUrl
+}
+
+export type FriendSubscriptionAvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
+
+export type NotificationSubscriptionVariables = {
+	id: string
+}
+
+export type NotificationSubscriptionSubscription = {
+	__typename?: 'Subscription'
+
+	NotificationSubscription: NotificationSubscriptionNotificationSubscription
+}
+
+export type NotificationSubscriptionNotificationSubscription = {
+	__typename?: 'NotificationSubscriptionPayload'
+
+	node: Maybe<NotificationSubscriptionNode>
+}
+
+export type NotificationSubscriptionNode = {
+	__typename?: 'Notification'
+
+	id: string
+
+	message: Maybe<string>
+
+	comments: Maybe<NotificationSubscriptionComments>
+
+	messages: Maybe<NotificationSubscriptionMessages>
+
+	friend_requests: Maybe<NotificationSubscriptionFriendRequests>
+
+	friend: Maybe<NotificationSubscriptionFriend>
+}
+
+export type NotificationSubscriptionComments = MyCommentFragmentFragment
+
+export type NotificationSubscriptionMessages = {
+	__typename?: 'Message'
+
+	id: string
+
+	parentId: string
+
+	body: string
+
+	author: NotificationSubscriptionAuthor
+
+	createdAt: DateTime
+
+	updatedAt: DateTime
+}
+
+export type NotificationSubscriptionAuthor = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+
+	online: boolean
+
+	avatar_url: NotificationSubscriptionAvatarUrl
+}
+
+export type NotificationSubscriptionAvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
+
+export type NotificationSubscriptionFriendRequests = {
+	__typename?: 'User'
+
+	createdAt: DateTime
+
+	updatedAt: DateTime
+} & FriendFragmentFragment
+
+export type NotificationSubscriptionFriend = {
+	__typename?: 'User'
+
+	createdAt: DateTime
+
+	updatedAt: DateTime
+} & FriendFragmentFragment
+
+export type DeleteNotificationVariables = {
+	id: string
+}
+
+export type DeleteNotificationMutation = {
+	__typename?: 'Mutation'
+
+	deleteNotification: Maybe<DeleteNotificationDeleteNotification>
+}
+
+export type DeleteNotificationDeleteNotification = {
+	__typename?: 'DeleteNotificationResponse'
+
+	ok: Maybe<boolean>
+
+	errors: Maybe<DeleteNotificationErrors>
+}
+
+export type DeleteNotificationErrors = {
+	__typename?: 'Error'
+
+	path: string
+
+	message: string
+}
+
+export type FetchNotificationsVariables = {}
+
+export type FetchNotificationsQuery = {
+	__typename?: 'Query'
+
+	fetchNotifications: Maybe<FetchNotificationsFetchNotifications[]>
+}
+
+export type FetchNotificationsFetchNotifications = {
+	__typename?: 'Notification'
+
+	id: string
+
+	message: Maybe<string>
+
+	comments: Maybe<FetchNotificationsComments>
+
+	messages: Maybe<FetchNotificationsMessages>
+
+	friend_requests: Maybe<FetchNotificationsFriendRequests>
+
+	friend: Maybe<FetchNotificationsFriend>
+}
+
+export type FetchNotificationsComments = MyCommentFragmentFragment
+
+export type FetchNotificationsMessages = {
+	__typename?: 'Message'
+
+	id: string
+
+	parentId: string
+
+	body: string
+
+	author: FetchNotificationsAuthor
+
+	createdAt: DateTime
+
+	updatedAt: DateTime
+}
+
+export type FetchNotificationsAuthor = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+
+	online: boolean
+
+	avatar_url: FetchNotificationsAvatarUrl
+}
+
+export type FetchNotificationsAvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
+
+export type FetchNotificationsFriendRequests = {
+	__typename?: 'User'
+
+	createdAt: DateTime
+
+	updatedAt: DateTime
+} & FriendFragmentFragment
+
+export type FetchNotificationsFriend = {
+	__typename?: 'User'
+
+	createdAt: DateTime
+
+	updatedAt: DateTime
+} & FriendFragmentFragment
+
 export type BlockOrUnblockUserVariables = {
 	id: string
 }
@@ -2800,6 +3078,14 @@ export type UpdateProfileMutation = {
 }
 
 export type UpdateProfileUpdateProfile = {
+	__typename?: 'UpdateProfileResponse'
+
+	avatar: Maybe<UpdateProfileAvatar>
+
+	username: Maybe<string>
+}
+
+export type UpdateProfileAvatar = {
 	__typename?: 'File'
 
 	url: string
@@ -4264,6 +4550,318 @@ export function DeleteCommentHOC<TProps, TChildProps = any>(
 		DeleteCommentProps<TChildProps>
 	>(DeleteCommentDocument, operationOptions)
 }
+export const FriendRequestSubscriptionDocument = gql`
+	subscription FriendRequestSubscription($id: ID!) {
+		friendRequestSubscription(id: $id) {
+			node {
+				id
+				username
+				friend_requests {
+					id
+					username
+					avatar_url {
+						url
+					}
+				}
+			}
+		}
+	}
+`
+export class FriendRequestSubscriptionComponent extends React.Component<
+	Partial<
+		ReactApollo.SubscriptionProps<
+			FriendRequestSubscriptionSubscription,
+			FriendRequestSubscriptionVariables
+		>
+	>
+> {
+	render() {
+		return (
+			<ReactApollo.Subscription<
+				FriendRequestSubscriptionSubscription,
+				FriendRequestSubscriptionVariables
+			>
+				subscription={FriendRequestSubscriptionDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type FriendRequestSubscriptionProps<TChildProps = any> = Partial<
+	ReactApollo.DataProps<FriendRequestSubscriptionSubscription, FriendRequestSubscriptionVariables>
+> &
+	TChildProps
+export function FriendRequestSubscriptionHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				FriendRequestSubscriptionSubscription,
+				FriendRequestSubscriptionVariables,
+				FriendRequestSubscriptionProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		FriendRequestSubscriptionSubscription,
+		FriendRequestSubscriptionVariables,
+		FriendRequestSubscriptionProps<TChildProps>
+	>(FriendRequestSubscriptionDocument, operationOptions)
+}
+export const FriendSubscriptionDocument = gql`
+	subscription FriendSubscription($id: ID!) {
+		friendSubscription(id: $id) {
+			node {
+				id
+				username
+				friends {
+					id
+					username
+					avatar_url {
+						url
+					}
+				}
+			}
+		}
+	}
+`
+export class FriendSubscriptionComponent extends React.Component<
+	Partial<
+		ReactApollo.SubscriptionProps<FriendSubscriptionSubscription, FriendSubscriptionVariables>
+	>
+> {
+	render() {
+		return (
+			<ReactApollo.Subscription<FriendSubscriptionSubscription, FriendSubscriptionVariables>
+				subscription={FriendSubscriptionDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type FriendSubscriptionProps<TChildProps = any> = Partial<
+	ReactApollo.DataProps<FriendSubscriptionSubscription, FriendSubscriptionVariables>
+> &
+	TChildProps
+export function FriendSubscriptionHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				FriendSubscriptionSubscription,
+				FriendSubscriptionVariables,
+				FriendSubscriptionProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		FriendSubscriptionSubscription,
+		FriendSubscriptionVariables,
+		FriendSubscriptionProps<TChildProps>
+	>(FriendSubscriptionDocument, operationOptions)
+}
+export const NotificationSubscriptionDocument = gql`
+	subscription NotificationSubscription($id: ID!) {
+		NotificationSubscription(id: $id) {
+			node {
+				id
+				message
+				comments {
+					...MyCommentFragment
+				}
+				messages {
+					id
+					parentId
+					body
+					author {
+						id
+						username
+						online
+						avatar_url {
+							url
+						}
+					}
+					createdAt
+					updatedAt
+				}
+				friend_requests {
+					...FriendFragment
+					createdAt
+					updatedAt
+				}
+				friend {
+					...FriendFragment
+					createdAt
+					updatedAt
+				}
+			}
+		}
+	}
+
+	${MyCommentFragmentFragmentDoc}
+	${FriendFragmentFragmentDoc}
+`
+export class NotificationSubscriptionComponent extends React.Component<
+	Partial<
+		ReactApollo.SubscriptionProps<
+			NotificationSubscriptionSubscription,
+			NotificationSubscriptionVariables
+		>
+	>
+> {
+	render() {
+		return (
+			<ReactApollo.Subscription<
+				NotificationSubscriptionSubscription,
+				NotificationSubscriptionVariables
+			>
+				subscription={NotificationSubscriptionDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type NotificationSubscriptionProps<TChildProps = any> = Partial<
+	ReactApollo.DataProps<NotificationSubscriptionSubscription, NotificationSubscriptionVariables>
+> &
+	TChildProps
+export function NotificationSubscriptionHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				NotificationSubscriptionSubscription,
+				NotificationSubscriptionVariables,
+				NotificationSubscriptionProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		NotificationSubscriptionSubscription,
+		NotificationSubscriptionVariables,
+		NotificationSubscriptionProps<TChildProps>
+	>(NotificationSubscriptionDocument, operationOptions)
+}
+export const DeleteNotificationDocument = gql`
+	mutation DeleteNotification($id: ID!) {
+		deleteNotification(id: $id) {
+			ok
+			errors {
+				path
+				message
+			}
+		}
+	}
+`
+export class DeleteNotificationComponent extends React.Component<
+	Partial<ReactApollo.MutationProps<DeleteNotificationMutation, DeleteNotificationVariables>>
+> {
+	render() {
+		return (
+			<ReactApollo.Mutation<DeleteNotificationMutation, DeleteNotificationVariables>
+				mutation={DeleteNotificationDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type DeleteNotificationProps<TChildProps = any> = Partial<
+	ReactApollo.MutateProps<DeleteNotificationMutation, DeleteNotificationVariables>
+> &
+	TChildProps
+export type DeleteNotificationMutationFn = ReactApollo.MutationFn<
+	DeleteNotificationMutation,
+	DeleteNotificationVariables
+>
+export function DeleteNotificationHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				DeleteNotificationMutation,
+				DeleteNotificationVariables,
+				DeleteNotificationProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		DeleteNotificationMutation,
+		DeleteNotificationVariables,
+		DeleteNotificationProps<TChildProps>
+	>(DeleteNotificationDocument, operationOptions)
+}
+export const FetchNotificationsDocument = gql`
+	query FetchNotifications {
+		fetchNotifications {
+			id
+			message
+			comments {
+				...MyCommentFragment
+			}
+			messages {
+				id
+				parentId
+				body
+				author {
+					id
+					username
+					online
+					avatar_url {
+						url
+					}
+				}
+				createdAt
+				updatedAt
+			}
+			friend_requests {
+				...FriendFragment
+				createdAt
+				updatedAt
+			}
+			friend {
+				...FriendFragment
+				createdAt
+				updatedAt
+			}
+		}
+	}
+
+	${MyCommentFragmentFragmentDoc}
+	${FriendFragmentFragmentDoc}
+`
+export class FetchNotificationsComponent extends React.Component<
+	Partial<ReactApollo.QueryProps<FetchNotificationsQuery, FetchNotificationsVariables>>
+> {
+	render() {
+		return (
+			<ReactApollo.Query<FetchNotificationsQuery, FetchNotificationsVariables>
+				query={FetchNotificationsDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type FetchNotificationsProps<TChildProps = any> = Partial<
+	ReactApollo.DataProps<FetchNotificationsQuery, FetchNotificationsVariables>
+> &
+	TChildProps
+export function FetchNotificationsHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				FetchNotificationsQuery,
+				FetchNotificationsVariables,
+				FetchNotificationsProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		FetchNotificationsQuery,
+		FetchNotificationsVariables,
+		FetchNotificationsProps<TChildProps>
+	>(FetchNotificationsDocument, operationOptions)
+}
 export const BlockOrUnblockUserDocument = gql`
 	mutation BlockOrUnblockUser($id: ID!) {
 		blockUser(id: $id) {
@@ -4689,7 +5287,10 @@ export const UpdateProfileDocument = gql`
 			newPassword: $newPassword
 			avatar: $avatar
 		) {
-			url
+			avatar {
+				url
+			}
+			username
 		}
 	}
 `

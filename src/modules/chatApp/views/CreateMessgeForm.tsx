@@ -36,18 +36,14 @@ export const CreateMessageForm: React.SFC<IProps> = ({ channelId }) =>
 					initialValues={{ message: '' }}
 					validationSchema={validationSchema}
 					validateOnChange={false}
-					onSubmit={async (
-						{ message },
-						{ resetForm, setSubmitting }
-					) => {
-						const response = await mutate({
+					onSubmit={async ({ message }, { resetForm, setSubmitting }) => {
+						await mutate({
 							variables: {
 								body: message,
 								channelId
 							}
 						})
 
-						console.log(response)
 						resetForm()
 						setSubmitting(false)
 					}}

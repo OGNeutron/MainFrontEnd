@@ -33,7 +33,10 @@ export const UPDATE_PROFILE_DATA = gql`
 			newPassword: $newPassword
 			avatar: $avatar
 		) {
-			url
+			avatar {
+				url
+			}
+			username
 		}
 	}
 `

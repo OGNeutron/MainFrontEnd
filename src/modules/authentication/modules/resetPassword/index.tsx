@@ -20,9 +20,7 @@ interface IFormValues {
 	confirmPassword: string
 }
 
-class ResetPasswordComponent extends React.Component<
-	RouteComponentProps<any & IState>
-> {
+class ResetPasswordComponent extends React.Component<RouteComponentProps<any & IState>> {
 	state = {
 		resetPassword: false,
 		id: ''
@@ -36,8 +34,6 @@ class ResetPasswordComponent extends React.Component<
 
 		// @ts-ignore
 		const decoded: { user: { id: string } } = jwtDecode(token)
-
-		console.log(decoded)
 
 		if (!token) {
 			this.props.history.push('/auth/forgot_password')
@@ -65,23 +61,11 @@ class ResetPasswordComponent extends React.Component<
 								}}
 								validationSchema={validationSchema}
 								onSubmit={async (values: IFormValues) => {
-									if (
-										values.password ===
-										values.confirmPassword
-									) {
-										console.log(
-											values.password,
-											values.confirmPassword
-										)
-
-										const response = await result.resetPassword(
-											{
-												password: values.password,
-												id: this.state.id
-											}
-										)
-
-										console.log(response)
+									if (values.password === values.confirmPassword) {
+										await result.resetPassword({
+											password: values.password,
+											id: this.state.id
+										})
 									}
 								}}
 								render={() => <ResetPasswordForm />}

@@ -42,7 +42,6 @@ const ProfileContainer: React.SFC<
 				// 	variables: { username: props.match.params.username },
 				// 	document: FRIEND_REQUEST_SUBSCRIPTION,
 				// 	updateQuery(previousResult, { subscriptionData }) {
-				// 		console.log('SUBSCRIPTION_DATA')
 				// 		const requestedUser =
 				// 			subscriptionData.data.getProfile.friend_requests
 
@@ -58,7 +57,6 @@ const ProfileContainer: React.SFC<
 				// 		}
 
 				// 		if (user && user.username) {
-				// 			console.log('WORKING')
 
 				// 			toast(`Friend Request from ${user.username}`)
 				// 		}

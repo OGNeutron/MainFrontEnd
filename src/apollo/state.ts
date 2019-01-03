@@ -1,8 +1,5 @@
 import { clone } from 'ramda'
-import {
-	CURRENT_USER_QUERY_CLIENT,
-	CURRENT_THEME_QUERY
-} from './graphql/client'
+import { CURRENT_USER_QUERY_CLIENT, CURRENT_THEME_QUERY } from './graphql/client'
 
 interface IAuthoriseArguments {
 	loggedIn: boolean
@@ -11,8 +8,8 @@ interface IAuthoriseArguments {
 }
 
 export const defaultState = {
-	currentUserClient: {
-		__typename: 'currentUserClient',
+	authorisedUser: {
+		__typename: 'authorisedUser',
 		loggedIn: false,
 		username: '',
 		id: ''
@@ -29,18 +26,14 @@ export const defaultState = {
 
 export const resolvers = {
 	Mutation: {
-		authoriseUser(
-			_: any,
-			{ username, id, loggedIn }: IAuthoriseArguments,
-			{ cache }: any
-		) {
+		authoriseUser(_: any, { username, id, loggedIn }: IAuthoriseArguments, { cache }: any) {
 			const data = cache.readQuery({ query: CURRENT_USER_QUERY_CLIENT })
 
 			const clonedData = clone<any>(data)
 
 			const changedState = {
-				currentUserClient: {
-					__typename: 'currentUserClient',
+				authorisedUser: {
+					__typename: 'authorisedUser',
 					...clonedData.currentUser,
 					loggedIn,
 					username,
@@ -70,10 +63,7 @@ export const resolvers = {
 								__typename: 'clientTheme'
 							}
 					  }
-			window.localStorage.setItem(
-				'client_theme',
-				newData.clientTheme.theme
-			)
+			window.localStorage.setItem('client_theme', newData.clientTheme.theme)
 
 			cache.writeQuery({ query: CURRENT_THEME_QUERY, data: newData })
 		}

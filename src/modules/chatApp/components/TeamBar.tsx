@@ -41,8 +41,7 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 	_handleSubmit = async (
 		mutate: MutationFn<AddTeamMemberMutation, AddTeamMemberMutationVariables>
 	): Promise<void> => {
-		const { value, key } = this.state
-		console.log(value, key)
+		const { key } = this.state
 
 		await mutate({
 			variables: {
@@ -97,7 +96,6 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 								})
 
 							// const combineArrays = usernames.concat(members)
-							// console.log('ARRAYS', combineArrays)
 							users = usernames
 						}
 

@@ -1,19 +1,12 @@
 import * as React from 'react'
 import { Query, ApolloConsumer } from 'react-apollo'
-import {
-	Route,
-	Redirect,
-	RouteProps,
-	RouteComponentProps
-} from 'react-router-dom'
+import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom'
 
 import { CURRENT_USER_QUERY } from '../../utils/graphql/server'
 import { AUTHORISE_USER } from '../../modules/authentication/graphql/client'
 
 // @ts-ignore
-export const AuthRoute: React.SFC<RouteProps> = (
-	props: RouteComponentProps<{}>
-): JSX.Element => (
+export const AuthRoute: React.SFC<RouteProps> = (props: RouteComponentProps<{}>): JSX.Element => (
 	<Query query={CURRENT_USER_QUERY}>
 		{({ data, loading }) => {
 			if (loading === false) {
@@ -26,8 +19,7 @@ export const AuthRoute: React.SFC<RouteProps> = (
 										.mutate({
 											mutation: AUTHORISE_USER,
 											variables: {
-												username:
-													data.currentUser.username,
+												username: data.currentUser.username,
 												id: data.currentUser.id,
 												loggedIn: true
 											}

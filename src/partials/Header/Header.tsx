@@ -11,6 +11,7 @@ import {
 	NavBrandIcon,
 	NavBrand
 } from './styles'
+import { Badge } from 'antd'
 
 interface IState {
 	open: boolean
@@ -25,6 +26,9 @@ interface INavItem {
 	onClickEvent?: any
 	dropdown?: boolean
 	children?: INavItem[]
+	component?: any
+	count?: number
+	badge?: boolean
 }
 
 interface INavBrand {
@@ -39,10 +43,7 @@ interface IProps {
 	authorised: boolean
 }
 
-class HeaderBar extends React.Component<
-	IProps & RouteComponentProps<{}>,
-	IState
-> {
+class HeaderBar extends React.Component<IProps & RouteComponentProps<{}>, IState> {
 	state = {
 		open: false
 	}
@@ -72,47 +73,41 @@ class HeaderBar extends React.Component<
 					</NavBrand>
 				)}
 				<NavBrandIcon onClick={this._openSide}>
-					{open ? (
-						<Icon name="arrow left" />
-					) : (
-						<Icon name="arrow right" />
-					)}
+					{open ? <Icon name="arrow left" /> : <Icon name="arrow right" />}
 				</NavBrandIcon>
 				{navItems.map((navItem: INavItem, i: number) => {
+					const icon =
+						navItem.badge === true ? (
+							<Badge count={1}>
+								<Icon
+									style={{
+										color: navItem.link === pathname ? '#7b97fc' : 'black'
+									}}
+									name={navItem.icon}
+								/>
+							</Badge>
+						) : (
+							<Icon
+								style={{
+									color: navItem.link === pathname ? '#7b97fc' : 'black'
+								}}
+								name={navItem.icon}
+							/>
+						)
+
 					return (
 						<React.Fragment key={i}>
 							{navItem.auth === authorised && (
 								<NavItem>
 									{navItem.onClickEvent ? (
-										<Link
-											onClick={navItem.onClickEvent}
-											to={navItem.link}
-										>
-											<Popup
-												trigger={
-													<Icon
-														style={{
-															color:
-																navItem.link ===
-																pathname
-																	? '#7b97fc'
-																	: 'black'
-														}}
-														name={navItem.icon}
-													/>
-												}
-												content={navItem.tooltip}
-											/>
+										<Link onClick={navItem.onClickEvent} to={navItem.link}>
+											<Popup trigger={icon} content={navItem.tooltip} />
 										</Link>
 									) : (
 										<React.Fragment>
 											{navItem.children ? (
 												<Popup
-													trigger={
-														<DropDown
-															navItem={navItem}
-														/>
-													}
+													trigger={<DropDown navItem={navItem} />}
 													content={navItem.tooltip}
 												/>
 											) : (
@@ -122,19 +117,14 @@ class HeaderBar extends React.Component<
 															<Icon
 																style={{
 																	color:
-																		navItem.link ===
-																		pathname
+																		navItem.link === pathname
 																			? '#7b97fc'
 																			: 'black'
 																}}
-																name={
-																	navItem.icon
-																}
+																name={navItem.icon}
 															/>
 														}
-														content={
-															navItem.tooltip
-														}
+														content={navItem.tooltip}
 													/>
 												</Link>
 											)}

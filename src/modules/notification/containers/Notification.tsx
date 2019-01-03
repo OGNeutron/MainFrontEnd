@@ -1,22 +1,11 @@
 import * as React from 'react'
-import {
-	graphql,
-	ChildDataProps,
-	compose,
-	withApollo,
-	WithApolloClient
-	// ApolloConsumer
-} from 'react-apollo'
-import { ToastContainer, toast } from 'react-toastify'
 
-import {
-	FRIEND_REQUEST_SUBSCRIPTION
-	// FRIEND_SUBSCRIPTION
-} from '../graphql/server'
+import { Feed, Segment } from 'semantic-ui-react'
+import { ChildDataProps, WithApolloClient } from 'react-apollo'
+import { FetchNotificationsComponent } from '../../../apollo/components/apollo-components'
+
 import { Observable } from 'apollo-client/util/Observable'
-import { GET_PROFILE_QUERY } from '../../profile/graphql/server'
-// import FriendNotification from '../components/FriendNotification'
-// import { ApolloClient } from 'apollo-client'
+import { NotificationFeed } from '../components/NotificationFeed'
 
 interface IProps {
 	id: string
@@ -54,91 +43,68 @@ class NotificationContainer extends React.PureComponent<
 	// 		})
 	// 		.subscribe({
 	// 			next(data) {
-	// 				console.log(data)
 	// 			},
 	// 			error(error) {
-	// 				console.error(error)
 	// 			}
 	// 		})
 	// }
 
-	_subscribeFriendRequest = async () => {
-		// console.log('PROPS', this.props)
-
-		this.props.data.subscribeToMore({
-			document: FRIEND_REQUEST_SUBSCRIPTION,
-			variables: {
-				id: this.props.id
-			},
-			updateQuery(previousResult, { subscriptionData }) {
-				if (!subscriptionData.data) return previousResult
-
-				const currentFriendRequest = previousResult.getProfile.user.friend_requests
-				const newFriendRequest =
-					subscriptionData.data.friendRequestSubscription.node.friend_requests
-
-				const friend_requests = [...currentFriendRequest, ...newFriendRequest]
-
-				if (friend_requests.length <= 0) {
-					return previousResult
-				}
-
-				if (currentFriendRequest.some(fr => fr.id === newFriendRequest[0].id)) {
-					return previousResult
-				}
-
-				if (!currentFriendRequest.some(fr => fr.id === newFriendRequest[0].id)) {
-					toast(
-						`Friend Request from ${
-							subscriptionData.data.friendRequestSubscription.node.username
-						}`
-					)
-				}
-
-				return {
-					getProfile: {
-						...previousResult.getProfile,
-						user: {
-							...previousResult.getProfile.user,
-							friend_requests: [...friend_requests]
-						}
-					}
-				}
-			}
-		}) as any
-	}
+	_subscribeFriendRequest = async () => {}
 
 	render() {
-		// const { id, username } = this.props
-
-		// console.log()
-
 		return (
-			<div>
-				<ToastContainer
-					autoClose={5000}
-					newestOnTop={false}
-					closeOnClick
-					rtl={false}
-					draggable
-				/>
+			<Segment>
+				<FetchNotificationsComponent>
+					{({ data, loading }) => {
+						if (data === undefined || data === null) {
+							return 'no notifications'
+						}
+
+						if (data.fetchNotifications === null) {
+							return 'no notifications'
+						}
+
+						return loading === false && data !== null ? (
+							<Feed>
+								{data.fetchNotifications.map(notification => {
+									if (notification.friend_requests !== null) {
+										const {
+											avatar_url: { url },
+											createdAt,
+											username
+										} = notification.friend_requests
+
+										if (notification.message !== null) {
+											return (
+												<NotificationFeed
+													id={notification.id}
+													friendRequestId={
+														notification.friend_requests.id
+													}
+													key={notification.id}
+													avatar={url}
+													date={createdAt}
+													username={username}
+													message={notification.message}
+												/>
+											)
+										}
+									}
+								})}
+							</Feed>
+						) : null
+					}}
+				</FetchNotificationsComponent>
+
 				{/* <ApolloConsumer>
 					{client => {
-						console.log(client)
 						return null
 					}}
 				</ApolloConsumer> */}
 				{/* <FriendNotification username={username} id={id} /> */}
-			</div>
+			</Segment>
 		)
 	}
 }
 
-export default compose(
-	withApollo,
-	graphql<IProps>(GET_PROFILE_QUERY, {
-		options: (props: IProps) => ({
-			variables: { username: props.username }
-		})
-	})
-)(NotificationContainer as any)
+export default NotificationContainer
