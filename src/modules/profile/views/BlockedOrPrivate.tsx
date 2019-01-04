@@ -9,7 +9,7 @@ interface IProps {
 	message: Maybe<string>
 }
 
-export const BlockedOrPrivate: React.SFC<IProps> = ({
+export const BlockedOrPrivate: React.FunctionComponent<IProps> = ({
 	avatar_url,
 	username,
 	message

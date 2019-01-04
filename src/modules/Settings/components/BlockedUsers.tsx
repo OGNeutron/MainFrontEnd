@@ -23,7 +23,7 @@ const BlockedUsersLayout = styled.div`
 	}
 `
 
-export const BlockedUsersComponent: React.SFC<IProps> = ({ profile }): JSX.Element => {
+export const BlockedUsersComponent: React.FunctionComponent<IProps> = ({ profile }): JSX.Element => {
 	if (profile !== null && profile.blockedUsers !== null) {
 		return (
 			<BlockedUsersLayout style={{ marginLeft: '1.5rem', marginTop: '1rem' }}>

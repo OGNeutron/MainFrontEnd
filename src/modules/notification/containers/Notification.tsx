@@ -55,7 +55,7 @@ class NotificationContainer extends React.PureComponent<
 		return (
 			<Segment>
 				<FetchNotificationsComponent>
-					{({ data, loading }) => {
+					{({ data, loading, error }) => {
 						if (data === undefined || data === null) {
 							return 'no notifications'
 						}
@@ -64,33 +64,63 @@ class NotificationContainer extends React.PureComponent<
 							return 'no notifications'
 						}
 
+						if (error) {
+							return <span>An error has occurred: {error.message}</span>
+						}
+
 						return loading === false && data !== null ? (
 							<Feed>
-								{data.fetchNotifications.map(notification => {
-									if (notification.friend_requests !== null) {
-										const {
-											avatar_url: { url },
-											createdAt,
-											username
-										} = notification.friend_requests
+								{data.fetchNotifications.length > 0 ? (
+									data.fetchNotifications.map(notification => {
+										if (notification.friend_requests !== null) {
+											const {
+												avatar_url: { url },
+												createdAt,
+												username
+											} = notification.friend_requests
 
-										if (notification.message !== null) {
-											return (
-												<NotificationFeed
-													id={notification.id}
-													friendRequestId={
-														notification.friend_requests.id
-													}
-													key={notification.id}
-													avatar={url}
-													date={createdAt}
-													username={username}
-													message={notification.message}
-												/>
-											)
+											if (notification.message !== null) {
+												return (
+													<NotificationFeed
+														id={notification.id}
+														friendRequestId={
+															notification.friend_requests.id
+														}
+														key={notification.id}
+														avatar={url}
+														date={createdAt}
+														username={username}
+														message={notification.message}
+													/>
+												)
+											}
 										}
-									}
-								})}
+
+										if (notification.friend !== null) {
+											const {
+												avatar_url: { url },
+												createdAt,
+												username
+											} = notification.friend
+
+											if (notification.message !== null) {
+												return (
+													<NotificationFeed
+														id={notification.id}
+														friend={notification.friend}
+														key={notification.id}
+														avatar={url}
+														date={createdAt}
+														username={username}
+														message={notification.message}
+													/>
+												)
+											}
+										}
+									})
+								) : (
+									<div>Currently no notifications</div>
+								)}
 							</Feed>
 						) : null
 					}}

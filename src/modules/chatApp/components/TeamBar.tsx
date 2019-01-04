@@ -73,8 +73,12 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 					modalOpen={this.state.modalOpen}
 				/>
 				<Query query={USER_SEARCH}>
-					{({ data, loading }) => {
+					{({ data, loading, error }) => {
 						let users: any = []
+
+						if (error) {
+							return <div>An error has occurred: ${error.message}</div>
+						}
 
 						if (data !== undefined && data.queryUsers !== undefined) {
 							const usernames: [{ key: any; value: any; text: any }] = data.queryUsers

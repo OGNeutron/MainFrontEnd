@@ -25,7 +25,7 @@ interface IProps {
 	currentUser: any
 }
 
-const ProfileContainer: React.SFC<
+const ProfileContainer: React.FunctionComponent<
 	ChildDataProps<IProps, GetProfileQuery> & RouteComponentProps<{ username: string }>
 > = (props): JSX.Element => {
 	const {

@@ -6,7 +6,7 @@ export function themeHelper(theme: any) {
 
 			const styles = `html, body {
                 background-color: #302f2f;
-                height: 100vh;
+                height: 100%;
             }`
 
 			css.append(document.createTextNode(styles))
@@ -15,7 +15,7 @@ export function themeHelper(theme: any) {
 			css.id = 'my-styles'
 			const styles = `html, body {
                 background-color: #302f2f;
-                height: 100vh;
+                height: 100%;
             }`
 
 			css.append(document.createTextNode(styles))
@@ -27,7 +27,7 @@ export function themeHelper(theme: any) {
 
 			const styles = `html, body {
                 background-color: #e2dcdc;
-                height: 100vh;
+                height: 100%;
             }`
 
 			css.append(document.createTextNode(styles))
@@ -36,7 +36,7 @@ export function themeHelper(theme: any) {
 			css.id = 'my-styles'
 			const styles = `html, body {
                 background-color: #e2dcdc;
-                height: 100vh;
+                height: 100%;
             }`
 
 			css.append(document.createTextNode(styles))

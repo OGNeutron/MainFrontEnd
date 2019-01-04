@@ -4,7 +4,7 @@ import ChatContainer from '../containers/ChatContainer'
 
 // const ChatContainer = React.lazy(() => import("../containers/ChatContainer"))
 
-const ChatAppLayout: React.SFC<RouteComponentProps<{}>> = (props): JSX.Element => (
+const ChatAppLayout: React.FunctionComponent<RouteComponentProps<{}>> = (props): JSX.Element => (
 	<React.Fragment>
 		<Route path={`${props.match.path}/:team/:channel`} component={ChatContainer} />
 	</React.Fragment>

@@ -33,7 +33,7 @@ const validationSchema = yup.object().shape({
 		.min(3)
 })
 
-const CreateChannelModal: React.SFC<IProps & RouteComponentProps<{}>> = ({
+const CreateChannelModal: React.FunctionComponent<IProps & RouteComponentProps<{}>> = ({
 	teamId,
 	teamSlug,
 	history,

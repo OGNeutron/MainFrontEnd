@@ -17,6 +17,7 @@ import { CURRENT_USER_QUERY } from './utils/graphql/server'
 import { LOGOUT_MUTATION } from './modules/authentication/graphql'
 import SubscriptionContainer from './modules/notification/containers/SubcriptionContainer'
 import { themeHelper } from './utils/helpers'
+// import { Footer } from './partials/footer/Footer'
 
 interface IVariables {
 	variables: IAuthoriseVariables
@@ -189,7 +190,6 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 					]}
 				/>
 			)
-			console.log('LAYOUT', this.props)
 			return (
 				<ThemeProvider theme={theme[(currentTheme.clientTheme.theme as any) || 'light']}>
 					<React.Fragment>
@@ -222,6 +222,7 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 								<Routes />
 							</Container>
 						</MainLayoutStyle>
+						{/* <Footer /> */}
 					</React.Fragment>
 				</ThemeProvider>
 			)
@@ -249,6 +250,7 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 						<Container width="80%">
 							<Routes />
 						</Container>
+						{/* <Footer /> */}
 					</MainLayoutStyle>
 				</ThemeProvider>
 			) : null

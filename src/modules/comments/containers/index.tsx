@@ -20,7 +20,7 @@ interface IProps {
 	currentUser: IUser
 }
 
-const CommentContainer: React.SFC<IProps> = (props): JSX.Element => {
+const CommentContainer: React.FunctionComponent<IProps> = (props): JSX.Element => {
 	const [offsetInt] = useState(0)
 	const [more] = useState(false)
 

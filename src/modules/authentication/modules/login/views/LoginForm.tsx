@@ -15,7 +15,7 @@ const LoginFormLayout = styled.div`
 	}
 `
 
-export const LoginForm: React.SFC = (): JSX.Element => (
+export const LoginForm: React.FunctionComponent = (): JSX.Element => (
 	<LoginFormLayout>
 		<FormContainer
 			formInputs={[

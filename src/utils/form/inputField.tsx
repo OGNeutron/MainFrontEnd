@@ -2,7 +2,7 @@ import * as React from 'react'
 import { FieldProps } from 'formik'
 import { Form, Message } from 'semantic-ui-react'
 
-export const InputField: React.SFC<FieldProps<any>> = ({
+export const InputField: React.FunctionComponent<FieldProps<any>> = ({
 	field,
 	form: { touched, errors, dirty },
 	...props

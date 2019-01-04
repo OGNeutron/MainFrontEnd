@@ -19,7 +19,7 @@ interface IProps {
 	currentUser: IUser
 }
 
-const CommentView: React.SFC<IProps> = ({
+const CommentView: React.FunctionComponent<IProps> = ({
 	comment,
 	editOpen,
 	toggleEdit,

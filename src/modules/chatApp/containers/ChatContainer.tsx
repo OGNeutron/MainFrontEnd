@@ -22,9 +22,8 @@ interface IProps {
 	}
 }
 
-const ChatContainer: React.SFC<
-	ChildDataProps<IProps> &
-		RouteComponentProps<{ channel: string; team: string }>
+const ChatContainer: React.FunctionComponent<
+	ChildDataProps<IProps> & RouteComponentProps<{ channel: string; team: string }>
 > = props => {
 	const channelSlug = props.match.params.channel
 
@@ -38,10 +37,15 @@ const ChatContainer: React.SFC<
 				query={SHOW_TEAM_QUERY}
 				variables={{ teamSlug: props.match.params.team }}
 			>
-				{({ data }) => {
+				{({ data, error }) => {
 					if (data !== undefined) {
 						team = data.showTeam
 					}
+
+					if (error) {
+						return <div>An error has occurred: ${error.message}</div>
+					}
+
 					let authorId = ''
 					if (team !== undefined) {
 						authorId = team.author.id ? team.author.id : ''

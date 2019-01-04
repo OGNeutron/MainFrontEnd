@@ -118,11 +118,17 @@ export const FETCH_NOTIFICATION_QUERY = gql`
 			}
 			friend_requests {
 				...FriendFragment
+				avatar_url {
+					url
+				}
 				createdAt
 				updatedAt
 			}
 			friend {
 				...FriendFragment
+				avatar_url {
+					url
+				}
 				createdAt
 				updatedAt
 			}

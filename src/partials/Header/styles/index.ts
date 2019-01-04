@@ -26,7 +26,7 @@ export const MainNav: any = styled('nav')`
 	background: ${props => props.theme.headerColour};
 	padding: 0 1rem;
 	box-shadow: 1px 7px 29px 0px rgba(0, 0, 0, 0.5);
-	z-index: 1;
+	z-index: 1000;
 
 	@media (max-width: 750px) {
 		width: 10%;

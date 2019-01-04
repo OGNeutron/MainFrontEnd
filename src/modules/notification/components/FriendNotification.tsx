@@ -9,7 +9,7 @@ interface IProps {
 	id: string
 }
 
-class FriendNotification extends React.Component<IProps> {
+class FriendNotification extends React.PureComponent<IProps> {
 	render() {
 		return (
 			<React.Fragment>

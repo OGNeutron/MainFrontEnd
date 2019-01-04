@@ -17,10 +17,11 @@ interface IProps {
 	username: string
 	date: string
 	message: string
-	friendRequestId: string
+	friendRequestId?: string
+	friend?: any
 }
 
-export const NotificationFeed: React.SFC<IProps> = ({
+export const NotificationFeed: React.FunctionComponent<IProps> = ({
 	id,
 	avatar,
 	message,

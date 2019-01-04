@@ -14,6 +14,9 @@ import ProfileLayout from '../modules/profile/layouts'
 import MainLayout from '../MainLayout'
 import ChatAppLayout from '../modules/chatApp/layouts'
 import NotificationContainer from '../modules/notification/containers/Notification'
+// const NotificationContainer = React.lazy(() =>
+// 	import('../modules/notification/containers/Notification')
+// )
 
 const allRoutes: IRoute[] = [
 	...HomeRoutes,
@@ -28,26 +31,26 @@ export default (): JSX.Element => {
 
 	return (
 		<React.Fragment>
-			<React.Suspense fallback={Spinner}>
-				<Switch>
-					{allRoutes.map((route: IRoute, i: number) => {
-						if (route.guest === false) {
-							return <AuthRoute key={`${i}-${route.path}`} {...route} />
-						}
-						return (
-							<Route
-								key={`${i}-${route.path}`}
-								path={route.path}
-								component={route.component}
-							/>
-						)
-					})}
+			<Switch>
+				{allRoutes.map((route: IRoute, i: number) => {
+					if (route.guest === false) {
+						return <AuthRoute key={`${i}-${route.path}`} {...route} />
+					}
+					return (
+						<Route
+							key={`${i}-${route.path}`}
+							path={route.path}
+							component={route.component}
+						/>
+					)
+				})}
+				<React.Suspense fallback={Spinner}>
 					<Route path="/main-layout" component={MainLayout} />
 					<AuthRoute path="/profile" component={ProfileLayout} />
 					<AuthRoute path="/chat-app" component={ChatAppLayout} />
 					<AuthRoute path="/notifications" component={NotificationContainer} />
-				</Switch>
-			</React.Suspense>
+				</React.Suspense>
+			</Switch>
 		</React.Fragment>
 	)
 }

@@ -22,7 +22,7 @@ interface IProps {
 	username: string
 }
 
-class FriendContainer extends React.Component<ChildMutateProps<ChildDataProps<IProps>>> {
+class FriendContainer extends React.PureComponent<ChildMutateProps<ChildDataProps<IProps>>> {
 	state = {
 		subscribe: ''
 	}

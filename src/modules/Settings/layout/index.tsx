@@ -2,10 +2,8 @@ import * as React from 'react'
 import { Route, RouteComponentProps } from 'react-router-dom'
 import SettingContainer from '../containers'
 
-export const SettingLayout: React.SFC<RouteComponentProps<{}>> = ({
+// const SettingContainer = React.lazy(() => import('../containers'))
+
+export const SettingLayout: React.FunctionComponent<RouteComponentProps<{}>> = ({
 	match: { path }
-}): JSX.Element => (
-	<React.Fragment>
-		<Route path={`${path}/:username`} component={SettingContainer} />
-	</React.Fragment>
-)
+}): JSX.Element => <Route path={`${path}/:username`} component={SettingContainer} />

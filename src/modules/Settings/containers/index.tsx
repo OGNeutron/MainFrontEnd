@@ -53,9 +53,13 @@ class SettingContainer extends React.PureComponent<
 				<GetProfileQueryComponent
 					variables={{ username: this.props.match.params.username }}
 				>
-					{({ data, loading }) => {
+					{({ data, loading, error }) => {
 						if (!data && loading === false) {
 							return <div>Something went wrong</div>
+						}
+
+						if (error) {
+							return <div>An error has occurred: ${error.message}</div>
 						}
 
 						return loading == false &&

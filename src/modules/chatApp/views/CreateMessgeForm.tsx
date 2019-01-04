@@ -26,7 +26,7 @@ const validationSchema = yup.object().shape({
 		.min(3)
 })
 
-export const CreateMessageForm: React.SFC<IProps> = ({ channelId }) =>
+export const CreateMessageForm: React.FunctionComponent<IProps> = ({ channelId }) =>
 	channelId !== undefined ? (
 		<Mutation<CreateMessageMutation, CreateMessageMutationVariables>
 			mutation={CREATE_MESSAGE_MUTATION}

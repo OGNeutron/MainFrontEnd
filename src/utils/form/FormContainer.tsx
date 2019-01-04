@@ -14,7 +14,7 @@ interface IProps {
 	handleSubmit?: any
 }
 
-export const FormContainer: React.SFC<IProps> = (props): JSX.Element => {
+export const FormContainer: React.FunctionComponent<IProps> = (props): JSX.Element => {
 	return (
 		<Form>
 			{props.formInputs.map((input: any, i: number) => (

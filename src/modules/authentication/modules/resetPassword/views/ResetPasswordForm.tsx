@@ -4,7 +4,7 @@ import { Icon } from 'antd'
 import { InputField } from '../../../../../utils/form/inputField'
 import { FormContainer } from '../../../../../utils/form/FormContainer'
 
-const ResetPasswordForm: React.SFC = (): JSX.Element => (
+const ResetPasswordForm: React.FunctionComponent = (): JSX.Element => (
 	<FormContainer
 		formInputs={[
 			{

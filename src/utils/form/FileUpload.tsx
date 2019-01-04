@@ -31,7 +31,7 @@ interface IProps {
 	onDrop: any
 }
 
-export const FileUpload: React.SFC<IProps> = ({ onDrop }): JSX.Element => (
+export const FileUpload: React.FunctionComponent<IProps> = ({ onDrop }): JSX.Element => (
 	<Dropzone onDrop={onDrop}>
 		{({ getRootProps, getInputProps, isDragActive }) => {
 			return (

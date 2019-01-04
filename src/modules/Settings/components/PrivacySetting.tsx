@@ -16,7 +16,7 @@ interface IProps {
 	profile: Maybe<GetProfileQueryUser>
 }
 
-const PrivacySetting: React.SFC<IProps> = ({ profile }): JSX.Element => {
+const PrivacySetting: React.FunctionComponent<IProps> = ({ profile }): JSX.Element => {
 	if (profile !== null) {
 		// const privacyStatus = !profile.private
 		const [profilePrivate, setPrivate] = useState(true)

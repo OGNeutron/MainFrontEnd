@@ -4,7 +4,7 @@ import { Icon } from 'antd'
 import { FormContainer } from '../../../../../utils/form/FormContainer'
 import { InputField } from '../../../../../utils/form/inputField'
 
-export const RegisterForm: React.SFC = (): JSX.Element => (
+export const RegisterForm: React.FunctionComponent = (): JSX.Element => (
 	<FormContainer
 		formInputs={[
 			{

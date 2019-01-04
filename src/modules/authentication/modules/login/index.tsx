@@ -23,7 +23,7 @@ const validationSchema = yup.object().shape({
 // 	password: string
 // }
 
-const LoginContainer: React.SFC<RouteComponentProps<{}>> = ({
+const LoginContainer: React.FunctionComponent<RouteComponentProps<{}>> = ({
 	authoriseUser,
 	history,
 	history: {

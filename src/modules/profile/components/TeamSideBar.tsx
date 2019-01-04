@@ -21,7 +21,7 @@ interface IProps {
 	showTeams: any[]
 }
 
-class TeamSideBar extends React.Component<DataProps<IProps, IState>> {
+class TeamSideBar extends React.PureComponent<DataProps<IProps, IState>> {
 	state = {
 		visible: false
 	}
@@ -32,11 +32,7 @@ class TeamSideBar extends React.Component<DataProps<IProps, IState>> {
 		return (
 			<React.Fragment>
 				<Button onClick={this.toggleVisibility}>Chat Teams</Button>
-				<Drawer
-					anchor="right"
-					open={this.state.visible}
-					onClose={this.toggleVisibility}
-				>
+				<Drawer anchor="right" open={this.state.visible} onClose={this.toggleVisibility}>
 					<div
 						tabIndex={0}
 						role="button"
@@ -53,13 +49,11 @@ class TeamSideBar extends React.Component<DataProps<IProps, IState>> {
 										return (
 											<ListItem key={team.id}>
 												<Link
-													to={`/chat-app/${
-														team.slug
-													}/${team.channels[0].slug}`}
+													to={`/chat-app/${team.slug}/${
+														team.channels[0].slug
+													}`}
 												>
-													<ListItemText
-														primary={team.name}
-													/>
+													<ListItemText primary={team.name} />
 												</Link>
 											</ListItem>
 										)

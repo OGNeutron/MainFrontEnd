@@ -6,7 +6,7 @@ import { CURRENT_USER_QUERY } from '../../utils/graphql/server'
 import { AUTHORISE_USER } from '../../modules/authentication/graphql/client'
 
 // @ts-ignore
-export const AuthRoute: React.SFC<RouteProps> = (props: RouteComponentProps<{}>): JSX.Element => (
+export const AuthRoute: React.FunctionComponent<RouteProps> = (props: RouteComponentProps<{}>): JSX.Element => (
 	<Query query={CURRENT_USER_QUERY}>
 		{({ data, loading }) => {
 			if (loading === false) {

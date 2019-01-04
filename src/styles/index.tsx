@@ -25,8 +25,9 @@ export const GlobalStyle = createGlobalStyle`
     `
 
 export const MainLayoutStyle: any = styled.div`
-	margin-top: 5rem;
-
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 	background: ${props => props.theme.siteBackground};
 	/* height: 100%; */
 	color: ${props => props.theme.textColour};

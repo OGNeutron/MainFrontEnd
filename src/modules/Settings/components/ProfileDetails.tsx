@@ -36,7 +36,7 @@ interface IProps {
 	profile: Maybe<GetProfileQueryUser>
 }
 
-const ProfileDetails: React.SFC<IProps & RouteComponentProps<{}>> = ({
+const ProfileDetails: React.FunctionComponent<IProps & RouteComponentProps<{}>> = ({
 	profile,
 	history
 }): JSX.Element => {

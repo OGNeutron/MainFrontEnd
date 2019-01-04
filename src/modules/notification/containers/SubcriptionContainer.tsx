@@ -19,7 +19,7 @@ interface IState {
 	subscribe: Observable<any>
 }
 
-class SubscriptionContainer extends React.Component<
+class SubscriptionContainer extends React.PureComponent<
 	ChildDataProps<IProps> & IState & WithApolloClient<IProps>
 > {
 	state = {
@@ -32,15 +32,11 @@ class SubscriptionContainer extends React.Component<
 
 	_subscribeToNotifications = async () => {
 		let they = this
-		console.log(this.props)
 		this.props.data.subscribeToMore({
 			document: NOTIFICATION_SUBSCRIPTION,
 			variables: { id: this.props.id },
 			updateQuery(previousResult, { subscriptionData }) {
 				if (!subscriptionData.data) return previousResult
-
-				console.log('PREV', previousResult)
-				console.log('data', subscriptionData)
 
 				previousResult.fetchNotifications.unshift(
 					subscriptionData.data.NotificationSubscription.node
@@ -59,15 +55,12 @@ class SubscriptionContainer extends React.Component<
 						}
 					})
 
-					console.log('PRECACHE', cacheData)
-
 					if (cacheData !== null && cacheData.getProfile !== null) {
 						//@ts-ignore
 						cacheData.getProfile.user.friend_requests.unshift(
 							subscriptionData.data.NotificationSubscription.node
 						)
 					}
-					console.log('POSTCACHE', cacheData)
 
 					they.props.client.writeQuery({
 						query: GET_PROFILE_QUERY,
@@ -85,7 +78,6 @@ class SubscriptionContainer extends React.Component<
 	}
 
 	render() {
-		console.log('SC', this.props)
 		return null
 	}
 }

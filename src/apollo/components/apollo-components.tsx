@@ -2789,18 +2789,34 @@ export type FetchNotificationsAvatarUrl = {
 export type FetchNotificationsFriendRequests = {
 	__typename?: 'User'
 
+	avatar_url: FetchNotifications_AvatarUrl
+
 	createdAt: DateTime
 
 	updatedAt: DateTime
 } & FriendFragmentFragment
+
+export type FetchNotifications_AvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
 
 export type FetchNotificationsFriend = {
 	__typename?: 'User'
 
+	avatar_url: FetchNotifications__AvatarUrl
+
 	createdAt: DateTime
 
 	updatedAt: DateTime
 } & FriendFragmentFragment
+
+export type FetchNotifications__AvatarUrl = {
+	__typename?: 'File'
+
+	url: string
+}
 
 export type BlockOrUnblockUserVariables = {
 	id: string
@@ -4815,11 +4831,17 @@ export const FetchNotificationsDocument = gql`
 			}
 			friend_requests {
 				...FriendFragment
+				avatar_url {
+					url
+				}
 				createdAt
 				updatedAt
 			}
 			friend {
 				...FriendFragment
+				avatar_url {
+					url
+				}
 				createdAt
 				updatedAt
 			}
