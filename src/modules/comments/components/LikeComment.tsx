@@ -20,6 +20,7 @@ class LikeComment extends React.Component<ChildMutateProps<IProps>> {
 			variables: {
 				commentId: this.props.id
 			}
+			// optimisticResponse: {}
 		})
 	}
 

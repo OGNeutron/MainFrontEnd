@@ -3,15 +3,18 @@ import { Card, List, Button, Image } from 'semantic-ui-react'
 import { graphql, ChildMutateProps, compose, ChildDataProps } from 'react-apollo'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import { FriendsLayout } from '../styles'
 import { ADD_FRIEND_MUTATION, REJECT_FREIND_MUTATION, GET_PROFILE_QUERY } from '../graphql/server'
-import UserSearch from '../../shared/components/UserSearch'
+// import UserSearch from '../../shared/components/UserSearch'
 import { toast } from 'react-toastify'
 import { FRIEND_REQUEST_SUBSCRIPTION } from '../../notification/graphql/server'
 
+import UserSearchTwo from '../../shared/components/UserSearch2'
+
 const HeaderTwo = styled.h2`
-	color: ${props => props.theme.textColour};
+	color: black;
 `
 
 interface IProps {
@@ -22,9 +25,12 @@ interface IProps {
 	username: string
 }
 
-class FriendContainer extends React.PureComponent<ChildMutateProps<ChildDataProps<IProps>>> {
+class FriendContainer extends React.PureComponent<
+	ChildMutateProps<ChildDataProps<IProps & RouteComponentProps<{}>>>
+> {
 	state = {
-		subscribe: ''
+		subscribe: '',
+		value: ''
 	}
 
 	async componentDidMount() {
@@ -133,13 +139,27 @@ class FriendContainer extends React.PureComponent<ChildMutateProps<ChildDataProp
 		})
 	}
 
+	_handleChange = args => {
+		console.log(args)
+		// this.setState({ value: args.value })
+
+		console.log(this.props)
+
+		this.props.history.push(`/profile/${args.value}`)
+	}
+
 	render() {
 		const { user, currentUser } = this.props
+
 		return (
 			<FriendsLayout>
 				<Card>
 					<Card.Content>
-						<UserSearch currentUser={currentUser} />
+						{/* <UserSearch currentUser={currentUser} /> */}
+
+						<UserSearchTwo currentUser={currentUser} onChange={this._handleChange} />
+
+						{this.state.value !== '' ? <Button>{this.state.value}</Button> : null}
 
 						{currentUser.id === user.id ? (
 							user.friend_requests.length > 0 ? (
@@ -196,6 +216,7 @@ class FriendContainer extends React.PureComponent<ChildMutateProps<ChildDataProp
 }
 
 export default compose(
+	withRouter,
 	graphql<IProps>(REJECT_FREIND_MUTATION, { name: 'rejectFriend' }),
 	graphql<IProps>(ADD_FRIEND_MUTATION, { name: 'addFriend' }),
 	graphql<IProps>(GET_PROFILE_QUERY, {

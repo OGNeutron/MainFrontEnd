@@ -10,7 +10,8 @@ export const GlobalStyle = createGlobalStyle`
         } */
 
         body, html {
-            height: 100vh
+            height: 100vh;
+            font-family: 'Fira Sans', sans-serif;
         }
 
         * {

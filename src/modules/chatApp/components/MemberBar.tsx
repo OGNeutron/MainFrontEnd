@@ -11,7 +11,8 @@ import RemoveMemberButton from '../views/RemoveMemberButton'
 interface IProps {
 	authorId: string
 	channelId: string
-
+	currentUser: any
+	teamSlug: string
 	showTeam: ShowTeamQuery_showTeam
 }
 
@@ -42,21 +43,35 @@ class MemberBar extends React.PureComponent<
 			user: { id }
 		} = this.state
 
+		// const { teamSlug } = this.props
+
+		// console.log('TEAM_SLUG', teamSlug)
+
 		this.props.mutate({
 			variables: {
 				userId: id,
 				channelId: this.props.channelId
 			}
+			// update(cache, { data }) {
+			// 	console.log('DATA', data)
+			// 	const cacheData = cache.readQuery({
+			// 		query: SHOW_TEAM_QUERY,
+			// 		variables: {
+			// 			teamSlug
+			// 		}
+			// 	})
+
+			// 	console.log(cacheData)
+			// }
 		})
 	}
 
-	_removeMember = () => {}
-
 	render() {
 		const { user } = this.state
-		const { showTeam } = this.props
+		const { showTeam, currentUser, teamSlug } = this.props
 
 		let channelsMembers
+		let channelAdmin
 
 		if (this.props.showTeam.channels) {
 			channelsMembers = this.props.showTeam.channels.find(
@@ -74,6 +89,8 @@ class MemberBar extends React.PureComponent<
 					text: userInfo.username
 				}
 			})
+
+			channelAdmin = showTeam.author
 		}
 
 		let memberList
@@ -92,10 +109,13 @@ class MemberBar extends React.PureComponent<
 											</Link>
 										</Grid.Column>
 										<Grid.Column floated="left" width={5}>
-											<RemoveMemberButton
-												channelId={this.props.channelId}
-												member={member}
-											/>
+											{currentUser.id === channelAdmin.id ? (
+												<RemoveMemberButton
+                                                    slug={teamSlug}
+													channelId={this.props.channelId}
+													member={member}
+												/>
+											) : null}
 										</Grid.Column>
 									</Grid>
 								</List.Item>

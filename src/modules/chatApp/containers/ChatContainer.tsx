@@ -15,6 +15,7 @@ import {
 	ShowTeamQueryVariables,
 	ShowTeamQuery_showTeam
 } from '../../../operation-result-types'
+import { CURRENT_USER_QUERY_CLIENT } from '../../../apollo/graphql/client'
 
 interface IProps {
 	data: {
@@ -62,12 +63,20 @@ const ChatContainer: React.FunctionComponent<
 								{channelId !== undefined ? (
 									<ChatComponent channelId={channelId} />
 								) : null}
-								<MemberBar
-									channelId={channelId}
-									authorId={authorId}
-									{...props}
-									showTeam={team}
-								/>
+								<Query query={CURRENT_USER_QUERY_CLIENT}>
+									{({ loading, data }) => {
+										return loading === false ? (
+											<MemberBar
+												teamSlug={props.match.params.team}
+												currentUser={data.authorisedUser}
+												channelId={channelId}
+												authorId={authorId}
+												{...props}
+												showTeam={team}
+											/>
+										) : null
+									}}
+								</Query>
 							</React.Fragment>
 						) : null
 					}

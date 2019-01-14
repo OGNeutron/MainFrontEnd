@@ -8,6 +8,7 @@ import { CommentMutationVariables } from '../../../operation-result-types'
 import { validationSchema } from '../utils/yupSchemas'
 // import { FormTextArea } from '../../../utils/form/FormTextArea'
 import { InputField } from '../../../utils/form/inputField'
+// import TextEditor from '../../shared/components/TextEditor'
 
 interface IProps extends FormikProps<any> {
 	pageId: string
@@ -62,25 +63,26 @@ function CreateComment(props: ChildMutateProps<IProps>): JSX.Element {
 					setSubmitting(false)
 				}}
 				render={formikProps => (
-					<FormContainer
-						{...props}
-						{...formikProps}
-						reply={true}
-						formInputs={[
-							{
-								type: 'text',
-								name: 'body',
-								placeholder: 'place a comment',
-								component: InputField
-							}
-						]}
-					/>
+					<React.Fragment>
+						<FormContainer
+							{...props}
+							{...formikProps}
+							reply={true}
+							formInputs={[
+								{
+									type: 'text',
+									name: 'body',
+									placeholder: 'place a comment',
+									component: InputField
+								}
+							]}
+						/>
+						{/* <TextEditor setFieldValue={formikProps.setFieldValue} /> */}
+					</React.Fragment>
 				)}
 			/>
 		</React.Fragment>
 	)
 }
 
-export default compose(graphql<CommentMutationVariables>(COMMENT_MUTATION))(
-	CreateComment
-)
+export default compose(graphql<CommentMutationVariables>(COMMENT_MUTATION))(CreateComment)

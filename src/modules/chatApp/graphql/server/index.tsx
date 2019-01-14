@@ -23,6 +23,25 @@ export const CHANNEL_MESSAGE_SUBSCRIPTION = gql`
 	}
 `
 
+export const REMOVE_TEAM_MEMBER = gql`
+	mutation RemoveTeamMember($teamId: ID!, $userId: ID!) {
+		removeTeamMember(teamId: $teamId, userId: $userId) {
+			id
+			name
+			slug
+			author {
+				id
+				username
+			}
+			members {
+				id
+				username
+				email
+			}
+		}
+	}
+`
+
 export const REMOVE_CHANNEL_MEMBER = gql`
 	mutation removeChannelMemberMutation($channelId: ID!, $userId: ID!) {
 		removeChannelMember(channelId: $channelId, userId: $userId) {

@@ -2,11 +2,11 @@ import * as React from 'react'
 import { graphql, ChildMutateProps } from 'react-apollo'
 import styled from 'styled-components'
 import { Icon } from 'semantic-ui-react'
-import { REMOVE_CHANNEL_MEMBER, SHOW_TEAM_QUERY } from '../graphql/server'
+import { REMOVE_TEAM_MEMBER } from '../graphql/server'
 import {
-	removeChannelMemberMutation,
-	removeChannelMemberMutationVariables
-} from '../../../operation-result-types'
+	RemoveTeamMemberMutation,
+	RemoveTeamMemberVariables
+} from '../../../apollo/components/apollo-components'
 
 const RemoveButton = styled.span`
 	cursor: pointer;
@@ -30,29 +30,20 @@ interface Member {
 
 interface IProps {
 	member: Member
-	channelId: any
-	slug: string
+	teamId: any
 }
 
 class RemoveMemberButton extends React.Component<
-	ChildMutateProps<IProps, removeChannelMemberMutation, removeChannelMemberMutationVariables>
+	ChildMutateProps<IProps, RemoveTeamMemberMutation, RemoveTeamMemberVariables>
 > {
 	_removeMember = async () => {
-		const { mutate, channelId, member, slug } = this.props
+		const { mutate, teamId, member } = this.props
 
 		await mutate({
 			variables: {
-				channelId,
+				teamId,
 				userId: member.id
-			},
-			refetchQueries: [
-				{
-					query: SHOW_TEAM_QUERY,
-					variables: {
-						teamSlug: slug
-					}
-				}
-			]
+			}
 		})
 	}
 
@@ -65,4 +56,4 @@ class RemoveMemberButton extends React.Component<
 	}
 }
 
-export default graphql<IProps>(REMOVE_CHANNEL_MEMBER)(RemoveMemberButton as any)
+export default graphql<IProps>(REMOVE_TEAM_MEMBER)(RemoveMemberButton as any)

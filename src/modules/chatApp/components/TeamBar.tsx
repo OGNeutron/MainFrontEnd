@@ -7,11 +7,12 @@ import { TeamBarLayout } from '../styles'
 import CreateChannelModal from '../views/modal/CreateChannelModal'
 import { IChannel } from '../types'
 import { USER_SEARCH } from '../../shared/graphql/server'
-import { ADD_TEAM_MEMBER } from '../graphql/server'
+import { ADD_TEAM_MEMBER, SHOW_TEAM_QUERY } from '../graphql/server'
 import {
 	AddTeamMemberMutation,
 	AddTeamMemberMutationVariables
 } from '../../../operation-result-types'
+import RemoveMemberButton from '../views/RemoveTeamMember'
 
 interface IProps {
 	showTeam: {
@@ -43,11 +44,33 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 	): Promise<void> => {
 		const { key } = this.state
 
+		const {
+			showTeam: { slug }
+		} = this.props
+
 		await mutate({
 			variables: {
 				userId: key,
 				teamId: this.props.showTeam.id
-			}
+			},
+			refetchQueries: [
+				{
+					query: SHOW_TEAM_QUERY,
+					variables: {
+						teamSlug: slug
+					}
+				}
+			]
+			// update(cache, { data }) {
+			// 	console.log('DATA', data)
+			// 	const cacheData = cache.readQuery({
+			// 		query: SHOW_TEAM_QUERY,
+			// 		variables: {
+			// 			teamSlug: slug
+			// 		}
+			// 	})
+			// 	console.log('CACHE DATA', cacheData)
+			// }
 		})
 	}
 
@@ -91,12 +114,13 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 								})
 								.filter(user => user.value !== admin)
 								.filter(user => {
+									const users: any = []
 									for (const member of members) {
-										if (member.username === user.value) {
-											return user.value !== member.username
+										if (member.username !== user.member) {
+											users.push(user)
 										}
 									}
-									return null
+									return users
 								})
 
 							// const combineArrays = usernames.concat(members)
@@ -145,19 +169,27 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 									</List.Item>
 									{members.map(member => (
 										<List.Item key={member.id}>
-											<Link to={`/profile/${member.username}`}>
-												{this.props.showTeam.author.online == true ? (
-													<Icon
-														style={{
-															color: 'green'
-														}}
-														name="circle"
-													/>
-												) : (
-													<Icon name="circle" />
-												)}
-												{member.username}
-											</Link>
+											<List.Content floated="right">
+												<RemoveMemberButton
+													teamId={teamId}
+													member={member}
+												/>
+											</List.Content>
+											<List.Content>
+												<Link to={`/profile/${member.username}`}>
+													{this.props.showTeam.author.online == true ? (
+														<Icon
+															style={{
+																color: 'green'
+															}}
+															name="circle"
+														/>
+													) : (
+														<Icon name="circle" />
+													)}
+													{member.username}
+												</Link>
+											</List.Content>
 										</List.Item>
 									))}
 								</List>

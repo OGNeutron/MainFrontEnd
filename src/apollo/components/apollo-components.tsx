@@ -1920,6 +1920,49 @@ export type ChannelMessageSubscriptionAvatarUrl = {
 	url: string
 }
 
+export type RemoveTeamMemberVariables = {
+	teamId: string
+	userId: string
+}
+
+export type RemoveTeamMemberMutation = {
+	__typename?: 'Mutation'
+
+	removeTeamMember: Maybe<RemoveTeamMemberRemoveTeamMember>
+}
+
+export type RemoveTeamMemberRemoveTeamMember = {
+	__typename?: 'Team'
+
+	id: string
+
+	name: string
+
+	slug: string
+
+	author: RemoveTeamMemberAuthor
+
+	members: Maybe<RemoveTeamMemberMembers[]>
+}
+
+export type RemoveTeamMemberAuthor = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+}
+
+export type RemoveTeamMemberMembers = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+
+	email: string
+}
+
 export type RemoveChannelMemberMutationVariables = {
 	channelId: string
 	userId: string
@@ -3754,6 +3797,61 @@ export function ChannelMessageSubscriptionHOC<TProps, TChildProps = any>(
 		ChannelMessageSubscriptionVariables,
 		ChannelMessageSubscriptionProps<TChildProps>
 	>(ChannelMessageSubscriptionDocument, operationOptions)
+}
+export const RemoveTeamMemberDocument = gql`
+	mutation RemoveTeamMember($teamId: ID!, $userId: ID!) {
+		removeTeamMember(teamId: $teamId, userId: $userId) {
+			id
+			name
+			slug
+			author {
+				id
+				username
+			}
+			members {
+				id
+				username
+				email
+			}
+		}
+	}
+`
+export class RemoveTeamMemberComponent extends React.Component<
+	Partial<ReactApollo.MutationProps<RemoveTeamMemberMutation, RemoveTeamMemberVariables>>
+> {
+	render() {
+		return (
+			<ReactApollo.Mutation<RemoveTeamMemberMutation, RemoveTeamMemberVariables>
+				mutation={RemoveTeamMemberDocument}
+				{...(this as any)['props'] as any}
+			/>
+		)
+	}
+}
+export type RemoveTeamMemberProps<TChildProps = any> = Partial<
+	ReactApollo.MutateProps<RemoveTeamMemberMutation, RemoveTeamMemberVariables>
+> &
+	TChildProps
+export type RemoveTeamMemberMutationFn = ReactApollo.MutationFn<
+	RemoveTeamMemberMutation,
+	RemoveTeamMemberVariables
+>
+export function RemoveTeamMemberHOC<TProps, TChildProps = any>(
+	operationOptions:
+		| ReactApollo.OperationOption<
+				TProps,
+				RemoveTeamMemberMutation,
+				RemoveTeamMemberVariables,
+				RemoveTeamMemberProps<TChildProps>
+		  >
+		| undefined
+) {
+	return ReactApollo.graphql<
+		TProps,
+		RemoveTeamMemberMutation,
+		RemoveTeamMemberVariables,
+		RemoveTeamMemberProps<TChildProps>
+	>(RemoveTeamMemberDocument, operationOptions)
 }
 export const RemoveChannelMemberMutationDocument = gql`
 	mutation removeChannelMemberMutation($channelId: ID!, $userId: ID!) {

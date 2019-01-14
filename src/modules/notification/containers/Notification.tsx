@@ -1,11 +1,17 @@
 import * as React from 'react'
 
+import styled from 'styled-components'
+
 import { Feed, Segment } from 'semantic-ui-react'
 import { ChildDataProps, WithApolloClient } from 'react-apollo'
 import { FetchNotificationsComponent } from '../../../apollo/components/apollo-components'
 
 import { Observable } from 'apollo-client/util/Observable'
 import { NotificationFeed } from '../components/NotificationFeed'
+
+const Splash = styled.div`
+	color: black;
+`
 
 interface IProps {
 	id: string
@@ -119,7 +125,7 @@ class NotificationContainer extends React.PureComponent<
 										}
 									})
 								) : (
-									<div>Currently no notifications</div>
+									<Splash>Currently no notifications</Splash>
 								)}
 							</Feed>
 						) : null

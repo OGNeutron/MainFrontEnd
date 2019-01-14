@@ -1,5 +1,5 @@
 import * as React from 'react'
-// import Downshift from 'downshift'
+import Downshift from 'downshift'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Dropdown, Button } from 'semantic-ui-react'
 import { DataProps, compose } from 'react-apollo'
@@ -19,6 +19,7 @@ interface IProps extends Partial<RouteComponentProps<IHistory>> {
 	history: any
 	mutate?: (variables: {}) => void
 	currentUser: IUser
+	// onChange?: () => any
 }
 
 interface IState {
@@ -81,63 +82,59 @@ class UserSearch extends React.Component<DataProps<IProps, IState> & IProps> {
 					/>
 					{value !== '' ? <Button onClick={this._handleClick}>{value}</Button> : null}
 				</div>
+				<Downshift
+					onChange={selection => alert(`You selected ${selection.value}`)}
+					itemToString={(item: any) => (item ? item.value : '')}
+				>
+					{({
+						getInputProps,
+						getItemProps,
+						getLabelProps,
+						getMenuProps,
+						isOpen,
+						inputValue,
+						highlightedIndex,
+						selectedItem
+					}) => (
+						<div>
+							<label {...getLabelProps()}>Search User</label>
+							<input {...getInputProps()} />
+							<ul {...getMenuProps()}>
+								{isOpen
+									? this.props.data.queryUsers ||
+									  []
+											.filter(
+												(item: any) =>
+													!inputValue ||
+													item.username.includes(inputValue)
+											)
+											.map((item: any, index: any) => (
+												<li
+													{...getItemProps({
+														key: item.id,
+														index,
+														item,
+														style: {
+															backgroundColor:
+																highlightedIndex === index
+																	? 'lightgray'
+																	: 'white',
+															fontWeight:
+																selectedItem === item
+																	? 'bold'
+																	: 'normal'
+														}
+													})}
+												>
+													{item.username}
+												</li>
+											))
+									: null}
+							</ul>
+						</div>
+					)}
+				</Downshift>
 			</React.Fragment>
-
-			// <Downshift
-			// 	onChange={selection => alert(`You selected ${selection.value}`)}
-			// 	itemToString={(item: any) => (item ? item.value : '')}
-			// >
-			// 	{({
-			// 		getInputProps,
-			// 		getItemProps,
-			// 		getLabelProps,
-			// 		getMenuProps,
-			// 		isOpen,
-			// 		inputValue,
-			// 		highlightedIndex,
-			// 		selectedItem
-			// 	}) => (
-			// 		<div>
-			// 			<label {...getLabelProps()}>Enter a fruit</label>
-			// 			<input {...getInputProps()} />
-			// 			<ul {...getMenuProps()}>
-			// 				{isOpen
-			// 					? this.props.data.queryUsers
-			// 							.filter(
-			// 								(item: any) =>
-			// 									!inputValue ||
-			// 									item.username.includes(
-			// 										inputValue
-			// 									)
-			// 							)
-			// 							.map((item: any, index: any) => (
-			// 								<li
-			// 									{...getItemProps({
-			// 										key: item.id,
-			// 										index,
-			// 										item,
-			// 										style: {
-			// 											backgroundColor:
-			// 												highlightedIndex ===
-			// 												index
-			// 													? 'lightgray'
-			// 													: 'white',
-			// 											fontWeight:
-			// 												selectedItem ===
-			// 												item
-			// 													? 'bold'
-			// 													: 'normal'
-			// 										}
-			// 									})}
-			// 								>
-			// 									{item.username}
-			// 								</li>
-			// 							))
-			// 					: null}
-			// 			</ul>
-			// 		</div>
-			// 	)}
-			// </Downshift>
 		)
 	}
 }
