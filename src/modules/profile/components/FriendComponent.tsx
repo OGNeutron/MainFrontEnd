@@ -38,7 +38,6 @@ class FriendContainer extends React.PureComponent<
 	}
 
 	_subscribeFriendRequest = async () => {
-		console.log('MY PROPS', this.props)
 		this.props.data.subscribeToMore({
 			document: FRIEND_REQUEST_SUBSCRIPTION,
 			variables: {
@@ -90,9 +89,6 @@ class FriendContainer extends React.PureComponent<
 					variables: { username }
 				})
 
-				console.log(data)
-				console.log(addFriend)
-
 				data.getProfile.user.friend_requests.splice(
 					data.getProfile.user.friend_requests.findIndex((e: any) => e.id === id)
 				)
@@ -140,10 +136,7 @@ class FriendContainer extends React.PureComponent<
 	}
 
 	_handleChange = args => {
-		console.log(args)
 		// this.setState({ value: args.value })
-
-		console.log(this.props)
 
 		this.props.history.push(`/profile/${args.value}`)
 	}
@@ -206,7 +199,7 @@ class FriendContainer extends React.PureComponent<
 								</List>
 							</React.Fragment>
 						) : (
-							<h4>Just search for people to add</h4>
+							<h4 style={{ color: 'black' }}>Just search for people to add</h4>
 						)}
 					</Card.Content>
 				</Card>

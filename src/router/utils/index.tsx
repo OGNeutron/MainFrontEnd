@@ -31,8 +31,7 @@ class AuthRoute extends React.Component<
 			return null
 		}
 
-		console.log(this.props)
-		if (currentUser === null) {
+		if (currentUser === null || currentUser === undefined) {
 			return (
 				<Redirect
 					to={{
@@ -42,8 +41,6 @@ class AuthRoute extends React.Component<
 				/>
 			)
 		}
-
-		console.log('PROPS', this.props)
 
 		const Component = component
 

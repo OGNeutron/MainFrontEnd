@@ -57,12 +57,10 @@ const LoginContainer: React.FunctionComponent<RouteComponentProps<{}>> = ({
 								})
 
 								if (state && state.next) {
-									history.push(state.next)
-									return
+									return history.push(state.next)
 								}
 
-								history.push(`/profile/${username}`)
-								return
+								return history.push(`/profile/${username}`)
 							} else {
 								return false
 							}

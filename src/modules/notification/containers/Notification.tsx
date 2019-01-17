@@ -78,6 +78,28 @@ class NotificationContainer extends React.PureComponent<
 							<Feed>
 								{data.fetchNotifications.length > 0 ? (
 									data.fetchNotifications.map(notification => {
+										if (
+											notification.team !== null &&
+											notification.channel !== null
+										) {
+											const { createdAt } = notification.team
+											const { slug } = notification.channel
+
+											if (notification.message) {
+												return (
+													<NotificationFeed
+														id={notification.id}
+														key={notification.id}
+														teamUrl={`chat-app/${
+															notification.team.slug
+														}/${slug}`}
+														date={createdAt}
+														message={notification.message}
+													/>
+												)
+											}
+										}
+
 										if (notification.friend_requests !== null) {
 											const {
 												avatar_url: { url },

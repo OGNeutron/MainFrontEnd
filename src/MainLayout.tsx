@@ -76,53 +76,20 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 
 	render() {
 		let header
+		let userName = ''
 
 		const { currentTheme } = this.props
 
-		header = (
-			<Header
-				authorised={false}
-				sidePanel={true}
-				navBrand={{
-					title: 'MainSite',
-					icon: 'double-right'
-				}}
-				navItems={[
-					// {
-					// 	link: `/profile`,
-					// 	icon: 'user',
-					// 	tooltip: `${username}`,
-					// 	text: '',
-					// 	auth: true,
-					// 	children: []
-					// },
-					//
-					{
-						link: '/auth/login',
-						icon: 'sign in',
-						tooltip: 'login',
-						text: '',
-						auth: false
-					},
-					{
-						link: '/auth/register',
-						icon: 'add user',
-						tooltip: 'register',
-						text: '',
-						auth: false
+		if (this.props.currentUserServer.loading === false) {
+			if (this.props.currentUserServer.username) {
+				const {
+					currentUserServer: {
+						currentUser: { username }
 					}
-				]}
-			/>
-		)
-		if (
-			this.props.currentUserServer.loading === false &&
-			this.props.currentUserServer.currentUser
-		) {
-			const {
-				currentUserServer: {
-					currentUser: { username }
-				}
-			} = this.props
+				} = this.props
+
+				userName = username
+			}
 
 			header = (
 				<Header
@@ -165,14 +132,14 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 							auth: false
 						},
 						{
-							link: `/settings/${username || ''}`,
+							link: `/settings/${userName}`,
 							icon: 'setting',
 							tooltip: 'settings',
 							text: 'Settings',
 							auth: true
 						},
 						{
-							link: `/profile/${username || ''}`,
+							link: `/profile/${userName}`,
 							icon: 'user',
 							tooltip: 'profile',
 							text: 'Profile',

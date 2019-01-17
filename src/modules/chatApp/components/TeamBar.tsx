@@ -20,6 +20,7 @@ interface IProps {
 		slug: string
 		id: string
 	}
+	currentUser: any
 }
 
 class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
@@ -80,12 +81,18 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 		const teamId = this.props.showTeam.id
 		const members = this.props.showTeam.members
 		const admin = this.props.showTeam.author.username
+		const adminId = this.props.showTeam.author.id
 		const adminOnline =
 			this.props.showTeam.author.online == true ? (
 				<Icon style={{ color: 'green' }} name="circle" />
 			) : (
 				<Icon name="circle" />
 			)
+
+		const { currentUser } = this.props
+
+		console.log('CURRENTUSER', currentUser)
+
 		return (
 			<TeamBarLayout>
 				<h2>Team bar</h2>
@@ -129,34 +136,44 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 
 						return loading === false ? (
 							<React.Fragment>
-								<Dropdown
-									style={{ marginTop: '1rem' }}
-									onChange={this._handleChange}
-									placeholder="Search Users"
-									fluid
-									search
-									selection
-									options={users}
-								/>
+								{currentUser.id === adminId ? (
+									<React.Fragment>
+										<Dropdown
+											style={{ marginTop: '1rem' }}
+											onChange={this._handleChange}
+											placeholder="Search Users"
+											fluid
+											search
+											selection
+											options={users}
+										/>
 
-								{this.state.value !== undefined ? (
-									<Mutation<AddTeamMemberMutation, AddTeamMemberMutationVariables>
-										mutation={ADD_TEAM_MEMBER}
-									>
-										{mutate => {
-											return (
-												<Button
-													style={{
-														marginTop: '1rem'
-													}}
-													onClick={() => this._handleSubmit(mutate)}
-												>
-													Add User
-												</Button>
-											)
-										}}
-									</Mutation>
+										{this.state.value !== undefined ? (
+											<Mutation<
+												AddTeamMemberMutation,
+												AddTeamMemberMutationVariables
+											>
+												mutation={ADD_TEAM_MEMBER}
+											>
+												{mutate => {
+													return (
+														<Button
+															style={{
+																marginTop: '1rem'
+															}}
+															onClick={() =>
+																this._handleSubmit(mutate)
+															}
+														>
+															Add User
+														</Button>
+													)
+												}}
+											</Mutation>
+										) : null}
+									</React.Fragment>
 								) : null}
+
 								<Divider />
 								<List>
 									<h2>Team Members</h2>

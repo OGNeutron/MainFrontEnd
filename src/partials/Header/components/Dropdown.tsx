@@ -50,7 +50,6 @@ class DropDown extends React.PureComponent<IProps, IState> {
 				{this.state.open ? (
 					<DropDownContent className="dropdown-content">
 						{navItem.children.map((child: any) => {
-							console.log(child)
 							return (
 								<Link
 									to={child.link}

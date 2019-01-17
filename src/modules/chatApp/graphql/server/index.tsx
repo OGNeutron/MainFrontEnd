@@ -106,11 +106,13 @@ export const SHOW_TEAM_QUERY = gql`
 				author {
 					id
 					username
+					online
 				}
 				members {
 					id
 					username
 					email
+					online
 				}
 			}
 			createdAt

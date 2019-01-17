@@ -13,12 +13,13 @@ import { FETCH_NOTIFICATION_QUERY } from '../graphql/server'
 
 interface IProps {
 	id: string
-	avatar: string
-	username: string
+	avatar?: string
+	username?: string
 	date: string
 	message: string
 	friendRequestId?: string
 	friend?: any
+	teamUrl?: string
 }
 
 export const NotificationFeed: React.FunctionComponent<IProps> = ({
@@ -26,22 +27,35 @@ export const NotificationFeed: React.FunctionComponent<IProps> = ({
 	avatar,
 	message,
 	username,
-	date
+	date,
+	teamUrl
 	// friendRequestId
 }): JSX.Element => (
 	<Feed.Event>
-		<Feed.Label>
-			<img src={avatar} />
-		</Feed.Label>
+		{avatar !== undefined ? (
+			<Feed.Label>
+				<img src={avatar} />
+			</Feed.Label>
+		) : null}
+
 		<Feed.Content>
 			<Feed.Summary>
-				<Feed.User as={Link} to={`/profile/${username}`}>
-					{username}
-				</Feed.User>
+				{username !== undefined ? (
+					<Feed.User as={Link} to={`/profile/${username}`}>
+						{username}
+					</Feed.User>
+				) : null}
+
 				<Feed.Extra text>{message}</Feed.Extra>
+				{teamUrl !== undefined ? (
+					<Feed.Extra text>
+						<Link to={teamUrl}>{teamUrl}</Link>
+					</Feed.Extra>
+				) : null}
 				<Feed.Date>
 					<Moment fromNow date={new Date(date)} />
 				</Feed.Date>
+				<div />
 				<Feed.Meta>
 					<DeleteNotificationComponent>
 						{mutate => (

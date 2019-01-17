@@ -58,14 +58,19 @@ const ChatContainer: React.FunctionComponent<
 						}
 
 						return team !== undefined ? (
-							<React.Fragment>
-								<TeamBar showTeam={team} {...props} />
-								{channelId !== undefined ? (
-									<ChatComponent channelId={channelId} />
-								) : null}
-								<Query query={CURRENT_USER_QUERY_CLIENT}>
-									{({ loading, data }) => {
-										return loading === false ? (
+							<Query query={CURRENT_USER_QUERY_CLIENT}>
+								{({ loading, data }) => {
+									return loading === false &&
+										data.authorisedUser !== undefined ? (
+										<React.Fragment>
+											<TeamBar
+												currentUser={data.authorisedUser}
+												showTeam={team}
+												{...props}
+											/>
+											{channelId !== undefined ? (
+												<ChatComponent channelId={channelId} />
+											) : null}
 											<MemberBar
 												teamSlug={props.match.params.team}
 												currentUser={data.authorisedUser}
@@ -74,10 +79,10 @@ const ChatContainer: React.FunctionComponent<
 												{...props}
 												showTeam={team}
 											/>
-										) : null
-									}}
-								</Query>
-							</React.Fragment>
+										</React.Fragment>
+									) : null
+								}}
+							</Query>
 						) : null
 					}
 					return null

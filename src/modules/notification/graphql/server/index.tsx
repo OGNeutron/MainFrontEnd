@@ -64,6 +64,14 @@ export const NOTIFICATION_SUBSCRIPTION = gql`
 					createdAt
 					updatedAt
 				}
+				team {
+					id
+					slug
+				}
+				channel {
+					id
+					slug
+				}
 				friend_requests {
 					...FriendFragment
 					createdAt
@@ -115,6 +123,16 @@ export const FETCH_NOTIFICATION_QUERY = gql`
 				}
 				createdAt
 				updatedAt
+			}
+			team {
+				id
+				slug
+				createdAt
+			}
+			channel {
+				id
+				slug
+				createdAt
 			}
 			friend_requests {
 				...FriendFragment

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Downshift from 'downshift'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { QueryUsersComponent } from '../../../apollo/components/apollo-components'
 
@@ -9,7 +9,34 @@ const SearchLayout = styled.div`
 	margin-top: 1rem;
 `
 
-const SearchList = styled.ul``
+const SearchList = styled.ul`
+	margin-top: 1rem;
+	padding: 0.5rem 0;
+	/* border: 1px solid lightgrey; */
+`
+
+interface SearchItemProps {
+	highlighted: boolean
+	selected: boolean
+}
+
+const SearchItem = styled.li<SearchItemProps>`
+	${({ highlighted, selected }) => {
+		if (highlighted) {
+			return css`
+				background: mistyrose;
+			`
+		}
+		if (selected) {
+			return css`
+				background: linen;
+			`
+		}
+	}};
+	padding: 5px;
+	list-style: none;
+	text-decoration: none;
+`
 
 // const items: any[] = []
 
@@ -46,8 +73,6 @@ class UserSearch extends React.Component<IProps> {
 						users = []
 					}
 
-					console.log('USERS', users)
-
 					return loading === false ? (
 						<SearchLayout>
 							<Downshift
@@ -65,8 +90,24 @@ class UserSearch extends React.Component<IProps> {
 									selectedItem
 								}) => (
 									<div>
-										<label {...getLabelProps()}>Search User</label>
-										<input {...getInputProps()} />
+										<label
+											{...getLabelProps()}
+											style={{ display: 'block', color: 'black' }}
+										>
+											Search User
+										</label>
+										<input
+											{...getInputProps({
+												style: {
+													width: '100%',
+													borderRadius: '5px',
+													padding: '0.5rem',
+													outline: 'none',
+													boxShadow: 'none',
+													border: '1px solid rgba(34,36,38,.15)'
+												}
+											})}
+										/>
 										<SearchList {...getMenuProps()}>
 											{isOpen
 												? users
@@ -76,12 +117,23 @@ class UserSearch extends React.Component<IProps> {
 																item.value.includes(inputValue)
 														)
 														.map((item: any, index: any) => (
-															<li
+															<SearchItem
+																style={{
+																	zIndex: '100',
+																	color: 'black'
+																}}
+																selected={selectedItem === item}
+																highlighted={
+																	highlightedIndex === index
+																}
 																{...getItemProps({
 																	key: item.key,
 																	index,
 																	item,
 																	style: {
+																		listStyle: 'none',
+																		color: 'black',
+
 																		backgroundColor:
 																			highlightedIndex ===
 																			index
@@ -95,7 +147,7 @@ class UserSearch extends React.Component<IProps> {
 																})}
 															>
 																{item.value}
-															</li>
+															</SearchItem>
 														))
 												: null}
 										</SearchList>

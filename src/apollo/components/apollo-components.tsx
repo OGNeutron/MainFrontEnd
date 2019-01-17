@@ -61,6 +61,10 @@ export interface NotificationWhereInput {
 
 	messages?: Maybe<MessageWhereInput>
 
+	team?: Maybe<TeamWhereInput>
+
+	channel?: Maybe<ChannelWhereInput>
+
 	friend_requests?: Maybe<UserWhereInput>
 
 	friend?: Maybe<UserWhereInput>
@@ -1071,6 +1075,34 @@ export interface ChannelWhereInput {
 
 	messages_none?: Maybe<MessageWhereInput>
 
+	teamId?: Maybe<string>
+
+	teamId_not?: Maybe<string>
+
+	teamId_in?: Maybe<string[]>
+
+	teamId_not_in?: Maybe<string[]>
+
+	teamId_lt?: Maybe<string>
+
+	teamId_lte?: Maybe<string>
+
+	teamId_gt?: Maybe<string>
+
+	teamId_gte?: Maybe<string>
+
+	teamId_contains?: Maybe<string>
+
+	teamId_not_contains?: Maybe<string>
+
+	teamId_starts_with?: Maybe<string>
+
+	teamId_not_starts_with?: Maybe<string>
+
+	teamId_ends_with?: Maybe<string>
+
+	teamId_not_ends_with?: Maybe<string>
+
 	members_every?: Maybe<UserWhereInput>
 
 	members_some?: Maybe<UserWhereInput>
@@ -1675,6 +1707,8 @@ export enum ChannelOrderByInput {
 	SlugDesc = 'slug_DESC',
 	PublicAsc = 'public_ASC',
 	PublicDesc = 'public_DESC',
+	TeamIdAsc = 'teamId_ASC',
+	TeamIdDesc = 'teamId_DESC',
 	CreatedAtAsc = 'createdAt_ASC',
 	CreatedAtDesc = 'createdAt_DESC',
 	UpdatedAtAsc = 'updatedAt_ASC',
@@ -2134,6 +2168,8 @@ export type ShowTeamQuery_Author = {
 	id: string
 
 	username: string
+
+	online: boolean
 }
 
 export type ShowTeamQuery_Members = {
@@ -2144,6 +2180,8 @@ export type ShowTeamQuery_Members = {
 	username: string
 
 	email: string
+
+	online: boolean
 }
 
 export type ShowChannelQueryVariables = {
@@ -2686,6 +2724,10 @@ export type NotificationSubscriptionNode = {
 
 	messages: Maybe<NotificationSubscriptionMessages>
 
+	team: Maybe<NotificationSubscriptionTeam>
+
+	channel: Maybe<NotificationSubscriptionChannel>
+
 	friend_requests: Maybe<NotificationSubscriptionFriendRequests>
 
 	friend: Maybe<NotificationSubscriptionFriend>
@@ -2725,6 +2767,22 @@ export type NotificationSubscriptionAvatarUrl = {
 	__typename?: 'File'
 
 	url: string
+}
+
+export type NotificationSubscriptionTeam = {
+	__typename?: 'Team'
+
+	id: string
+
+	slug: string
+}
+
+export type NotificationSubscriptionChannel = {
+	__typename?: 'Channel'
+
+	id: string
+
+	slug: string
 }
 
 export type NotificationSubscriptionFriendRequests = {
@@ -2788,6 +2846,10 @@ export type FetchNotificationsFetchNotifications = {
 
 	messages: Maybe<FetchNotificationsMessages>
 
+	team: Maybe<FetchNotificationsTeam>
+
+	channel: Maybe<FetchNotificationsChannel>
+
 	friend_requests: Maybe<FetchNotificationsFriendRequests>
 
 	friend: Maybe<FetchNotificationsFriend>
@@ -2827,6 +2889,26 @@ export type FetchNotificationsAvatarUrl = {
 	__typename?: 'File'
 
 	url: string
+}
+
+export type FetchNotificationsTeam = {
+	__typename?: 'Team'
+
+	id: string
+
+	slug: string
+
+	createdAt: DateTime
+}
+
+export type FetchNotificationsChannel = {
+	__typename?: 'Channel'
+
+	id: string
+
+	slug: string
+
+	createdAt: DateTime
 }
 
 export type FetchNotificationsFriendRequests = {
@@ -3964,11 +4046,13 @@ export const ShowTeamQueryDocument = gql`
 				author {
 					id
 					username
+					online
 				}
 				members {
 					id
 					username
 					email
+					online
 				}
 			}
 			createdAt
@@ -4798,6 +4882,14 @@ export const NotificationSubscriptionDocument = gql`
 					createdAt
 					updatedAt
 				}
+				team {
+					id
+					slug
+				}
+				channel {
+					id
+					slug
+				}
 				friend_requests {
 					...FriendFragment
 					createdAt
@@ -4926,6 +5018,16 @@ export const FetchNotificationsDocument = gql`
 				}
 				createdAt
 				updatedAt
+			}
+			team {
+				id
+				slug
+				createdAt
+			}
+			channel {
+				id
+				slug
+				createdAt
 			}
 			friend_requests {
 				...FriendFragment
