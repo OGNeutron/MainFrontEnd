@@ -107,14 +107,7 @@ class MemberBar extends React.PureComponent<
 
 			memberList =
 				channelsMembers.members.length !== 0 ? (
-					<List>
-						<List.Item>
-							ADMIN:{' '}
-							<Link to={`/profile/${channelsMembers.author.username}`}>
-								<span>{adminOnline}</span>
-								{channelsMembers.author.username}
-							</Link>
-						</List.Item>
+					<React.Fragment>
 						{channelsMembers.members.map(member => (
 							<List.Item key={member.id}>
 								<Grid>
@@ -145,28 +138,39 @@ class MemberBar extends React.PureComponent<
 								</Grid>
 							</List.Item>
 						))}
-					</List>
+					</React.Fragment>
 				) : null
-		}
 
-		return (
-			<MemberBarLayout>
-				<h2>Channel Members</h2>
-				<Dropdown
-					onChange={this._handleChange}
-					placeholder="Search Users"
-					fluid
-					search
-					selection
-					options={users}
-				/>
-				{user.value !== '' ? (
-					<Button onClick={this._handleClick}>{user.value}</Button>
-				) : null}
-				<Divider />
-				{memberList}
-			</MemberBarLayout>
-		)
+			return (
+				<MemberBarLayout>
+					<h2>Channel Members</h2>
+					<Dropdown
+						onChange={this._handleChange}
+						placeholder="Search Users"
+						fluid
+						search
+						selection
+						options={users}
+					/>
+					{user.value !== '' ? (
+						<Button onClick={this._handleClick}>{user.value}</Button>
+					) : null}
+					<Divider />
+					<List>
+						<List.Item>
+							ADMIN:{' '}
+							<Link to={`/profile/${channelsMembers.author.username}`}>
+								<span>{adminOnline}</span>
+								{channelsMembers.author.username}
+							</Link>
+						</List.Item>
+					</List>
+					{memberList}
+				</MemberBarLayout>
+			)
+		} else {
+			return null
+		}
 	}
 }
 

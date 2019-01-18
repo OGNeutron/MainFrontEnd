@@ -74,11 +74,13 @@ export const NOTIFICATION_SUBSCRIPTION = gql`
 				}
 				friend_requests {
 					...FriendFragment
+					username
 					createdAt
 					updatedAt
 				}
 				friend {
 					...FriendFragment
+					username
 					createdAt
 					updatedAt
 				}
@@ -135,7 +137,7 @@ export const FETCH_NOTIFICATION_QUERY = gql`
 				createdAt
 			}
 			friend_requests {
-				...FriendFragment
+				username
 				avatar_url {
 					url
 				}
@@ -143,7 +145,7 @@ export const FETCH_NOTIFICATION_QUERY = gql`
 				updatedAt
 			}
 			friend {
-				...FriendFragment
+				username
 				avatar_url {
 					url
 				}

@@ -8,8 +8,8 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { FriendsLayout } from '../styles'
 import { ADD_FRIEND_MUTATION, REJECT_FREIND_MUTATION, GET_PROFILE_QUERY } from '../graphql/server'
 // import UserSearch from '../../shared/components/UserSearch'
-import { toast } from 'react-toastify'
-import { FRIEND_REQUEST_SUBSCRIPTION } from '../../notification/graphql/server'
+// import { toast } from 'react-toastify'
+// import { FRIEND_REQUEST_SUBSCRIPTION } from '../../notification/graphql/server'
 
 import UserSearchTwo from '../../shared/components/UserSearch2'
 
@@ -33,49 +33,51 @@ class FriendContainer extends React.PureComponent<
 		value: ''
 	}
 
-	async componentDidMount() {
-		await this._subscribeFriendRequest()
-	}
+	// async componentDidMount() {
+	// 	await this._subscribeFriendRequest()
+	// }
 
-	_subscribeFriendRequest = async () => {
-		this.props.data.subscribeToMore({
-			document: FRIEND_REQUEST_SUBSCRIPTION,
-			variables: {
-				id: this.props.currentUser.id
-			},
-			updateQuery(previousResult, { subscriptionData }) {
-				if (!subscriptionData.data) return previousResult
+	// _subscribeFriendRequest = async () => {
+	// 	this.props.data.subscribeToMore({
+	// 		document: FRIEND_REQUEST_SUBSCRIPTION,
+	// 		variables: {
+	// 			id: this.props.currentUser.id
+	// 		},
+	// 		updateQuery(previousResult, { subscriptionData }) {
+	// 			if (!subscriptionData.data) return previousResult
 
-				const currentFriendRequest = previousResult.getProfile.user.friend_requests
-				const newFriendRequest =
-					subscriptionData.data.friendRequestSubscription.node.friend_requests
+	// 			console.log('SUBSCRIPTION_DATA', subscriptionData)
 
-				const friend_requests = [...currentFriendRequest, ...newFriendRequest]
+	// 			const currentFriendRequest = previousResult.getProfile.user.friend_requests
+	// 			const newFriendRequest =
+	// 				subscriptionData.data.friendRequestSubscription.node.friend_requests
 
-				if (friend_requests.length <= 0) {
-					return previousResult
-				}
+	// 			const friend_requests = [...currentFriendRequest, ...newFriendRequest]
 
-				if (currentFriendRequest.some(fr => fr.id === newFriendRequest[0].id)) {
-					return previousResult
-				}
+	// 			if (friend_requests.length <= 0) {
+	// 				return previousResult
+	// 			}
 
-				if (!currentFriendRequest.some(fr => fr.id === newFriendRequest[0].id)) {
-					toast(`Friend Request from ${newFriendRequest[0].username}`)
-				}
+	// 			if (currentFriendRequest.some(fr => fr.id === newFriendRequest[0].id)) {
+	// 				return previousResult
+	// 			}
 
-				return {
-					getProfile: {
-						...previousResult.getProfile,
-						user: {
-							...previousResult.getProfile.user,
-							friend_requests: [...friend_requests]
-						}
-					}
-				}
-			}
-		}) as any
-	}
+	// 			if (!currentFriendRequest.some(fr => fr.id === newFriendRequest[0].id)) {
+	// 				toast(`Friend Request from ${newFriendRequest[0].username}`)
+	// 			}
+
+	// 			return {
+	// 				getProfile: {
+	// 					...previousResult.getProfile,
+	// 					user: {
+	// 						...previousResult.getProfile.user,
+	// 						friend_requests: [...friend_requests]
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}) as any
+	// }
 
 	_addFriend = async (id: any) => {
 		const username = this.props.currentUser.username
@@ -161,7 +163,9 @@ class FriendContainer extends React.PureComponent<
 									<List>
 										{user.friend_requests.map(request => (
 											<List.Item key={request.id}>
-												{request.username}
+												<span style={{ color: 'black' }}>
+													{request.username}
+												</span>
 												<Button onClick={() => this._addFriend(request.id)}>
 													Accept
 												</Button>

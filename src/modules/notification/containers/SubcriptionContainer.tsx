@@ -38,15 +38,19 @@ class SubscriptionContainer extends React.PureComponent<
 			updateQuery(previousResult, { subscriptionData }) {
 				if (!subscriptionData.data) return previousResult
 
-				previousResult.fetchNotifications.unshift(
-					subscriptionData.data.NotificationSubscription.node
-				)
+				if (previousResult.fetchNotifications !== undefined) {
+					previousResult.fetchNotifications.unshift(
+						subscriptionData.data.NotificationSubscription.node
+					)
+				}
+
+				const subscriptionD = subscriptionData.data.NotificationSubscription
 
 				if (
-					subscriptionData.data.NotificationSubscription.node.friend_requests !==
-					undefined
+					subscriptionD.node.friend_requests !== undefined &&
+					subscriptionD.node.friend_requests !== null
 				) {
-					const cacheData: Maybe<
+					const cacheGetProfileData: Maybe<
 						GetProfileQueryQuery
 					> = they.props.client.cache.readQuery({
 						query: GET_PROFILE_QUERY,
@@ -55,10 +59,14 @@ class SubscriptionContainer extends React.PureComponent<
 						}
 					})
 
-					if (cacheData !== null && cacheData.getProfile !== null) {
-						//@ts-ignore
-						cacheData.getProfile.user.friend_requests.unshift(
-							subscriptionData.data.NotificationSubscription.node
+					if (
+						cacheGetProfileData !== null &&
+						cacheGetProfileData.getProfile !== null &&
+						cacheGetProfileData.getProfile.user !== null &&
+						cacheGetProfileData.getProfile.user.friend_requests !== null
+					) {
+						cacheGetProfileData.getProfile.user.friend_requests.unshift(
+							subscriptionData.data.NotificationSubscription.node.friend_requests
 						)
 					}
 
@@ -67,9 +75,30 @@ class SubscriptionContainer extends React.PureComponent<
 						variables: {
 							username: they.props.username
 						},
-						data: cacheData
+						data: cacheGetProfileData
 					})
 				}
+
+				// if (subscriptionD.node.team !== null) {
+				// 	const cacheData: Maybe<
+				// 		FetchNotificationsQuery
+				// 	> = they.props.client.cache.readQuery({
+				// 		query: FETCH_NOTIFICATION_QUERY
+				// 	})
+
+				// 	console.log('CACHEDATA', cacheData)
+
+				// 	if (cacheData !== null && cacheData.fetchNotifications !== null) {
+				// 		cacheData.fetchNotifications.unshift(
+				// 			subscriptionData.data.NotificationSubscription.node
+				// 		)
+				// 	}
+
+				// 	they.props.client.writeQuery({
+				// 		query: FETCH_NOTIFICATION_QUERY,
+				// 		data: cacheData
+				// 	})
+				// }
 
 				toast(subscriptionData.data.NotificationSubscription.node.message)
 				return previousResult

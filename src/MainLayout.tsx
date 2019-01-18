@@ -75,187 +75,101 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 	}
 
 	render() {
+		console.log('PROPS', this.props)
 		let header
-		let userName = ''
+		let username = this.props.currentUser.authorisedUser.username
 
 		const { currentTheme } = this.props
 
-		if (this.props.currentUserServer.loading === false) {
-			if (this.props.currentUserServer.currentUser.username) {
-				const {
-					currentUserServer: {
-						currentUser: { username }
+		header = (
+			<Header
+				authorised={this.props.currentUser.authorisedUser.loggedIn}
+				sidePanel={true}
+				navBrand={{
+					title: 'MainSite',
+					icon: 'double-right'
+				}}
+				navItems={[
+					// {
+					// 	link: `/profile`,
+					// 	icon: 'user',
+					// 	tooltip: `${username}`,
+					// 	text: '',
+					// 	auth: true,
+					// 	children: []
+					// },
+					{
+						link: '/auth/login',
+						icon: 'sign in',
+						tooltip: 'login',
+						text: '',
+						auth: false
+					},
+					{
+						link: '/notifications',
+						icon: 'tasks',
+						tooltip: 'notifications',
+						text: '',
+						auth: true,
+						badge: true,
+						count: 1
+					},
+					{
+						link: '/auth/register',
+						icon: 'add user',
+						tooltip: 'register',
+						text: '',
+						auth: false
+					},
+					{
+						link: `/settings/${username || ''}`,
+						icon: 'setting',
+						tooltip: 'settings',
+						text: 'Settings',
+						auth: true
+					},
+					{
+						link: `/profile/${username || ''}`,
+						icon: 'user',
+						tooltip: 'profile',
+						text: 'Profile',
+						auth: true
+					},
+
+					{
+						link: '/auth/login',
+						icon: 'sign out',
+						tooltip: 'logout',
+						text: '',
+						auth: true,
+						onClickEvent: this._logout
 					}
-                } = this.props
-                
-                header = (
-                    <Header
-                        authorised={this.props.currentUser.authorisedUser.loggedIn}
-                        sidePanel={true}
-                        navBrand={{
-                            title: 'MainSite',
-                            icon: 'double-right'
-                        }}
-                        navItems={[
-                            // {
-                            // 	link: `/profile`,
-                            // 	icon: 'user',
-                            // 	tooltip: `${username}`,
-                            // 	text: '',
-                            // 	auth: true,
-                            // 	children: []
-                            // },
-                            {
-                                link: '/auth/login',
-                                icon: 'sign in',
-                                tooltip: 'login',
-                                text: '',
-                                auth: false
-                            },
-                            {
-                                link: '/notifications',
-                                icon: 'tasks',
-                                tooltip: 'notifications',
-                                text: '',
-                                auth: true,
-                                badge: true,
-                                count: 1
-                            },
-                            {
-                                link: '/auth/register',
-                                icon: 'add user',
-                                tooltip: 'register',
-                                text: '',
-                                auth: false
-                            },
-                            {
-                                link: `/settings/${username}`,
-                                icon: 'setting',
-                                tooltip: 'settings',
-                                text: 'Settings',
-                                auth: true
-                            },
-                            {
-                                link: `/profile/${username}`,
-                                icon: 'user',
-                                tooltip: 'profile',
-                                text: 'Profile',
-                                auth: true
-                            },
-    
-                            {
-                                link: '/auth/login',
-                                icon: 'sign out',
-                                tooltip: 'logout',
-                                text: '',
-                                auth: true,
-                                onClickEvent: this._logout
-                            }
-                        ]}
-                    />
-                )
+				]}
+			/>
+		)
 
-			} else {
-                header = (
-                    <Header
-                        authorised={this.props.currentUser.authorisedUser.loggedIn}
-                        sidePanel={true}
-                        navBrand={{
-                            title: 'MainSite',
-                            icon: 'double-right'
-                        }}
-                        navItems={[
-                            // {
-                            // 	link: `/profile`,
-                            // 	icon: 'user',
-                            // 	tooltip: `${username}`,
-                            // 	text: '',
-                            // 	auth: true,
-                            // 	children: []
-                            // },
-                            {
-                                link: '/auth/login',
-                                icon: 'sign in',
-                                tooltip: 'login',
-                                text: '',
-                                auth: false
-                            },
-                            {
-                                link: '/notifications',
-                                icon: 'tasks',
-                                tooltip: 'notifications',
-                                text: '',
-                                auth: true,
-                                badge: true,
-                                count: 1
-                            },
-                            {
-                                link: '/auth/register',
-                                icon: 'add user',
-                                tooltip: 'register',
-                                text: '',
-                                auth: false
-                            },
-                            
-                        ]}
-                    />
-                )
-            }
+		return (
+			<ThemeProvider theme={theme[(currentTheme.clientTheme.theme as any) || 'light']}>
+				<React.Fragment>
+					{this.props.currentUser.authorisedUser.id !== '' ? (
+						<React.Fragment>
+							<SubscriptionContainer
+								username={this.props.currentUser.authorisedUser.username}
+								id={this.props.currentUser.authorisedUser.id}
+							/>
 
-			console.log(userName)
+							<ToastContainer
+								autoClose={5000}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								draggable
+							/>
+						</React.Fragment>
+					) : null}
 
-			
-			return (
-				<ThemeProvider theme={theme[(currentTheme.clientTheme.theme as any) || 'light']}>
-					<React.Fragment>
-						{this.props.currentUser.authorisedUser.id !== '' ? (
-							<React.Fragment>
-								<SubscriptionContainer
-									username={this.props.currentUser.authorisedUser.username}
-									id={this.props.currentUser.authorisedUser.id}
-								/>
-
-								<ToastContainer
-									autoClose={5000}
-									newestOnTop={false}
-									closeOnClick
-									rtl={false}
-									draggable
-								/>
-							</React.Fragment>
-						) : null}
-
-						<GlobalStyle theme={theme[currentTheme.clientTheme.theme]} />
-						<MainLayoutStyle>
-							<Helmet>
-								<meta charSet="utf-8" />
-								<title>MainSite</title>
-								<meta name="universal app" content="stuff happens" />
-							</Helmet>
-							{header}
-							<Container width="80%">
-								<Routes />
-							</Container>
-						</MainLayoutStyle>
-						{/* <Footer /> */}
-					</React.Fragment>
-				</ThemeProvider>
-			)
-		} else {
-			return this.props.currentUserServer.loading === false ? (
-				<ThemeProvider theme={theme[currentTheme.clientTheme.theme as any] || {}}>
+					<GlobalStyle theme={theme[currentTheme.clientTheme.theme]} />
 					<MainLayoutStyle>
-						<ToastContainer
-							autoClose={5000}
-							newestOnTop={false}
-							closeOnClick
-							rtl={false}
-							draggable
-						/>
-						<SubscriptionContainer
-							username={this.props.currentUser.authorisedUser.username}
-							id={this.props.currentUser.authorisedUser.id}
-						/>
 						<Helmet>
 							<meta charSet="utf-8" />
 							<title>MainSite</title>
@@ -265,11 +179,11 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 						<Container width="80%">
 							<Routes />
 						</Container>
-						{/* <Footer /> */}
 					</MainLayoutStyle>
-				</ThemeProvider>
-			) : null
-		}
+					{/* <Footer /> */}
+				</React.Fragment>
+			</ThemeProvider>
+		)
 	}
 }
 
