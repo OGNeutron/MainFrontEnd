@@ -9,20 +9,6 @@ import { CurrentUserQueryQuery } from '../../apollo/components/apollo-components
 class AuthRoute extends React.Component<
 	ChildMutateProps<ChildDataProps<RouteProps, CurrentUserQueryQuery>> & RouteComponentProps<{}>
 > {
-	componentDidMount() {
-		const { currentUser } = this.props.data
-
-		if (currentUser) {
-			this.props.mutate({
-				variables: {
-					username: currentUser.username,
-					id: currentUser.id,
-					loggedIn: true
-				}
-			})
-		}
-	}
-
 	render() {
 		const { currentUser, loading } = this.props.data
 		const { path, component } = this.props
@@ -41,6 +27,14 @@ class AuthRoute extends React.Component<
 				/>
 			)
 		}
+
+		this.props.mutate({
+			variables: {
+				username: currentUser.username,
+				id: currentUser.id,
+				loggedIn: true
+			}
+		})
 
 		const Component = component
 
