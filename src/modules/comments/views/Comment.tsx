@@ -17,6 +17,7 @@ interface IProps {
 	toggleEdit: () => void
 	deleteComment: () => void
 	currentUser: IUser
+	pageId: string
 }
 
 const CommentView: React.FunctionComponent<IProps> = ({
@@ -24,7 +25,8 @@ const CommentView: React.FunctionComponent<IProps> = ({
 	editOpen,
 	toggleEdit,
 	deleteComment,
-	currentUser
+	currentUser,
+	pageId
 }): JSX.Element => (
 	<Comment as="span" key={comment.id}>
 		<Comment.Content
@@ -33,14 +35,12 @@ const CommentView: React.FunctionComponent<IProps> = ({
 			}}
 		>
 			<Comment.Author as="span">
-				<Link to={`/profile/${comment.author.username}`}>
-					{comment.author.username}
-				</Link>
+				<Link to={`/profile/${comment.author.username}`}>{comment.author.username}</Link>
 			</Comment.Author>
 			<Comment.Metadata>
 				<CommentListLayout>
 					<Moment fromNow date={new Date(comment.createdAt)} />
-					<LikeComment id={comment.id} />
+					<LikeComment pageId={pageId} id={comment.id} />
 					<span>{comment.ratings.vote}</span>
 				</CommentListLayout>
 			</Comment.Metadata>
@@ -64,7 +64,7 @@ const CommentView: React.FunctionComponent<IProps> = ({
 			) : null}
 		</Comment.Content>
 		<Comment.Group>
-			<ReplyComments parentComment={comment} replies={comment.replies} />
+			<ReplyComments pageId={pageId} parentComment={comment} replies={comment.replies} />
 		</Comment.Group>
 	</Comment>
 )

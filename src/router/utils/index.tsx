@@ -5,6 +5,7 @@ import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-d
 import { CURRENT_USER_QUERY } from '../../utils/graphql/server'
 import { AUTHORISE_USER } from '../../modules/authentication/graphql/client'
 import { CurrentUserQueryQuery } from '../../apollo/components/apollo-components'
+import { Spinner } from '../../utils/components/animations/loader'
 
 class AuthRoute extends React.Component<
 	ChildMutateProps<ChildDataProps<RouteProps, CurrentUserQueryQuery>> & RouteComponentProps<{}>
@@ -36,10 +37,18 @@ class AuthRoute extends React.Component<
 			}
 		})
 
-		const Component = component
+		const Component = component as any
 
-		// @ts-ignore
-		return <Route path={this.props.path} render={(props: any) => <Component {...props} />} />
+		return (
+			<Route
+				path={this.props.path}
+				render={(props: any) => (
+					<React.Suspense fallback={Spinner}>
+						<Component {...props} />
+					</React.Suspense>
+				)}
+			/>
+		)
 	}
 }
 

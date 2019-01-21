@@ -9,6 +9,7 @@ import { MyCommentFragmentFragment } from '../../../apollo/components/apollo-com
 interface IProps {
 	comment: MyCommentFragmentFragment
 	currentUser: IUser
+	pageId: string
 }
 
 interface IState {
@@ -87,10 +88,11 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 	}
 
 	render() {
-		const { comment, currentUser } = this.props
+		const { comment, currentUser, pageId } = this.props
 		const { editOpen } = this.state
 		return (
 			<CommentView
+				pageId={pageId}
 				currentUser={currentUser}
 				comment={comment}
 				toggleEdit={this._toggleEdit}

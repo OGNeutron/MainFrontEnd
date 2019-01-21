@@ -101,6 +101,7 @@ const CommentContainer: React.FunctionComponent<IProps> = (props): JSX.Element =
 							}
 						>
 							<CommentList
+								pageId={props.pageId}
 								currentUser={props.currentUser}
 								comments={
 									data.queryComment.edges == undefined

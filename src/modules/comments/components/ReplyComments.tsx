@@ -11,6 +11,7 @@ import { Maybe, MyCommentFragmentReplies } from '../../../apollo/components/apol
 interface IProps {
 	replies: Maybe<MyCommentFragmentReplies[]>
 	parentComment: MyCommentFragmentReplies
+	pageId: string
 }
 
 const styles = {
@@ -19,7 +20,7 @@ const styles = {
 	}
 }
 
-function ReplyComments({ replies, parentComment }: IProps): JSX.Element {
+function ReplyComments({ replies, parentComment, pageId }: IProps): JSX.Element {
 	return (
 		<React.Fragment>
 			{replies !== null
@@ -42,7 +43,7 @@ function ReplyComments({ replies, parentComment }: IProps): JSX.Element {
 											<Icon name="long arrow alternate right" />
 											<Link to={`/profile/${reply.repliedTo!.username}`} />
 											{reply.repliedTo!.username}
-											<LikeComment id={reply.id} />
+											<LikeComment pageId={pageId} id={reply.id} />
 											<span>{reply.ratings.vote}</span>
 										</CommentListLayout>
 									</div>

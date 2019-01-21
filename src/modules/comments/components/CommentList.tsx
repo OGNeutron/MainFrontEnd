@@ -9,14 +9,16 @@ interface IProps {
 	comments: QueryCommentEdges[]
 	theme?: any
 	currentUser: IUser
+	pageId: string
 }
 
-function CommentList({ comments, currentUser }: IProps): JSX.Element {
+function CommentList({ comments, currentUser, pageId }: IProps): JSX.Element {
 	return (
 		<React.Fragment>
 			<Comment.Group size="large">
 				{comments.map(comment => (
 					<CommentActions
+						pageId={pageId}
 						currentUser={currentUser}
 						key={comment.node.id}
 						comment={comment.node}
