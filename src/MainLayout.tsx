@@ -34,11 +34,7 @@ interface IProps {
 }
 
 class MainLayout extends React.PureComponent<ChildProps<IProps>> {
-	state = {
-		authorised: false
-	}
-
-	componentDidUpdate() {
+	componentDidMount() {
 		const theme = this.props.currentTheme.clientTheme.theme
 		themeHelper(theme)
 	}
