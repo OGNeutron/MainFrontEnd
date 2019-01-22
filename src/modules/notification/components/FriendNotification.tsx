@@ -9,24 +9,17 @@ interface IProps {
 	id: string
 }
 
-class FriendNotification extends React.PureComponent<IProps> {
-	render() {
-		return (
-			<React.Fragment>
-				<Subscription
-					subscription={NOTIFICATION_SUBSCRIPTION}
-					variables={{ id: this.props.id }}
-				>
-					{response => {
-						if (response.data !== undefined) {
-							return toast('friend accepted')
-						}
-						return null
-					}}
-				</Subscription>
-			</React.Fragment>
-		)
-	}
-}
+const FriendNotification: React.FunctionComponent<IProps> = ({ id }) => (
+	<React.Fragment>
+		<Subscription subscription={NOTIFICATION_SUBSCRIPTION} variables={{ id }}>
+			{response => {
+				if (response.data !== undefined) {
+					return toast('friend accepted')
+				}
+				return null
+			}}
+		</Subscription>
+	</React.Fragment>
+)
 
 export default FriendNotification

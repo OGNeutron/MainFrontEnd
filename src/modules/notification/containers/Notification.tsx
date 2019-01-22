@@ -1,168 +1,114 @@
 import * as React from 'react'
+import { useState } from 'react'
 
 import styled from 'styled-components'
 
 import { Feed, Segment } from 'semantic-ui-react'
-import { ChildDataProps, WithApolloClient } from 'react-apollo'
 import { FetchNotificationsComponent } from '../../../apollo/components/apollo-components'
 
-import { Observable } from 'apollo-client/util/Observable'
 import { NotificationFeed } from '../components/NotificationFeed'
 
 const Splash = styled.div`
 	color: black;
 `
+const NotificationContainer: React.FunctionComponent = () => {
+	return (
+		<Segment>
+			<FetchNotificationsComponent>
+				{({ data, loading, error }) => {
+					if (data === undefined || data === null) {
+						return 'no notifications'
+					}
 
-interface IProps {
-	id: string
-	username: string
-}
+					if (data.fetchNotifications === null) {
+						return 'no notifications'
+					}
 
-interface IState {
-	subscribe: Observable<any>
-}
+					if (error) {
+						return <span>An error has occurred: {error.message}</span>
+					}
 
-class NotificationContainer extends React.PureComponent<
-	ChildDataProps<IProps> & IState & WithApolloClient<IProps>
-> {
-	state = {
-		subscribe: '',
-		pass: true
-	}
+					return loading === false && data !== null ? (
+						<Feed>
+							{data.fetchNotifications.length > 0 ? (
+								data.fetchNotifications.map(notification => {
+									if (
+										notification.team !== null &&
+										notification.channel !== null
+									) {
+										const { createdAt } = notification.team
+										const { slug } = notification.channel
 
-	async componentDidMount() {
-		await this._subscribeFriendRequest()
-		// await this._subscribeFriend()
-	}
-
-	// async componentWillUnmount() {
-	// 	this.state.subscribe.unsubcribe()
-	// }
-
-	// _subscribeFriend = async () => {
-	// 	this.props.client
-	// 		.subscribe({
-	// 			query: FRIEND_SUBSCRIPTION,
-	// 			variables: {
-	// 				id: this.props
-	// 			}
-	// 		})
-	// 		.subscribe({
-	// 			next(data) {
-	// 			},
-	// 			error(error) {
-	// 			}
-	// 		})
-	// }
-
-	_subscribeFriendRequest = async () => {}
-
-	render() {
-		return (
-			<Segment>
-				<FetchNotificationsComponent>
-					{({ data, loading, error }) => {
-						if (data === undefined || data === null) {
-							return 'no notifications'
-						}
-
-						if (data.fetchNotifications === null) {
-							return 'no notifications'
-						}
-
-						if (error) {
-							return <span>An error has occurred: {error.message}</span>
-						}
-
-						return loading === false && data !== null ? (
-							<Feed>
-								{data.fetchNotifications.length > 0 ? (
-									data.fetchNotifications.map(notification => {
-										if (
-											notification.team !== null &&
-											notification.channel !== null
-										) {
-											const { createdAt } = notification.team
-											const { slug } = notification.channel
-
-											if (notification.message) {
-												return (
-													<NotificationFeed
-														id={notification.id}
-														key={notification.id}
-														teamUrl={`chat-app/${
-															notification.team.slug
-														}/${slug}`}
-														date={createdAt}
-														message={notification.message}
-													/>
-												)
-											}
+										if (notification.message) {
+											return (
+												<NotificationFeed
+													id={notification.id}
+													key={notification.id}
+													teamUrl={`chat-app/${
+														notification.team.slug
+													}/${slug}`}
+													date={createdAt}
+													message={notification.message}
+												/>
+											)
 										}
+									}
 
-										if (notification.friend_requests !== null) {
-											const {
-												avatar_url: { url },
-												createdAt,
-												username
-											} = notification.friend_requests
+									if (notification.friend_requests !== null) {
+										const {
+											avatar_url: { url },
+											createdAt,
+											username
+										} = notification.friend_requests
 
-											if (notification.message !== null) {
-												return (
-													<NotificationFeed
-														id={notification.id}
-														friendRequestId={
-															notification.friend_requests.id
-														}
-														key={notification.id}
-														avatar={url}
-														date={createdAt}
-														username={username}
-														message={notification.message}
-													/>
-												)
-											}
+										if (notification.message !== null) {
+											return (
+												<NotificationFeed
+													id={notification.id}
+													friendRequestId={
+														notification.friend_requests.id
+													}
+													key={notification.id}
+													avatar={url}
+													date={createdAt}
+													username={username}
+													message={notification.message}
+												/>
+											)
 										}
+									}
 
-										if (notification.friend !== null) {
-											const {
-												avatar_url: { url },
-												createdAt,
-												username
-											} = notification.friend
+									if (notification.friend !== null) {
+										const {
+											avatar_url: { url },
+											createdAt,
+											username
+										} = notification.friend
 
-											if (notification.message !== null) {
-												return (
-													<NotificationFeed
-														id={notification.id}
-														friend={notification.friend}
-														key={notification.id}
-														avatar={url}
-														date={createdAt}
-														username={username}
-														message={notification.message}
-													/>
-												)
-											}
+										if (notification.message !== null) {
+											return (
+												<NotificationFeed
+													id={notification.id}
+													friend={notification.friend}
+													key={notification.id}
+													avatar={url}
+													date={createdAt}
+													username={username}
+													message={notification.message}
+												/>
+											)
 										}
-									})
-								) : (
-									<Splash>Currently no notifications</Splash>
-								)}
-							</Feed>
-						) : null
-					}}
-				</FetchNotificationsComponent>
-
-				{/* <ApolloConsumer>
-					{client => {
-						return null
-					}}
-				</ApolloConsumer> */}
-				{/* <FriendNotification username={username} id={id} /> */}
-			</Segment>
-		)
-	}
+									}
+								})
+							) : (
+								<Splash>Currently no notifications</Splash>
+							)}
+						</Feed>
+					) : null
+				}}
+			</FetchNotificationsComponent>
+		</Segment>
+	)
 }
 
 export default NotificationContainer
