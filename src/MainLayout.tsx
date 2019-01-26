@@ -58,7 +58,7 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 			const {
 				currentUser: { username, id }
 			} = this.props.currentUserServer
-			this.props.authoriseUser({
+			return this.props.authoriseUser({
 				variables: {
 					__typename: 'authorisedUser',
 					username,
@@ -72,7 +72,7 @@ class MainLayout extends React.PureComponent<ChildProps<IProps>> {
 
 	render() {
 		console.log('PROPS', this.props)
-		let header
+		let header: JSX.Element
 		let username = this.props.currentUser.authorisedUser.username
 
 		const { currentTheme } = this.props

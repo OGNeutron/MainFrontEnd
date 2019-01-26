@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const Button = styled.a`
 	text-decoration: none;
 	text-align: center;
-	color: #000;
+	color: ${props => props.theme.textColour};
 	padding: 1rem 0;
 	border: 1px solid black;
 	cursor: pointer;

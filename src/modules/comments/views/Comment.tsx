@@ -51,17 +51,20 @@ const CommentView: React.FunctionComponent<IProps> = ({
 			) : (
 				<EditComment toggleEdit={toggleEdit} comment={comment} />
 			)}
-			{currentUser.id === comment.author.id ? (
-				<Comment.Actions>
-					<CreateReply parentComment={comment} comment={comment} />
-					<Comment.Action onClick={toggleEdit}>
-						<CommentListLayout>Edit</CommentListLayout>
-					</Comment.Action>
-					<Comment.Action onClick={deleteComment}>
-						<CommentListLayout>Delete</CommentListLayout>
-					</Comment.Action>
-				</Comment.Actions>
-			) : null}
+
+			<Comment.Actions>
+				<CreateReply parentComment={comment} comment={comment} />
+				{currentUser.id === comment.author.id ? (
+					<React.Fragment>
+						<Comment.Action onClick={toggleEdit}>
+							<CommentListLayout>Edit</CommentListLayout>
+						</Comment.Action>
+						<Comment.Action onClick={deleteComment}>
+							<CommentListLayout>Delete</CommentListLayout>
+						</Comment.Action>
+					</React.Fragment>
+				) : null}
+			</Comment.Actions>
 		</Comment.Content>
 		<Comment.Group>
 			<ReplyComments pageId={pageId} parentComment={comment} replies={comment.replies} />
