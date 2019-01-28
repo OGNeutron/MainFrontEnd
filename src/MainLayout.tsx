@@ -1,22 +1,22 @@
+import { isEqual } from 'lodash'
 import * as React from 'react'
+import { ChildProps, compose, graphql } from 'react-apollo'
 import Helmet from 'react-helmet'
-
-import { ThemeProvider } from 'styled-components'
 import { ToastContainer } from 'react-toastify'
-import { graphql, ChildProps, compose } from 'react-apollo'
-
-import Routes from './router'
-import Header from './partials/Header/Header'
-import { CURRENT_USER_QUERY_CLIENT, CURRENT_THEME_QUERY } from './apollo/graphql/client'
+import { ThemeProvider } from 'styled-components'
+import { CURRENT_THEME_QUERY, CURRENT_USER_QUERY_CLIENT } from './apollo/graphql/client'
+import { LOGOUT_MUTATION } from './modules/authentication/graphql'
 import { AUTHORISE_USER } from './modules/authentication/graphql/client'
-import { IAuthoriseVariables } from './types'
+import SubscriptionContainer from './modules/notification/containers/SubcriptionContainer'
+import Header from './partials/Header/Header'
+import Routes from './router'
+import { Container, GlobalStyle, MainLayoutStyle } from './styles'
 import { theme } from './styles/theme'
-import { MainLayoutStyle, Container, GlobalStyle } from './styles'
+import { IAuthoriseVariables } from './types'
 import { CHANGE_THEME } from './utils/graphql/client/index'
 import { CURRENT_USER_QUERY } from './utils/graphql/server'
-import { LOGOUT_MUTATION } from './modules/authentication/graphql'
-import SubscriptionContainer from './modules/notification/containers/SubcriptionContainer'
 import { themeHelper } from './utils/helpers'
+
 // import { Footer } from './partials/footer/Footer'
 
 interface IVariables {
@@ -33,10 +33,19 @@ interface IProps {
 	changeTheme: ({  }: any) => any
 }
 
-class MainLayout extends React.PureComponent<ChildProps<IProps>> {
+class MainLayout extends React.Component<ChildProps<IProps>> {
 	componentDidMount() {
 		const theme = this.props.currentTheme.clientTheme.theme
 		themeHelper(theme)
+	}
+
+	shouldComponentUpdate(nextProps) {
+		console.log('NEXT_PROP', nextProps)
+		if (isEqual(this.props.currentUser, nextProps.currentUser)) {
+			return false
+		} else {
+			return true
+		}
 	}
 
 	_logout = async () => {
