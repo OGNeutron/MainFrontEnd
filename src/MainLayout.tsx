@@ -40,8 +40,7 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		console.log('NEXT_PROP', nextProps)
-		if (isEqual(this.props.currentUser, nextProps.currentUser)) {
+		if (!isEqual(this.props.currentUser, nextProps.currentUser)) {
 			return false
 		} else {
 			return true
@@ -80,7 +79,6 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 	}
 
 	render() {
-		console.log('PROPS', this.props)
 		let header: JSX.Element
 		let username = this.props.currentUser.authorisedUser.username
 
