@@ -84,6 +84,8 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 
 		const { currentTheme } = this.props
 
+		console.log('LOGGED IN', this.props.currentUser.authorisedUser.loggedIn)
+
 		header = (
 			<Header
 				authorised={this.props.currentUser.authorisedUser.loggedIn}
