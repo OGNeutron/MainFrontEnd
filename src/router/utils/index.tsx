@@ -1,11 +1,9 @@
 import * as React from 'react'
-import { compose, graphql, ChildDataProps, ChildMutateProps } from 'react-apollo'
-import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom'
-
-import { CURRENT_USER_QUERY } from '../../utils/graphql/server'
-import { AUTHORISE_USER } from '../../modules/authentication/graphql/client'
+import { ChildDataProps, ChildMutateProps, compose, graphql } from 'react-apollo'
+import { Redirect, Route, RouteComponentProps, RouteProps } from 'react-router-dom'
 import { CurrentUserQueryQuery } from '../../apollo/components/apollo-components'
-import { Spinner } from '../../utils/components/animations/loader'
+import { AUTHORISE_USER } from '../../modules/authentication/graphql/client'
+import { CURRENT_USER_QUERY } from '../../utils/graphql/server'
 
 class AuthRoute extends React.Component<
 	ChildMutateProps<ChildDataProps<RouteProps, CurrentUserQueryQuery>> & RouteComponentProps<{}>
@@ -37,20 +35,11 @@ class AuthRoute extends React.Component<
 			}
 		})
 
-		const Component = component as any
-
-		return (
-			<Route
-				path={this.props.path}
-				render={(props: any) => (
-					<React.Suspense fallback={Spinner}>
-						<Component {...props} />
-					</React.Suspense>
-				)}
-			/>
-		)
+		return <Route path={this.props.path} component={component} />
 	}
 }
+
+// component={Component} render={(props: any) => <Component {...props} />}
 
 export default compose(
 	graphql<RouteProps, CurrentUserQueryQuery>(CURRENT_USER_QUERY),

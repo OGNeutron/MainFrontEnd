@@ -57,6 +57,8 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 					}
 				}) as any
 
+				console.log('DATA', data)
+
 				if (pageId === deleteComment.parentId) {
 					const response = data.queryComment.edges.filter(
 						(comment: any) => comment.node.id !== deleteComment.id
