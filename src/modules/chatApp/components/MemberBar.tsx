@@ -1,11 +1,10 @@
 import * as React from 'react'
-import { graphql, ChildMutateProps, ChildDataProps } from 'react-apollo'
-import { Dropdown, Button, Divider, List, Grid, Icon } from 'semantic-ui-react'
-import { RouteComponentProps, Link } from 'react-router-dom'
-
-import { MemberBarLayout } from '../styles'
-import { ADD_CHANNEL_MEMBER_MUTATION } from '../graphql/server'
+import { ChildDataProps, ChildMutateProps, graphql } from 'react-apollo'
+import { Link, RouteComponentProps } from 'react-router-dom'
+import { Button, Divider, Dropdown, Grid, Icon, List } from 'semantic-ui-react'
 import { ShowTeamQuery_showTeam } from '../../../operation-result-types'
+import { ADD_CHANNEL_MEMBER_MUTATION } from '../graphql/server'
+import { MemberBarLayout } from '../styles'
 import RemoveMemberButton from '../views/RemoveMemberButton'
 
 interface IProps {
@@ -94,8 +93,6 @@ class MemberBar extends React.PureComponent<
 		}
 
 		let memberList
-
-		console.log('MEMBER', channelsMembers)
 
 		if (channelsMembers && channelsMembers.members !== null) {
 			const adminOnline =

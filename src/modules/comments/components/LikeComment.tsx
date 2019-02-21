@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Icon } from 'semantic-ui-react'
 import styled from 'styled-components'
-
 import { LikeCommentComponent } from '../../../apollo/components/apollo-components'
 import { COMMENTS_QUERY } from '../graphql/server'
 
@@ -15,7 +14,7 @@ interface IProps {
 	pageId: string
 }
 
-class LikeComment extends React.Component<IProps> {
+const LikeComment: React.FC<IProps> = props => {
 	// _handleSubmit = async () => {
 	// 	const { mutate, pageId, id } = this.props
 	// 	console.log('PAGEID', pageId)
@@ -61,37 +60,35 @@ class LikeComment extends React.Component<IProps> {
 	// 	})
 	// }
 
-	render() {
-		const { pageId, id } = this.props
+	const { pageId, id } = props
 
-		return (
-			<LikeCommentComponent>
-				{mutate => {
-					return (
-						<LikeSpan
-							onClick={() => {
-								mutate({
-									variables: { commentId: id },
-									refetchQueries: [
-										{
-											query: COMMENTS_QUERY,
-											variables: {
-												parentId: pageId,
-												limit: 10,
-												offset: 0
-											}
+	return (
+		<LikeCommentComponent>
+			{mutate => {
+				return (
+					<LikeSpan
+						onClick={() => {
+							mutate({
+								variables: { commentId: id },
+								refetchQueries: [
+									{
+										query: COMMENTS_QUERY,
+										variables: {
+											parentId: pageId,
+											limit: 10,
+											offset: 0
 										}
-									]
-								})
-							}}
-						>
-							<Icon name="thumbs up" />
-						</LikeSpan>
-					)
-				}}
-			</LikeCommentComponent>
-		)
-	}
+									}
+								]
+							})
+						}}
+					>
+						<Icon name="thumbs up" />
+					</LikeSpan>
+				)
+			}}
+		</LikeCommentComponent>
+	)
 }
 
 // export default graphql<IProps>(LIKE_COMMENT)(LikeComment as any)

@@ -40,6 +40,29 @@ class CommentFragmentClass {
 						username
 					}
 					createdAt
+					replies {
+						id
+						parentId
+						ratings {
+							vote
+							id
+							author {
+								id
+								username
+							}
+						}
+						body
+						pageId
+						repliedTo {
+							id
+							username
+						}
+						updatedAt
+						author {
+							id
+							username
+						}
+					}
 					updatedAt
 					author {
 						id

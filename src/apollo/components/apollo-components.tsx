@@ -1994,7 +1994,7 @@ export type RemoveTeamMemberMembers = {
 
 	username: string
 
-	email: string
+	email: Maybe<string>
 }
 
 export type RemoveChannelMemberMutationVariables = {
@@ -2039,7 +2039,7 @@ export type RemoveChannelMemberMutationMembers = {
 
 	username: string
 
-	email: string
+	email: Maybe<string>
 }
 
 export type RemoveChannelMemberMutationMessages = {
@@ -2179,7 +2179,7 @@ export type ShowTeamQuery_Members = {
 
 	username: string
 
-	email: string
+	email: Maybe<string>
 
 	online: boolean
 }
@@ -2215,7 +2215,7 @@ export type ShowChannelQueryMembers = {
 
 	username: string
 
-	email: string
+	email: Maybe<string>
 
 	online: boolean
 }
@@ -2788,6 +2788,8 @@ export type NotificationSubscriptionChannel = {
 export type NotificationSubscriptionFriendRequests = {
 	__typename?: 'User'
 
+	username: string
+
 	createdAt: DateTime
 
 	updatedAt: DateTime
@@ -2795,6 +2797,8 @@ export type NotificationSubscriptionFriendRequests = {
 
 export type NotificationSubscriptionFriend = {
 	__typename?: 'User'
+
+	username: string
 
 	createdAt: DateTime
 
@@ -2914,12 +2918,16 @@ export type FetchNotificationsChannel = {
 export type FetchNotificationsFriendRequests = {
 	__typename?: 'User'
 
+	id: string
+
+	username: string
+
 	avatar_url: FetchNotifications_AvatarUrl
 
 	createdAt: DateTime
 
 	updatedAt: DateTime
-} & FriendFragmentFragment
+}
 
 export type FetchNotifications_AvatarUrl = {
 	__typename?: 'File'
@@ -2930,12 +2938,16 @@ export type FetchNotifications_AvatarUrl = {
 export type FetchNotificationsFriend = {
 	__typename?: 'User'
 
+	id: string
+
+	username: string
+
 	avatar_url: FetchNotifications__AvatarUrl
 
 	createdAt: DateTime
 
 	updatedAt: DateTime
-} & FriendFragmentFragment
+}
 
 export type FetchNotifications__AvatarUrl = {
 	__typename?: 'File'
@@ -3315,7 +3327,7 @@ export type MyCommentFragmentFragment = {
 
 	replies: Maybe<MyCommentFragmentReplies[]>
 
-	author: MyCommentFragment___Author
+	author: MyCommentFragment_____Author
 }
 
 export type MyCommentFragmentRepliedTo = {
@@ -3361,9 +3373,11 @@ export type MyCommentFragmentReplies = {
 
 	createdAt: DateTime
 
+	replies: Maybe<MyCommentFragment_Replies[]>
+
 	updatedAt: DateTime
 
-	author: MyCommentFragment__Author
+	author: MyCommentFragment____Author
 }
 
 export type MyCommentFragment_Ratings = {
@@ -3392,6 +3406,36 @@ export type MyCommentFragment_RepliedTo = {
 	username: string
 }
 
+export type MyCommentFragment_Replies = {
+	__typename?: 'Comment'
+
+	id: string
+
+	parentId: string
+
+	ratings: MyCommentFragment__Ratings
+
+	body: string
+
+	pageId: string
+
+	repliedTo: Maybe<MyCommentFragment__RepliedTo>
+
+	updatedAt: DateTime
+
+	author: MyCommentFragment___Author
+}
+
+export type MyCommentFragment__Ratings = {
+	__typename?: 'Rating'
+
+	vote: number
+
+	id: string
+
+	author: Maybe<MyCommentFragment__Author[]>
+}
+
 export type MyCommentFragment__Author = {
 	__typename?: 'User'
 
@@ -3400,7 +3444,31 @@ export type MyCommentFragment__Author = {
 	username: string
 }
 
+export type MyCommentFragment__RepliedTo = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+}
+
 export type MyCommentFragment___Author = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+}
+
+export type MyCommentFragment____Author = {
+	__typename?: 'User'
+
+	id: string
+
+	username: string
+}
+
+export type MyCommentFragment_____Author = {
 	__typename?: 'User'
 
 	id: string
@@ -3479,6 +3547,29 @@ export const MyCommentFragmentFragmentDoc = gql`
 				username
 			}
 			createdAt
+			replies {
+				id
+				parentId
+				ratings {
+					vote
+					id
+					author {
+						id
+						username
+					}
+				}
+				body
+				pageId
+				repliedTo {
+					id
+					username
+				}
+				updatedAt
+				author {
+					id
+					username
+				}
+			}
 			updatedAt
 			author {
 				id
@@ -4892,11 +4983,13 @@ export const NotificationSubscriptionDocument = gql`
 				}
 				friend_requests {
 					...FriendFragment
+					username
 					createdAt
 					updatedAt
 				}
 				friend {
 					...FriendFragment
+					username
 					createdAt
 					updatedAt
 				}
@@ -5030,7 +5123,8 @@ export const FetchNotificationsDocument = gql`
 				createdAt
 			}
 			friend_requests {
-				...FriendFragment
+				id
+				username
 				avatar_url {
 					url
 				}
@@ -5038,7 +5132,8 @@ export const FetchNotificationsDocument = gql`
 				updatedAt
 			}
 			friend {
-				...FriendFragment
+				id
+				username
 				avatar_url {
 					url
 				}
@@ -5049,7 +5144,6 @@ export const FetchNotificationsDocument = gql`
 	}
 
 	${MyCommentFragmentFragmentDoc}
-	${FriendFragmentFragmentDoc}
 `
 export class FetchNotificationsComponent extends React.Component<
 	Partial<ReactApollo.QueryProps<FetchNotificationsQuery, FetchNotificationsVariables>>

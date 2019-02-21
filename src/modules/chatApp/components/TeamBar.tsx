@@ -1,17 +1,16 @@
 import * as React from 'react'
-import { List, Dropdown, Divider, Button, Icon } from 'semantic-ui-react'
-import { ChildProps, Query, Mutation, MutationFn } from 'react-apollo'
+import { ChildProps, Mutation, MutationFn, Query } from 'react-apollo'
 import { Link } from 'react-router-dom'
-
-import { TeamBarLayout } from '../styles'
-import CreateChannelModal from '../views/modal/CreateChannelModal'
-import { IChannel } from '../types'
-import { USER_SEARCH } from '../../shared/graphql/server'
-import { ADD_TEAM_MEMBER, SHOW_TEAM_QUERY } from '../graphql/server'
+import { Button, Divider, Dropdown, Icon, List } from 'semantic-ui-react'
 import {
 	AddTeamMemberMutation,
 	AddTeamMemberMutationVariables
 } from '../../../operation-result-types'
+import { USER_SEARCH } from '../../shared/graphql/server'
+import { ADD_TEAM_MEMBER, SHOW_TEAM_QUERY } from '../graphql/server'
+import { TeamBarLayout } from '../styles'
+import { IChannel } from '../types'
+import CreateChannelModal from '../views/modal/CreateChannelModal'
 import RemoveMemberButton from '../views/RemoveTeamMember'
 
 interface IProps {
@@ -90,8 +89,6 @@ class TeamBar extends React.PureComponent<ChildProps<any> & IProps> {
 			)
 
 		const { currentUser } = this.props
-
-		console.log('CURRENTUSER', currentUser)
 
 		return (
 			<TeamBarLayout>

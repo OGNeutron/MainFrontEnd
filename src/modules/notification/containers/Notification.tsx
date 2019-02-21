@@ -1,10 +1,7 @@
 import * as React from 'react'
-
-import styled from 'styled-components'
-
 import { Feed, Segment } from 'semantic-ui-react'
+import styled from 'styled-components'
 import { FetchNotificationsComponent } from '../../../apollo/components/apollo-components'
-
 import { NotificationFeed } from '../components/NotificationFeed'
 
 const Splash = styled.div`

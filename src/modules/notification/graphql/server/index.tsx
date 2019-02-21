@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 import {
-	MyCommentFragmentFragmentDoc,
-	FriendFragmentFragmentDoc
+	FriendFragmentFragmentDoc,
+	MyCommentFragmentFragmentDoc
 } from '../../../../apollo/components/apollo-components'
 
 export const FRIEND_REQUEST_SUBSCRIPTION = gql`
@@ -137,6 +137,7 @@ export const FETCH_NOTIFICATION_QUERY = gql`
 				createdAt
 			}
 			friend_requests {
+				id
 				username
 				avatar_url {
 					url
@@ -145,6 +146,7 @@ export const FETCH_NOTIFICATION_QUERY = gql`
 				updatedAt
 			}
 			friend {
+				id
 				username
 				avatar_url {
 					url

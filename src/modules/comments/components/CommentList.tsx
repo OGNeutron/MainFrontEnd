@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { Comment } from 'semantic-ui-react'
-
-import CommentActions from './CommentActions'
-import { IUser } from '../../../types'
 import { QueryCommentEdges } from '../../../apollo/components/apollo-components'
+import { IUser } from '../../../types'
+import { CommentView } from '../views/CommentView'
 
 interface IProps {
 	comments: QueryCommentEdges[]
@@ -17,11 +16,11 @@ function CommentList({ comments, currentUser, pageId }: IProps): JSX.Element {
 		<React.Fragment>
 			<Comment.Group size="large">
 				{comments.map(comment => (
-					<CommentActions
-						pageId={pageId}
-						currentUser={currentUser}
+					<CommentView
 						key={comment.node.id}
 						comment={comment.node}
+						currentUser={currentUser}
+						pageId={pageId}
 					/>
 				))}
 			</Comment.Group>

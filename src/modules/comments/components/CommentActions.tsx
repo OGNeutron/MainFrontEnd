@@ -1,15 +1,23 @@
+import { remove } from 'lodash'
 import * as React from 'react'
-import { graphql, ChildMutateProps } from 'react-apollo'
-
-import CommentView from '../views/Comment'
-import { DELETE_COMMENT_MUTATION, COMMENTS_QUERY } from '../graphql/server'
+import { ChildMutateProps, graphql } from 'react-apollo'
+import { Comment } from 'semantic-ui-react'
+import {
+	MyCommentFragmentFragment,
+	MyCommentFragmentReplies
+} from '../../../apollo/components/apollo-components'
 import { IUser } from '../../../types'
-import { MyCommentFragmentFragment } from '../../../apollo/components/apollo-components'
+import { COMMENTS_QUERY, DELETE_COMMENT_MUTATION } from '../graphql/server'
+import { CommentListLayout } from '../styles'
+import CreateReply from './CreateReply'
+import EditComment from './EditComment'
 
 interface IProps {
-	comment: MyCommentFragmentFragment
+	comment: MyCommentFragmentFragment | MyCommentFragmentReplies
 	currentUser: IUser
 	pageId: string
+	reply: boolean
+	parentId: string
 }
 
 interface IState {
@@ -30,7 +38,9 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 	_deleteComment = async () => {
 		const {
 			mutate,
-			comment: { parentId, id, pageId }
+			comment: { id },
+			pageId,
+			parentId
 		} = this.props
 
 		await mutate({
@@ -41,7 +51,7 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 				const data = cache.readQuery({
 					query: COMMENTS_QUERY,
 					variables: {
-						parentId,
+						parentId: pageId,
 						limit: 10,
 						offset: 0
 					}
@@ -71,16 +81,19 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 						data: result
 					})
 				} else {
-					const response = data.queryComment.edges
-						.find((comment: any) => comment.node.parentId === deleteComment.parentId)
-						.replies.filter((reply: any) => reply.id === id)
+					remove(
+						data.queryComment.edges.find(
+							(comment: any) => comment.node.id === deleteComment.parentId
+						).node.replies,
+						(comment: any) => comment.id === deleteComment.id
+					)
 
 					cache.writeQuery({
 						query: COMMENTS_QUERY,
 						variables: {
 							parentId
 						},
-						data: response
+						data
 					})
 				}
 			}
@@ -88,17 +101,38 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 	}
 
 	render() {
-		const { comment, currentUser, pageId } = this.props
+		const { comment, currentUser, parentId, reply, pageId } = this.props
 		const { editOpen } = this.state
+
 		return (
-			<CommentView
-				pageId={pageId}
-				currentUser={currentUser}
-				comment={comment}
-				toggleEdit={this._toggleEdit}
-				editOpen={editOpen}
-				deleteComment={this._deleteComment}
-			/>
+			<React.Fragment>
+				{editOpen === false ? (
+					<Comment.Text>
+						<CommentListLayout>{comment.body}</CommentListLayout>
+					</Comment.Text>
+				) : (
+					<EditComment toggleEdit={this._toggleEdit} comment={comment} />
+				)}
+
+				<Comment.Actions>
+					{currentUser.id === comment.author.id ? (
+						<React.Fragment>
+							<Comment.Action onClick={this._toggleEdit}>
+								<CommentListLayout>Edit</CommentListLayout>
+							</Comment.Action>
+							<Comment.Action onClick={this._deleteComment}>
+								<CommentListLayout>Delete</CommentListLayout>
+							</Comment.Action>
+						</React.Fragment>
+					) : null}
+					<CreateReply
+						pageId={pageId}
+						reply={reply}
+						parentId={parentId}
+						comment={comment}
+					/>
+				</Comment.Actions>
+			</React.Fragment>
 		)
 	}
 }

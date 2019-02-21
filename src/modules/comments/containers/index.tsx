@@ -1,19 +1,17 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { Query } from 'react-apollo'
 // import InfiniteScroll from 'react-simple-infinite-scroll'
 import InfiniteScroll from 'react-infinite-scroller'
-
+import {
+	QueryCommentQuery,
+	QueryCommentVariables
+} from '../../../apollo/components/apollo-components'
+import { IUser } from '../../../types'
+import { Spinner } from '../../../utils/components/animations/loader'
 import CommentList from '../components/CommentList'
 import CreateComment from '../components/CreateComment'
-import UpdateCommentsComponent from '../components/UpdateCommentsComponent'
-import { Spinner } from '../../../utils/components/animations/loader'
-import { IUser } from '../../../types'
 import { COMMENTS_QUERY } from '../graphql/server'
-import { Query } from 'react-apollo'
-import {
-	QueryCommentVariables,
-	QueryCommentQuery
-} from '../../../apollo/components/apollo-components'
 
 interface IProps {
 	pageId: string
@@ -88,10 +86,7 @@ const CommentContainer: React.FunctionComponent<IProps> = (props): JSX.Element =
 				return loading == false && data.queryComment ? (
 					<React.Fragment>
 						<CreateComment parentId={props.pageId} />
-						<UpdateCommentsComponent
-							currentUser={props.currentUser}
-							pageId={props.pageId}
-						/>
+
 						<InfiniteScroll
 							pageStart={0}
 							hasMore={more}
