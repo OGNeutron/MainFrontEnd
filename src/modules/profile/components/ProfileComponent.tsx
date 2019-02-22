@@ -1,23 +1,22 @@
-import * as React from 'react'
-import { Card, Image } from 'semantic-ui-react'
-import Moment from 'react-moment'
-import { Mutation } from 'react-apollo'
 import Button from '@material-ui/core/Button'
-
-import { Profile } from '../styles'
+import * as React from 'react'
+import { Mutation } from 'react-apollo'
+import Moment from 'react-moment'
+import { Card, Image } from 'semantic-ui-react'
 import {
-	FRIEND_REQUEST_MUTATION,
-	BLOCK_OR_UNBLOCK_USER,
-	GET_PROFILE_QUERY
-} from '../graphql/server'
-import TeamSideBar from './TeamSideBar'
-import CreateTeamModal from '../views/modals/CreateTeamModal'
+	GetProfileQueryQuery,
+	Maybe,
+	UnBlockUserVariables
+} from '../../../apollo/components/apollo-components'
 import { IUser } from '../../../types'
 import {
-	UnBlockUserVariables,
-	Maybe,
-	GetProfileQueryQuery
-} from '../../../apollo/components/apollo-components'
+	BLOCK_OR_UNBLOCK_USER,
+	FRIEND_REQUEST_MUTATION,
+	GET_PROFILE_QUERY
+} from '../graphql/server'
+import { Profile } from '../styles'
+import CreateTeamModal from '../views/modals/CreateTeamModal'
+import TeamSideBar from './TeamSideBar'
 
 interface IProps {
 	user: any
@@ -37,7 +36,7 @@ function ProfileComponent(props: IProps): JSX.Element {
 	return (
 		<Profile>
 			<Card>
-				<Image style={{ backgroundSize: 'cover' }} src={avatar_url.url} />
+				<Image style={{ backgroundSize: 'cover', height: '200px' }} src={avatar_url.url} />
 				<Card.Content>
 					<Card.Header data-testid="profile-username">{username}</Card.Header>
 					<Card.Meta>
