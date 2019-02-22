@@ -1,22 +1,20 @@
 import * as React from 'react'
-import { graphql, ChildDataProps, compose } from 'react-apollo'
+import { ChildDataProps, compose, graphql } from 'react-apollo'
 import { RouteComponentProps } from 'react-router-dom'
 import {
 	// GetProfileQueryQuery,
 	GetProfileQueryComponent
 } from '../../../apollo/components/apollo-components'
-
-import { GET_PROFILE_QUERY } from '../graphql/server'
-
+import { GetProfileQuery } from '../../../operation-result-types'
 import { Spinner } from '../../../utils/components/animations/loader'
-import { ProfileLayout, CommentLayout } from '../styles'
-import ProfileComponent from '../components/ProfileComponent'
-import FriendComponent from '../components/FriendComponent'
+import { CURRENT_USER_QUERY } from '../../../utils/graphql/server'
 import CommentContainer from '../../comments'
+import FriendComponent from '../components/FriendComponent'
+import ProfileComponent from '../components/ProfileComponent'
+import { GET_PROFILE_QUERY } from '../graphql/server'
+import { CommentLayout, ProfileLayout } from '../styles'
 import { BlockedOrPrivate } from '../views/BlockedOrPrivate'
 
-import { CURRENT_USER_QUERY } from '../../../utils/graphql/server'
-import { GetProfileQuery } from '../../../operation-result-types'
 // import { FRIEND_REQUEST_SUBSCRIPTION } from '../../notification/graphql/server'
 // import { toast } from 'react-toastify'
 // import { toast } from 'react-toastify'
@@ -75,7 +73,7 @@ const ProfileContainer: React.FunctionComponent<
 					return <Spinner />
 				}
 
-				let display
+				let display: JSX.Element | undefined
 
 				if (data.getProfile !== null && loading === false) {
 					if (data.getProfile.user === null && data.getProfile.errors !== null) {

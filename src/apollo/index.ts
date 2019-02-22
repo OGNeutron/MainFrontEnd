@@ -1,16 +1,15 @@
-import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { ApolloClient } from 'apollo-client'
 // import { HttpLink } from 'apollo-link-http'
-import { ApolloLink, split, from } from 'apollo-link'
+import { ApolloLink, from, split } from 'apollo-link'
+import { onError } from 'apollo-link-error'
 import { withClientState } from 'apollo-link-state'
 import { WebSocketLink } from 'apollo-link-ws'
-import { getMainDefinition } from 'apollo-utilities'
-import { onError } from 'apollo-link-error'
 import { createUploadLink } from 'apollo-upload-client'
-// import { persistCache } from 'apollo-cache-persist'
-
-import { defaultState, resolvers } from './state'
+import { getMainDefinition } from 'apollo-utilities'
 import { AUTHORISE_USER } from '../modules/authentication/graphql/client'
+// import { persistCache } from 'apollo-cache-persist'
+import { defaultState, resolvers } from './state'
 
 const INVALID_CREDENTIALS = 'Invalid credentials'
 
@@ -90,7 +89,9 @@ const middleware = new ApolloLink((operation, forward) => {
 	operation.setContext(({ headers = {} }) => ({
 		headers: {
 			...headers,
-			'recent-activity': localStorage.getItem('lastOnlineTime') || null
+			'recent-activity': localStorage.getItem('lastOnlineTime') || null,
+			'x-token': `${localStorage.getItem('neutron-token')}`,
+			'x-refresh-token': localStorage.getItem('neutron-refresh')
 		}
 	}))
 

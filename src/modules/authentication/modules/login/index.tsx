@@ -1,14 +1,13 @@
-import * as React from 'react'
 import { Formik } from 'formik'
-import * as yup from 'yup'
+import * as React from 'react'
 import { graphql } from 'react-apollo'
 import { RouteComponentProps } from 'react-router-dom'
-
-import AuthenticationController from '../../containers'
-import { LoginForm } from './views/LoginForm'
-import { AUTHORISE_USER } from '../../graphql/client'
 import { Divider } from 'semantic-ui-react'
+import * as yup from 'yup'
 import ThirdPartyAuthentication from '../../components/ThirdPartyAuthentication'
+import AuthenticationController from '../../containers'
+import { AUTHORISE_USER } from '../../graphql/client'
+import { LoginForm } from './views/LoginForm'
 
 const validationSchema = yup.object().shape({
 	email: yup
@@ -44,8 +43,13 @@ const LoginContainer: React.FunctionComponent<RouteComponentProps<{}>> = ({
 
 							const {
 								ok,
-								user: { username, id }
+								user: { username, id },
+								refreshToken,
+								token
 							} = login
+
+							localStorage.setItem('neutron-refresh', refreshToken)
+							localStorage.setItem('neutron-token', token)
 
 							if (ok) {
 								await authoriseUser({
@@ -60,7 +64,7 @@ const LoginContainer: React.FunctionComponent<RouteComponentProps<{}>> = ({
 									return history.push(state.next)
 								}
 
-								return history.push(`/profile/${username}`)
+								history.push(`/profile/${username}`)
 							} else {
 								return false
 							}

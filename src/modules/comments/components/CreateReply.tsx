@@ -23,7 +23,7 @@ const CreateReply: React.FunctionComponent<Union> = props => {
 
 	return (
 		<React.Fragment>
-			<Comment.Action onClick={changeOpen}>
+			<Comment.Action onClick={() => changeOpen(!open)}>
 				{' '}
 				<CommentListLayout>Reply</CommentListLayout>{' '}
 			</Comment.Action>
@@ -73,6 +73,8 @@ const CreateReply: React.FunctionComponent<Union> = props => {
 									})
 								}
 							})
+
+							changeOpen(!open)
 						} else {
 							await mutate({
 								variables: {
@@ -106,9 +108,9 @@ const CreateReply: React.FunctionComponent<Union> = props => {
 									})
 								}
 							})
-						}
 
-						changeOpen(false)
+							changeOpen(!open)
+						}
 
 						resetForm()
 						setSubmitting(false)

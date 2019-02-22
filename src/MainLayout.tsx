@@ -40,6 +40,7 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 	}
 
 	shouldComponentUpdate(nextProps) {
+		console.log('SHOULD COMPONENT UPDATE')
 		if (!isEqual(this.props, nextProps)) {
 			return true
 		} else {
