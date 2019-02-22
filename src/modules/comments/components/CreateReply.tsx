@@ -52,7 +52,9 @@ const CreateReply: React.FunctionComponent<Union> = props => {
 									const data = cache.readQuery({
 										query: COMMENTS_QUERY,
 										variables: {
-											parentId
+											parentId: pageId,
+											limit: 10,
+											offset: 0
 										}
 									}) as any
 
@@ -63,7 +65,9 @@ const CreateReply: React.FunctionComponent<Union> = props => {
 									cache.writeQuery({
 										query: COMMENTS_QUERY,
 										variables: {
-											parentId
+											parentId: pageId,
+											limit: 10,
+											offset: 0
 										},
 										data
 									})

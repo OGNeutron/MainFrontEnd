@@ -51,6 +51,8 @@ const CommentContainer: React.FunctionComponent<IProps> = (props): JSX.Element =
 					}
 				}
 
+				console.log(newObject)
+
 				return newObject
 				// Object.assign({}, prev, {
 				// 	edges: [...newEdges]
