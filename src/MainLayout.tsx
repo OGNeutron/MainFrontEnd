@@ -2,7 +2,7 @@ import { isEqual } from 'lodash'
 import * as React from 'react'
 import { ChildProps, compose, graphql } from 'react-apollo'
 import Helmet from 'react-helmet'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { ThemeProvider } from 'styled-components'
 import { CURRENT_THEME_QUERY, CURRENT_USER_QUERY_CLIENT } from './apollo/graphql/client'
 import { LOGOUT_MUTATION } from './modules/authentication/graphql'
@@ -22,6 +22,10 @@ interface IVariables {
 	variables: IAuthoriseVariables
 }
 
+interface IState {
+	online: boolean
+}
+
 interface IProps {
 	currentUser: any
 	currentTheme: { clientTheme: { theme: string } }
@@ -34,16 +38,35 @@ interface IProps {
 
 const CountContext = React.createContext({ count: 0 })
 
-class MainLayout extends React.Component<ChildProps<IProps>> {
+class MainLayout extends React.Component<ChildProps<IProps>, IState> {
 	static contextType = CountContext
+
+	state = {
+		online: true
+	}
 
 	componentDidMount() {
 		const theme = this.props.currentTheme.clientTheme.theme
 		themeHelper(theme)
+
+		window.addEventListener('online', this.onLine)
+		window.addEventListener('offline', this.offLine)
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('online', this.onLine)
+		window.removeEventListener('offline', this.offLine)
+	}
+
+	onLine = () => {
+		toast('Website Currently Online', { autoClose: false })
+	}
+
+	offLine = () => {
+		toast('Website Currently Offline', { autoClose: false })
 	}
 
 	shouldComponentUpdate(nextProps) {
-		console.log('PROPS', this.props, nextProps)
 		if (!isEqual(this.props, nextProps) && this.context.count < 5) {
 			this.context.count++
 			return true
@@ -89,6 +112,8 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 		let username = this.props.currentUser.authorisedUser.username
 
 		const { currentTheme } = this.props
+
+		console.log('STATE', this.state)
 
 		header = (
 			<Header
@@ -178,6 +203,7 @@ class MainLayout extends React.Component<ChildProps<IProps>> {
 					) : null}
 
 					<GlobalStyle theme={theme[currentTheme.clientTheme.theme]} />
+
 					<MainLayoutStyle>
 						<Helmet>
 							<meta charSet="utf-8" />
