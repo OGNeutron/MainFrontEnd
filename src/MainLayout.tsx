@@ -113,8 +113,6 @@ class MainLayout extends React.Component<ChildProps<IProps>, IState> {
 
 		const { currentTheme } = this.props
 
-		console.log('STATE', this.state)
-
 		header = (
 			<Header
 				authorised={this.props.currentUser.authorisedUser.loggedIn}
