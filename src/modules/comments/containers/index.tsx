@@ -96,6 +96,7 @@ const CommentContainer: React.FunctionComponent<IProps> = (props): JSX.Element =
 							count={data.queryComment.edges.length}
 							parentId={props.pageId}
 							pageId={props.pageId}
+							offset={offset}
 						/>
 
 						<InfiniteScroll

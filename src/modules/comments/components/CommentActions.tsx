@@ -91,7 +91,9 @@ const CommentActions: React.FC<ChildMutateProps<IProps>> = ({
 					cache.writeQuery({
 						query: COMMENTS_QUERY,
 						variables: {
-							parentId
+							parentId,
+							limit: 10,
+							offset
 						},
 						data
 					})
