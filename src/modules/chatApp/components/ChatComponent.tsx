@@ -1,8 +1,5 @@
 import * as React from 'react'
-import { graphql, ChildDataProps } from 'react-apollo'
-
-import { ChatComponentLayout } from '../styles'
-import { SHOW_CHANNEL_QUERY, CHANNEL_MESSAGE_SUBSCRIPTION } from '../graphql/server'
+import { ChildDataProps, graphql } from 'react-apollo'
 import {
 	// ShowTeamQuery_showTeam,
 	ShowChannelQuery,
@@ -10,8 +7,11 @@ import {
 	ShowChannelQuery_showChannel
 } from '../../../operation-result-types'
 import { Spinner } from '../../../utils/components/animations/loader'
+import { CHANNEL_MESSAGE_SUBSCRIPTION, SHOW_CHANNEL_QUERY } from '../graphql/server'
+import { ChatComponentLayout } from '../styles'
 import { CreateMessageForm } from '../views/CreateMessgeForm'
 import MessageView from '../views/MessageView'
+
 // import { Message } from '../views/Message'
 
 interface IProps {
@@ -40,7 +40,7 @@ class ChatComponent extends React.PureComponent<ChildDataProps<IProps>, IState> 
 		this.setState({ channelId })
 
 		if (channelId !== undefined) {
-			this.props.data.subscribeToMore({
+			this.unsubscribe = this.props.data.subscribeToMore({
 				document: CHANNEL_MESSAGE_SUBSCRIPTION,
 				variables: { channelId },
 				updateQuery(prev, { subscriptionData }) {
@@ -65,9 +65,7 @@ class ChatComponent extends React.PureComponent<ChildDataProps<IProps>, IState> 
 	}
 
 	componentWillUnmount() {
-		this.props.data.subscribeToMore({
-			document: CHANNEL_MESSAGE_SUBSCRIPTION
-		})
+		this.unsubscribe()
 	}
 
 	render() {
