@@ -14,7 +14,6 @@ import { Container, GlobalStyle, MainLayoutStyle } from './styles'
 import { theme } from './styles/theme'
 import { IAuthoriseVariables } from './types'
 import { CHANGE_THEME } from './utils/graphql/client/index'
-import { CURRENT_USER_QUERY } from './utils/graphql/server'
 import { themeHelper } from './utils/helpers'
 
 // import { Footer } from './partials/footer/Footer'
@@ -33,17 +32,23 @@ interface IProps {
 	changeTheme: ({  }: any) => any
 }
 
+const CountContext = React.createContext({ count: 0 })
+
 class MainLayout extends React.Component<ChildProps<IProps>> {
+	static contextType = CountContext
+
 	componentDidMount() {
 		const theme = this.props.currentTheme.clientTheme.theme
 		themeHelper(theme)
 	}
 
 	shouldComponentUpdate(nextProps) {
-		console.log('SHOULD COMPONENT UPDATE')
-		if (!isEqual(this.props, nextProps)) {
+		console.log('PROPS', this.props, nextProps)
+		if (!isEqual(this.props, nextProps) && this.context.count < 5) {
+			this.context.count++
 			return true
 		} else {
+			this.context.count = 0
 			return false
 		}
 	}
@@ -196,6 +201,6 @@ export default compose(
 	graphql(CURRENT_USER_QUERY_CLIENT, { name: 'currentUser' }),
 	graphql(CHANGE_THEME, { name: 'changeTheme' }),
 	graphql(CURRENT_THEME_QUERY, { name: 'currentTheme' }),
-	graphql(CURRENT_USER_QUERY, { name: 'currentUserServer' }),
+	// graphql(CURRENT_USER_QUERY, { name: 'currentUserServer' }),
 	graphql(LOGOUT_MUTATION, { name: 'logoutMutation' })
 )(MainLayout)
