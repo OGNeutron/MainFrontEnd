@@ -18,46 +18,43 @@ interface IProps {
 	pageId: string
 	reply: boolean
 	parentId: string
+	offset: any
 }
 
-interface IState {
-	editOpen: boolean
-}
+const CommentActions: React.FC<ChildMutateProps<IProps>> = ({
+	mutate,
+	comment,
+	currentUser,
+	parentId,
+	reply,
+	pageId,
+	offset
+}) => {
+	const [editOpen, changeOpen] = React.useState(false)
 
-class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
-	state = {
-		editOpen: false
-	}
-
-	_toggleEdit = () => {
-		this.setState(state => ({
-			editOpen: !state.editOpen
-		}))
-	}
-
-	_deleteComment = async () => {
-		const {
-			mutate,
-			comment: { id },
-			pageId,
-			parentId
-		} = this.props
-
+	const _deleteComment = async () => {
 		await mutate({
 			variables: {
-				id
+				id: comment.id
 			},
+			// optimisticResponse: {
+			// 	__typeName: 'Mutation',
+			// 	deleteComment: {
+			// 		id
+			// 	}
+			// },
 			update(cache, { data: { deleteComment } }: any) {
 				const data = cache.readQuery({
 					query: COMMENTS_QUERY,
 					variables: {
 						parentId: pageId,
 						limit: 10,
-						offset: 0
+						offset
 					}
 				}) as any
 
 				if (pageId === deleteComment.parentId) {
+					console.log('WORKING_ONE')
 					const response = data.queryComment.edges.filter(
 						(comment: any) => comment.node.id !== deleteComment.id
 					)
@@ -71,16 +68,19 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 						}
 					}
 
+					console.log('RESULT', result)
+
 					cache.writeQuery({
 						query: COMMENTS_QUERY,
 						variables: {
 							parentId,
 							limit: 10,
-							offset: 0
+							offset
 						},
 						data: result
 					})
 				} else {
+					console.log('WORKING_TWO')
 					remove(
 						data.queryComment.edges.find(
 							(comment: any) => comment.node.id === deleteComment.parentId
@@ -100,41 +100,31 @@ class CommentActions extends React.Component<ChildMutateProps<IProps>, IState> {
 		})
 	}
 
-	render() {
-		const { comment, currentUser, parentId, reply, pageId } = this.props
-		const { editOpen } = this.state
+	return (
+		<React.Fragment>
+			{editOpen === false ? (
+				<Comment.Text>
+					<CommentListLayout>{comment.body}</CommentListLayout>
+				</Comment.Text>
+			) : (
+				<EditComment toggleEdit={() => changeOpen(!editOpen)} comment={comment} />
+			)}
 
-		return (
-			<React.Fragment>
-				{editOpen === false ? (
-					<Comment.Text>
-						<CommentListLayout>{comment.body}</CommentListLayout>
-					</Comment.Text>
-				) : (
-					<EditComment toggleEdit={this._toggleEdit} comment={comment} />
-				)}
-
-				<Comment.Actions>
-					{currentUser.id === comment.author.id ? (
-						<React.Fragment>
-							<Comment.Action onClick={this._toggleEdit}>
-								<CommentListLayout>Edit</CommentListLayout>
-							</Comment.Action>
-							<Comment.Action onClick={this._deleteComment}>
-								<CommentListLayout>Delete</CommentListLayout>
-							</Comment.Action>
-						</React.Fragment>
-					) : null}
-					<CreateReply
-						pageId={pageId}
-						reply={reply}
-						parentId={parentId}
-						comment={comment}
-					/>
-				</Comment.Actions>
-			</React.Fragment>
-		)
-	}
+			<Comment.Actions>
+				{currentUser.id === comment.author.id ? (
+					<React.Fragment>
+						<Comment.Action onClick={() => changeOpen(!editOpen)}>
+							<CommentListLayout>Edit</CommentListLayout>
+						</Comment.Action>
+						<Comment.Action onClick={_deleteComment}>
+							<CommentListLayout>Delete</CommentListLayout>
+						</Comment.Action>
+					</React.Fragment>
+				) : null}
+				<CreateReply pageId={pageId} reply={reply} parentId={parentId} comment={comment} />
+			</Comment.Actions>
+		</React.Fragment>
+	)
 }
 
 export default graphql<IProps>(DELETE_COMMENT_MUTATION)(CommentActions as any)

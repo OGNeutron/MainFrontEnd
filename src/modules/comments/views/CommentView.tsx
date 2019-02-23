@@ -9,13 +9,15 @@ interface IProps {
 	comment: MyCommentFragmentFragment
 	currentUser: IUser
 	pageId: string
+	offset: number
 }
 
-export const CommentView: React.FC<IProps> = ({ comment, currentUser, pageId }) => {
+export const CommentView: React.FC<IProps> = ({ comment, currentUser, pageId, offset }) => {
 	return (
 		<React.Fragment>
 			<Comment as="span">
 				<MyComment
+					offset={offset}
 					reply={false}
 					key={comment.id}
 					comment={comment}
@@ -24,6 +26,7 @@ export const CommentView: React.FC<IProps> = ({ comment, currentUser, pageId }) 
 				/>
 				<Comment.Group>
 					<ReplyComments
+						offset={offset}
 						currentUser={currentUser}
 						pageId={pageId}
 						replies={comment.replies}

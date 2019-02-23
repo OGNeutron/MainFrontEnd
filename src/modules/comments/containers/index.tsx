@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import { Query } from 'react-apollo'
 // import InfiniteScroll from 'react-simple-infinite-scroll'
 import InfiniteScroll from 'react-infinite-scroller'
@@ -12,6 +12,7 @@ import { Spinner } from '../../../utils/components/animations/loader'
 import CommentList from '../components/CommentList'
 import CreateComment from '../components/CreateComment'
 import { COMMENTS_QUERY } from '../graphql/server'
+import { offsetReducer } from '../reducers'
 
 interface IProps {
 	pageId: string
@@ -19,19 +20,21 @@ interface IProps {
 }
 
 const CommentContainer: React.FunctionComponent<IProps> = (props): JSX.Element => {
-	const [offsetInt] = useState(0)
 	const [more] = useState(false)
+	// @ts-ignore
+	const [offset, dispatch] = useReducer(offsetReducer, 0)
 
 	// useEffect(() => {
 	// 	changeMore(true)
 	// }, [])
 
-	function hasMoreComments(func: any, length: any) {
+	function hasMoreComments(func: any, _: any) {
+		dispatch({ type: 'INCREMENT' })
 		func({
 			variables: {
 				parentId: props.pageId,
 				limit: 5,
-				offset: length + 10
+				offset: offset
 			},
 			updateQuery(prev: any, { fetchMoreResult }: { fetchMoreResult: any }) {
 				if (!fetchMoreResult) return prev
@@ -68,7 +71,7 @@ const CommentContainer: React.FunctionComponent<IProps> = (props): JSX.Element =
 			variables={{
 				parentId: props.pageId,
 				limit: 10,
-				offset: offsetInt
+				offset: offset
 			}}
 		>
 			{({ data, loading, fetchMore }) => {
@@ -85,9 +88,15 @@ const CommentContainer: React.FunctionComponent<IProps> = (props): JSX.Element =
 				// 	}
 				// }
 
+				console.log('OFFSET', offset)
+
 				return loading == false && data.queryComment ? (
 					<React.Fragment>
-						<CreateComment parentId={props.pageId} />
+						<CreateComment
+							count={data.queryComment.edges.length}
+							parentId={props.pageId}
+							pageId={props.pageId}
+						/>
 
 						<InfiniteScroll
 							pageStart={0}
@@ -98,6 +107,7 @@ const CommentContainer: React.FunctionComponent<IProps> = (props): JSX.Element =
 							}
 						>
 							<CommentList
+								offset={offset}
 								pageId={props.pageId}
 								currentUser={props.currentUser}
 								comments={

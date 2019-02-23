@@ -9,14 +9,16 @@ interface IProps {
 	theme?: any
 	currentUser: IUser
 	pageId: string
+	offset: number
 }
 
-function CommentList({ comments, currentUser, pageId }: IProps): JSX.Element {
+function CommentList({ comments, currentUser, pageId, offset }: IProps): JSX.Element {
 	return (
 		<React.Fragment>
 			<Comment.Group size="large">
 				{comments.map(comment => (
 					<CommentView
+						offset={offset}
 						key={comment.node.id}
 						comment={comment.node}
 						currentUser={currentUser}

@@ -7,6 +7,7 @@ interface IProps {
 	replies: Maybe<MyCommentFragmentReplies[]>
 	pageId: string
 	currentUser: IUser
+	offset: number
 }
 
 // const styles = {
@@ -15,12 +16,13 @@ interface IProps {
 // 	}
 // }
 
-function ReplyComments({ replies, pageId, currentUser }: IProps): JSX.Element {
+function ReplyComments({ replies, pageId, currentUser, offset }: IProps): JSX.Element {
 	return (
 		<React.Fragment>
 			{replies !== null
 				? replies.map(reply => (
 						<MyComment
+							offset={offset}
 							reply={true}
 							key={reply.id}
 							comment={reply}

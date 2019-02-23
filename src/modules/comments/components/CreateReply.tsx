@@ -14,6 +14,7 @@ interface IProps {
 	pageId: string
 	parentId: string
 	reply: boolean
+	offset: any
 }
 
 type Union = FormikProps<any> & ChildMutateProps<IProps>
@@ -54,7 +55,7 @@ const CreateReply: React.FunctionComponent<Union> = props => {
 										variables: {
 											parentId: pageId,
 											limit: 10,
-											offset: 0
+											offset: props.offset
 										}
 									}) as any
 
@@ -67,7 +68,7 @@ const CreateReply: React.FunctionComponent<Union> = props => {
 										variables: {
 											parentId: pageId,
 											limit: 10,
-											offset: 0
+											offset: props.offset
 										},
 										data
 									})

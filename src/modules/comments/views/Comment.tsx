@@ -16,13 +16,15 @@ interface IProps {
 	currentUser: IUser
 	pageId: string
 	reply: boolean
+	offset: number
 }
 
 export const MyComment: React.FunctionComponent<IProps> = ({
 	comment,
 	currentUser,
 	pageId,
-	reply
+	reply,
+	offset
 }): JSX.Element => (
 	<Comment.Content
 		style={{
@@ -40,6 +42,7 @@ export const MyComment: React.FunctionComponent<IProps> = ({
 			</CommentListLayout>
 		</Comment.Metadata>
 		<CommentActions
+			offset={offset}
 			parentId={comment.parentId}
 			pageId={pageId}
 			reply={reply}

@@ -1,19 +1,21 @@
+import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
-import { FormikProps, Formik } from 'formik'
-import { compose, graphql, ChildMutateProps } from 'react-apollo'
-
-import { FormContainer } from '../../../utils/form/FormContainer'
-import { COMMENT_MUTATION, COMMENTS_QUERY } from '../graphql/server'
+import { ChildMutateProps, compose, graphql } from 'react-apollo'
 import { CommentMutationVariables } from '../../../operation-result-types'
-import { validationSchema } from '../utils/yupSchemas'
+import { FormContainer } from '../../../utils/form/FormContainer'
 // import { FormTextArea } from '../../../utils/form/FormTextArea'
 import { InputField } from '../../../utils/form/inputField'
+import { COMMENTS_QUERY, COMMENT_MUTATION } from '../graphql/server'
+import { validationSchema } from '../utils/yupSchemas'
+
 // import TextEditor from '../../shared/components/TextEditor'
 
 interface IProps extends FormikProps<any> {
 	pageId: string
 	parentId: string
 	id: string
+	count: number
+	offset: any
 }
 
 function CreateComment(props: ChildMutateProps<IProps>): JSX.Element {
@@ -23,41 +25,61 @@ function CreateComment(props: ChildMutateProps<IProps>): JSX.Element {
 				initialValues={{ body: '' }}
 				validationSchema={validationSchema}
 				onSubmit={async (values, { resetForm, setSubmitting }) => {
-					await props.mutate({
-						variables: {
-							pageId: props.parentId,
-							parentId: props.parentId,
-							body: values.body
-						},
-						update(cache, { data: { createComment } }: any) {
-							const data = cache.readQuery({
-								query: COMMENTS_QUERY,
-								variables: {
-									parentId: props.parentId,
-									limit: 10,
-									offset: 0
-								}
-							}) as any
+					const variables = {
+						pageId: props.parentId,
+						parentId: props.parentId,
+						body: values.body
+					}
 
-							if (data != null) {
-								let newComment = {
-									__typename: 'CommentNode',
-									node: {
-										...createComment
+					if (props.count == 0) {
+						await props.mutate({
+							variables,
+							refetchQueries: [
+								{
+									query: COMMENTS_QUERY,
+									variables: {
+										parentId: props.pageId,
+										limit: 10,
+										offset: props.offset
 									}
 								}
-								data.queryComment.edges.unshift(newComment)
-							}
+							]
+						})
+					} else {
+						await props.mutate({
+							variables,
+							update(cache, { data: { createComment } }: any) {
+								const data = cache.readQuery({
+									query: COMMENTS_QUERY,
+									variables: {
+										parentId: props.parentId,
+										limit: 10,
+										offset: props.offset
+									}
+								}) as any
 
-							return cache.writeQuery({
-								query: COMMENTS_QUERY,
-								variables: {
-									parentId: props.parentId
-								},
-								data
-							})
-						}
-					})
+								if (data != null) {
+									let newComment = {
+										__typename: 'CommentNode',
+										node: {
+											...createComment
+										}
+									}
+									data.queryComment.edges.unshift(newComment)
+								}
+
+								return cache.writeQuery({
+									query: COMMENTS_QUERY,
+									variables: {
+										parentId: props.parentId,
+										limit: 10,
+										offset: props.offset
+									},
+									data
+								})
+							}
+						})
+					}
 
 					resetForm()
 					setSubmitting(false)
