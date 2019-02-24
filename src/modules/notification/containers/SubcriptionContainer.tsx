@@ -1,14 +1,11 @@
-import * as React from 'react'
-
-import { ChildDataProps, WithApolloClient, graphql, compose, withApollo } from 'react-apollo'
-
 // import { NotificationSubscriptionComponent } from '../../../apollo/components/apollo-components'
 import { Observable } from 'apollo-link'
-import { FETCH_NOTIFICATION_QUERY } from '../graphql/server'
-import { NOTIFICATION_SUBSCRIPTION } from '../graphql/server'
+import * as React from 'react'
+import { ChildDataProps, compose, graphql, withApollo, WithApolloClient } from 'react-apollo'
 import { toast } from 'react-toastify'
+import { GetProfileQueryQuery, Maybe } from '../../../apollo/components/apollo-components'
 import { GET_PROFILE_QUERY } from '../../profile/graphql/server'
-import { Maybe, GetProfileQueryQuery } from '../../../apollo/components/apollo-components'
+import { FETCH_NOTIFICATION_QUERY, NOTIFICATION_SUBSCRIPTION } from '../graphql/server'
 
 interface IProps {
 	id: string
@@ -36,6 +33,7 @@ class SubscriptionContainer extends React.PureComponent<
 			document: NOTIFICATION_SUBSCRIPTION,
 			variables: { id: this.props.id },
 			updateQuery(previousResult, { subscriptionData }) {
+				console.log('SUBSCRIPTION_DATA', subscriptionData)
 				if (!subscriptionData.data) return previousResult
 
 				if (previousResult.fetchNotifications !== undefined) {

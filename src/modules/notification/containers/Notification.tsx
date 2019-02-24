@@ -26,6 +26,8 @@ const NotificationContainer: React.FunctionComponent = () => {
 							return <span>An error has occurred: {error.message}</span>
 						}
 
+						console.log('DATA', data)
+
 						return loading === false && data !== null ? (
 							<Feed>
 								{data.fetchNotifications.length > 0 ? (
