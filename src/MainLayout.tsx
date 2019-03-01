@@ -111,6 +111,8 @@ class MainLayout extends React.Component<ChildProps<IProps>, IState> {
 		let header: JSX.Element
 		let username = this.props.currentUser.authorisedUser.username
 
+		console.log('PROPS CURRENT USER', this.props.currentUser)
+
 		const { currentTheme } = this.props
 
 		header = (
