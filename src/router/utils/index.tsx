@@ -1,9 +1,9 @@
-import * as React from 'react'
-import { ChildDataProps, ChildMutateProps, compose, graphql } from 'react-apollo'
-import { Redirect, Route, RouteComponentProps, RouteProps } from 'react-router-dom'
-import { CurrentUserQueryQuery } from '../../apollo/components/apollo-components'
-import { AUTHORISE_USER } from '../../modules/authentication/graphql/client'
-import { CURRENT_USER_QUERY } from '../../utils/graphql/server'
+import * as React from 'react';
+import { ChildDataProps, ChildMutateProps, compose, graphql } from 'react-apollo';
+import { Redirect, Route, RouteComponentProps, RouteProps } from 'react-router-dom';
+import { CurrentUserQueryQuery } from '../../apollo/components/apollo-components';
+import { AUTHORISE_USER } from '../../modules/authentication/graphql/client';
+import { CURRENT_USER_QUERY } from '../../utils/graphql/server';
 
 class AuthRoute extends React.Component<
 	ChildMutateProps<ChildDataProps<RouteProps, CurrentUserQueryQuery>> & RouteComponentProps<{}>
@@ -15,6 +15,8 @@ class AuthRoute extends React.Component<
 		if (loading) {
 			return null
 		}
+
+		console.log("CURRENT_USER", currentUser)
 
 		if (currentUser === null || currentUser === undefined) {
 			return (
