@@ -42,14 +42,14 @@ export default function ThirdPartyAuthentication() {
 				<Icon name="github" />
 				Github
 			</Button>
-			<Button href={`${url}/api/v1/auth/facebook`}>
+			{/* <Button href={`${url}/api/v1/auth/facebook`}>
 				<Icon name="facebook" />
 				Facebook
 			</Button>
 			<Button href={`${url}/api/v1/auth/twitter`}>
 				<Icon name="twitter" />
 				Twitter
-			</Button>
+			</Button> */}
 		</Layout>
 	)
 }
